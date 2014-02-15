@@ -17718,104 +17718,96 @@ Source: http://www.irf.com/product-info/datasheets/data/irfr5305pbf.pdf</descrip
 <part name="IC4" library="Simplex-ICs" deviceset="PGA2311" device=""/>
 <part name="IC5" library="Simplex-ICs" deviceset="PGA2311" device=""/>
 <part name="IC7" library="burr-brown" deviceset="OPA2134" device="P"/>
-<part name="R41" library="rcl" deviceset="R-EU_" device="R0805W" value="47K"/>
-<part name="C15" library="rcl" deviceset="C-EU" device="C0805" value="47p"/>
+<part name="R41" library="rcl" deviceset="R-EU_" device="R0805W" value="100K"/>
+<part name="C15" library="rcl" deviceset="C-EU" device="C0805" value="1n"/>
 <part name="R42" library="rcl" deviceset="R-EU_" device="R0805W" value="1K"/>
-<part name="R43" library="rcl" deviceset="R-EU_" device="R0805W" value="47K"/>
-<part name="C16" library="rcl" deviceset="C-EU" device="C0805" value="47p"/>
+<part name="R43" library="rcl" deviceset="R-EU_" device="R0805W" value="100K"/>
+<part name="C16" library="rcl" deviceset="C-EU" device="C0805" value="1n"/>
 <part name="R44" library="rcl" deviceset="R-EU_" device="R0805W" value="1K"/>
 <part name="SUPPLY5" library="supply2" deviceset="AGND" device=""/>
 <part name="SUPPLY9" library="supply2" deviceset="AGND" device=""/>
 <part name="SUPPLY14" library="supply2" deviceset="AGND" device=""/>
 <part name="SUPPLY15" library="supply2" deviceset="AGND" device=""/>
-<part name="C1" library="rcl" deviceset="C-EU" device="C0805" value="100n"/>
-<part name="C2" library="rcl" deviceset="C-EU" device="C0805" value="100n"/>
+<part name="C1" library="rcl" deviceset="C-EU" device="C0805" value="10u"/>
+<part name="C2" library="rcl" deviceset="C-EU" device="C0805" value="10u"/>
 <part name="SUPPLY1" library="supply2" deviceset="AGND" device=""/>
 <part name="IC6" library="burr-brown" deviceset="OPA2134" device="P"/>
-<part name="R1" library="rcl" deviceset="R-EU_" device="R0805W" value="47K"/>
-<part name="C3" library="rcl" deviceset="C-EU" device="C0805" value="47p"/>
+<part name="R1" library="rcl" deviceset="R-EU_" device="R0805W" value="100K"/>
+<part name="C3" library="rcl" deviceset="C-EU" device="C0805" value="1n"/>
 <part name="R2" library="rcl" deviceset="R-EU_" device="R0805W" value="1K"/>
-<part name="R3" library="rcl" deviceset="R-EU_" device="R0805W" value="47K"/>
-<part name="C4" library="rcl" deviceset="C-EU" device="C0805" value="47p"/>
+<part name="R3" library="rcl" deviceset="R-EU_" device="R0805W" value="100K"/>
+<part name="C4" library="rcl" deviceset="C-EU" device="C0805" value="1n"/>
 <part name="R4" library="rcl" deviceset="R-EU_" device="R0805W" value="1K"/>
 <part name="SUPPLY2" library="supply2" deviceset="AGND" device=""/>
 <part name="SUPPLY3" library="supply2" deviceset="AGND" device=""/>
 <part name="SUPPLY4" library="supply2" deviceset="AGND" device=""/>
 <part name="SUPPLY6" library="supply2" deviceset="AGND" device=""/>
-<part name="C5" library="rcl" deviceset="C-EU" device="C0805" value="100n"/>
-<part name="C6" library="rcl" deviceset="C-EU" device="C0805" value="100n"/>
+<part name="C5" library="rcl" deviceset="C-EU" device="C0805" value="10u"/>
+<part name="C6" library="rcl" deviceset="C-EU" device="C0805" value="10u"/>
 <part name="SUPPLY7" library="supply2" deviceset="AGND" device=""/>
 <part name="IC8" library="burr-brown" deviceset="OPA2134" device="P"/>
-<part name="R5" library="rcl" deviceset="R-EU_" device="R0805W" value="47K"/>
-<part name="C7" library="rcl" deviceset="C-EU" device="C0805" value="47p"/>
+<part name="R5" library="rcl" deviceset="R-EU_" device="R0805W" value="100K"/>
+<part name="C7" library="rcl" deviceset="C-EU" device="C0805" value="1n"/>
 <part name="R6" library="rcl" deviceset="R-EU_" device="R0805W" value="1K"/>
-<part name="R7" library="rcl" deviceset="R-EU_" device="R0805W" value="47K"/>
-<part name="C8" library="rcl" deviceset="C-EU" device="C0805" value="47p"/>
+<part name="R7" library="rcl" deviceset="R-EU_" device="R0805W" value="100K"/>
+<part name="C8" library="rcl" deviceset="C-EU" device="C0805" value="1n"/>
 <part name="R8" library="rcl" deviceset="R-EU_" device="R0805W" value="1K"/>
 <part name="SUPPLY8" library="supply2" deviceset="AGND" device=""/>
 <part name="SUPPLY10" library="supply2" deviceset="AGND" device=""/>
 <part name="SUPPLY11" library="supply2" deviceset="AGND" device=""/>
 <part name="SUPPLY12" library="supply2" deviceset="AGND" device=""/>
-<part name="C9" library="rcl" deviceset="C-EU" device="C0805" value="100n"/>
-<part name="C10" library="rcl" deviceset="C-EU" device="C0805" value="100n"/>
+<part name="C9" library="rcl" deviceset="C-EU" device="C0805" value="10u"/>
+<part name="C10" library="rcl" deviceset="C-EU" device="C0805" value="10u"/>
 <part name="SUPPLY13" library="supply2" deviceset="AGND" device=""/>
 <part name="IC9" library="burr-brown" deviceset="OPA2134" device="P"/>
-<part name="R9" library="rcl" deviceset="R-EU_" device="R0805W" value="47K"/>
-<part name="C11" library="rcl" deviceset="C-EU" device="C0805" value="47p"/>
+<part name="R9" library="rcl" deviceset="R-EU_" device="R0805W" value="100K"/>
+<part name="C11" library="rcl" deviceset="C-EU" device="C0805" value="1n"/>
 <part name="R10" library="rcl" deviceset="R-EU_" device="R0805W" value="1K"/>
-<part name="R11" library="rcl" deviceset="R-EU_" device="R0805W" value="47K"/>
-<part name="C12" library="rcl" deviceset="C-EU" device="C0805" value="47p"/>
+<part name="R11" library="rcl" deviceset="R-EU_" device="R0805W" value="100K"/>
+<part name="C12" library="rcl" deviceset="C-EU" device="C0805" value="1n"/>
 <part name="R12" library="rcl" deviceset="R-EU_" device="R0805W" value="1K"/>
 <part name="SUPPLY16" library="supply2" deviceset="AGND" device=""/>
 <part name="SUPPLY17" library="supply2" deviceset="AGND" device=""/>
 <part name="SUPPLY18" library="supply2" deviceset="AGND" device=""/>
 <part name="SUPPLY19" library="supply2" deviceset="AGND" device=""/>
-<part name="C13" library="rcl" deviceset="C-EU" device="C0805" value="100n"/>
-<part name="C14" library="rcl" deviceset="C-EU" device="C0805" value="100n"/>
+<part name="C13" library="rcl" deviceset="C-EU" device="C0805" value="10u"/>
+<part name="C14" library="rcl" deviceset="C-EU" device="C0805" value="10u"/>
 <part name="SUPPLY20" library="supply2" deviceset="AGND" device=""/>
-<part name="R13" library="rcl" deviceset="R-EU_" device="R0805W" value="47K"/>
-<part name="C17" library="rcl" deviceset="C-EU" device="C0805" value="47p"/>
+<part name="R13" library="rcl" deviceset="R-EU_" device="R0805W" value="100K"/>
+<part name="C17" library="rcl" deviceset="C-EU" device="C0805" value="1n"/>
 <part name="R14" library="rcl" deviceset="R-EU_" device="R0805W" value="1K"/>
-<part name="R15" library="rcl" deviceset="R-EU_" device="R0805W" value="47K"/>
-<part name="C18" library="rcl" deviceset="C-EU" device="C0805" value="47p"/>
+<part name="R15" library="rcl" deviceset="R-EU_" device="R0805W" value="100K"/>
+<part name="C18" library="rcl" deviceset="C-EU" device="C0805" value="1n"/>
 <part name="R16" library="rcl" deviceset="R-EU_" device="R0805W" value="1K"/>
 <part name="SUPPLY21" library="supply2" deviceset="AGND" device=""/>
 <part name="SUPPLY22" library="supply2" deviceset="AGND" device=""/>
 <part name="SUPPLY23" library="supply2" deviceset="AGND" device=""/>
 <part name="SUPPLY24" library="supply2" deviceset="AGND" device=""/>
-<part name="C19" library="rcl" deviceset="C-EU" device="C0805" value="100n"/>
-<part name="C20" library="rcl" deviceset="C-EU" device="C0805" value="100n"/>
+<part name="C19" library="rcl" deviceset="C-EU" device="C0805" value="10u"/>
+<part name="C20" library="rcl" deviceset="C-EU" device="C0805" value="10u"/>
 <part name="SUPPLY25" library="supply2" deviceset="AGND" device=""/>
 <part name="IC11" library="burr-brown" deviceset="OPA2134" device="P"/>
-<part name="R17" library="rcl" deviceset="R-EU_" device="R0805W" value="22K"/>
+<part name="R17" library="rcl" deviceset="R-EU_" device="R0805W" value="5K"/>
 <part name="SUPPLY26" library="supply2" deviceset="AGND" device=""/>
-<part name="R18" library="rcl" deviceset="R-EU_" device="R0805W" value="47K"/>
-<part name="R19" library="rcl" deviceset="R-EU_" device="R0805W" value="47K"/>
-<part name="C21" library="rcl" deviceset="C-EU" device="C0805" value="100n"/>
-<part name="C22" library="rcl" deviceset="C-EU" device="C0805" value="100n"/>
-<part name="C24" library="rcl" deviceset="C-EU" device="C0805" value="100n"/>
-<part name="R20" library="rcl" deviceset="R-EU_" device="R0805W" value="47K"/>
-<part name="R21" library="rcl" deviceset="R-EU_" device="R0805W" value="47K"/>
-<part name="R23" library="rcl" deviceset="R-EU_" device="R0805W" value="22K"/>
+<part name="R18" library="rcl" deviceset="R-EU_" device="R0805W" value="10K"/>
+<part name="R19" library="rcl" deviceset="R-EU_" device="R0805W" value="10K"/>
+<part name="R20" library="rcl" deviceset="R-EU_" device="R0805W" value="10K"/>
+<part name="R21" library="rcl" deviceset="R-EU_" device="R0805W" value="10K"/>
+<part name="R23" library="rcl" deviceset="R-EU_" device="R0805W" value="5K"/>
 <part name="SUPPLY27" library="supply2" deviceset="AGND" device=""/>
-<part name="R24" library="rcl" deviceset="R-EU_" device="R0805W" value="47K"/>
-<part name="C25" library="rcl" deviceset="C-EU" device="C0805" value="100n"/>
-<part name="C26" library="rcl" deviceset="C-EU" device="C0805" value="100n"/>
-<part name="C28" library="rcl" deviceset="C-EU" device="C0805" value="100n"/>
-<part name="R25" library="rcl" deviceset="R-EU_" device="R0805W" value="47K"/>
-<part name="R26" library="rcl" deviceset="R-EU_" device="R0805W" value="47K"/>
-<part name="R28" library="rcl" deviceset="R-EU_" device="R0805W" value="47K"/>
+<part name="R24" library="rcl" deviceset="R-EU_" device="R0805W" value="10K"/>
+<part name="R25" library="rcl" deviceset="R-EU_" device="R0805W" value="10K"/>
+<part name="R26" library="rcl" deviceset="R-EU_" device="R0805W" value="10K"/>
+<part name="R28" library="rcl" deviceset="R-EU_" device="R0805W" value="10K"/>
 <part name="IC12" library="burr-brown" deviceset="OPA2134" device="P"/>
-<part name="R29" library="rcl" deviceset="R-EU_" device="R0805W" value="22K"/>
+<part name="R29" library="rcl" deviceset="R-EU_" device="R0805W" value="5K"/>
 <part name="SUPPLY28" library="supply2" deviceset="AGND" device=""/>
-<part name="R30" library="rcl" deviceset="R-EU_" device="R0805W" value="47K"/>
-<part name="C32" library="rcl" deviceset="C-EU" device="C0805" value="100n"/>
-<part name="R32" library="rcl" deviceset="R-EU_" device="R0805W" value="47K"/>
-<part name="R35" library="rcl" deviceset="R-EU_" device="R0805W" value="22K"/>
+<part name="R30" library="rcl" deviceset="R-EU_" device="R0805W" value="10K"/>
+<part name="R32" library="rcl" deviceset="R-EU_" device="R0805W" value="10K"/>
+<part name="R35" library="rcl" deviceset="R-EU_" device="R0805W" value="5K"/>
 <part name="SUPPLY29" library="supply2" deviceset="AGND" device=""/>
-<part name="R36" library="rcl" deviceset="R-EU_" device="R0805W" value="47K"/>
-<part name="C33" library="rcl" deviceset="C-EU" device="C0805" value="100n"/>
-<part name="R40" library="rcl" deviceset="R-EU_" device="R0805W" value="47K"/>
+<part name="R36" library="rcl" deviceset="R-EU_" device="R0805W" value="10K"/>
+<part name="R40" library="rcl" deviceset="R-EU_" device="R0805W" value="10K"/>
 <part name="C29" library="rcl" deviceset="C-EU" device="C0805" value="100n"/>
 <part name="C30" library="rcl" deviceset="C-EU" device="C0805" value="100n"/>
 <part name="C31" library="rcl" deviceset="C-EU" device="C0805" value="100n"/>
@@ -17849,10 +17841,8 @@ Source: http://www.irf.com/product-info/datasheets/data/irfr5305pbf.pdf</descrip
 <part name="U$2" library="Simplex-rlc" deviceset="INDUCTOR" device="" value="bead"/>
 <part name="U$3" library="Simplex-Fuses" deviceset="RESETTABLE" device="" value="RESETTABLE"/>
 <part name="U$4" library="Simplex-Fuses" deviceset="RESETTABLE" device=""/>
-<part name="C79" library="rcl" deviceset="C-EU" device="C0805" value="100n"/>
-<part name="R39" library="rcl" deviceset="R-EU_" device="R0805W" value="47K"/>
-<part name="C80" library="rcl" deviceset="C-EU" device="C0805" value="100n"/>
-<part name="R45" library="rcl" deviceset="R-EU_" device="R0805W" value="47K"/>
+<part name="R39" library="rcl" deviceset="R-EU_" device="R0805W" value="10K"/>
+<part name="R45" library="rcl" deviceset="R-EU_" device="R0805W" value="10K"/>
 <part name="C45" library="rcl" deviceset="C-EU" device="C0805" value="100n"/>
 <part name="C50" library="rcl" deviceset="C-EU" device="C0805" value="100n"/>
 <part name="C81" library="rcl" deviceset="C-EU" device="C0805" value="100n"/>
@@ -17944,6 +17934,26 @@ Source: http://www.irf.com/product-info/datasheets/data/irfr5305pbf.pdf</descrip
 <part name="C90" library="rcl" deviceset="CPOL-EU" device="153CLV-0405" value="10u"/>
 <part name="C91" library="rcl" deviceset="CPOL-EU" device="153CLV-0405" value="10u"/>
 <part name="C87" library="rcl" deviceset="CPOL-EU" device="153CLV-0405" value="10u"/>
+<part name="R52" library="rcl" deviceset="R-EU_" device="R0805W" value="100K"/>
+<part name="SUPPLY65" library="supply2" deviceset="AGND" device=""/>
+<part name="R53" library="rcl" deviceset="R-EU_" device="R0805W" value="100K"/>
+<part name="SUPPLY66" library="supply2" deviceset="AGND" device=""/>
+<part name="R54" library="rcl" deviceset="R-EU_" device="R0805W" value="100K"/>
+<part name="SUPPLY67" library="supply2" deviceset="AGND" device=""/>
+<part name="R55" library="rcl" deviceset="R-EU_" device="R0805W" value="100K"/>
+<part name="SUPPLY68" library="supply2" deviceset="AGND" device=""/>
+<part name="R56" library="rcl" deviceset="R-EU_" device="R0805W" value="100K"/>
+<part name="SUPPLY69" library="supply2" deviceset="AGND" device=""/>
+<part name="R57" library="rcl" deviceset="R-EU_" device="R0805W" value="100K"/>
+<part name="SUPPLY70" library="supply2" deviceset="AGND" device=""/>
+<part name="R58" library="rcl" deviceset="R-EU_" device="R0805W" value="100K"/>
+<part name="SUPPLY71" library="supply2" deviceset="AGND" device=""/>
+<part name="R59" library="rcl" deviceset="R-EU_" device="R0805W" value="100K"/>
+<part name="SUPPLY72" library="supply2" deviceset="AGND" device=""/>
+<part name="R60" library="rcl" deviceset="R-EU_" device="R0805W" value="100K"/>
+<part name="SUPPLY73" library="supply2" deviceset="AGND" device=""/>
+<part name="R61" library="rcl" deviceset="R-EU_" device="R0805W" value="100K"/>
+<part name="SUPPLY74" library="supply2" deviceset="AGND" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -17954,6 +17964,7 @@ Source: http://www.irf.com/product-info/datasheets/data/irfr5305pbf.pdf</descrip
 <text x="-2.54" y="154.94" size="1.778" layer="97">spdif</text>
 <text x="-2.54" y="78.74" size="1.778" layer="97">front to rear pan</text>
 <text x="-2.54" y="363.22" size="1.778" layer="97">front</text>
+<text x="127" y="345.44" size="1.778" layer="97">1.6Hz - 160kHz filter</text>
 </plain>
 <instances>
 <instance part="FRAME1" gate="G$1" x="294.64" y="15.24"/>
@@ -18042,17 +18053,11 @@ Source: http://www.irf.com/product-info/datasheets/data/irfr5305pbf.pdf</descrip
 <instance part="SUPPLY26" gate="G$1" x="251.46" y="312.42"/>
 <instance part="R18" gate="G$1" x="264.16" y="350.52" rot="R180"/>
 <instance part="R19" gate="G$1" x="233.68" y="332.74" rot="R180"/>
-<instance part="C21" gate="G$1" x="223.52" y="332.74" rot="R270"/>
-<instance part="C22" gate="G$1" x="223.52" y="345.44" rot="R270"/>
-<instance part="C24" gate="G$1" x="223.52" y="320.04" rot="R270"/>
 <instance part="R20" gate="G$1" x="233.68" y="320.04" rot="R180"/>
 <instance part="R21" gate="G$1" x="233.68" y="345.44" rot="R180"/>
 <instance part="R23" gate="G$1" x="251.46" y="248.92" rot="R90"/>
 <instance part="SUPPLY27" gate="G$1" x="251.46" y="238.76"/>
 <instance part="R24" gate="G$1" x="233.68" y="259.08" rot="R180"/>
-<instance part="C25" gate="G$1" x="223.52" y="259.08" rot="R270"/>
-<instance part="C26" gate="G$1" x="223.52" y="271.78" rot="R270"/>
-<instance part="C28" gate="G$1" x="223.52" y="246.38" rot="R270"/>
 <instance part="R25" gate="G$1" x="233.68" y="246.38" rot="R180"/>
 <instance part="R26" gate="G$1" x="233.68" y="271.78" rot="R180"/>
 <instance part="R28" gate="G$1" x="264.16" y="276.86" rot="R180"/>
@@ -18061,12 +18066,10 @@ Source: http://www.irf.com/product-info/datasheets/data/irfr5305pbf.pdf</descrip
 <instance part="R29" gate="G$1" x="355.6" y="325.12" rot="R90"/>
 <instance part="SUPPLY28" gate="G$1" x="355.6" y="314.96"/>
 <instance part="R30" gate="G$1" x="368.3" y="353.06" rot="R180"/>
-<instance part="C32" gate="G$1" x="327.66" y="335.28" rot="R270"/>
 <instance part="R32" gate="G$1" x="337.82" y="335.28" rot="R180"/>
 <instance part="R35" gate="G$1" x="355.6" y="251.46" rot="R90"/>
 <instance part="SUPPLY29" gate="G$1" x="355.6" y="241.3"/>
 <instance part="R36" gate="G$1" x="337.82" y="261.62" rot="R180"/>
-<instance part="C33" gate="G$1" x="327.66" y="261.62" rot="R270"/>
 <instance part="R40" gate="G$1" x="368.3" y="279.4" rot="R180"/>
 <instance part="C29" gate="G$1" x="289.56" y="185.42"/>
 <instance part="C30" gate="G$1" x="297.18" y="185.42"/>
@@ -18101,9 +18104,7 @@ Source: http://www.irf.com/product-info/datasheets/data/irfr5305pbf.pdf</descrip
 <instance part="U$2" gate="G$1" x="345.44" y="162.56" rot="R270"/>
 <instance part="U$3" gate="G$1" x="358.14" y="190.5"/>
 <instance part="U$4" gate="G$1" x="358.14" y="162.56"/>
-<instance part="C79" gate="G$1" x="327.66" y="347.98" rot="R270"/>
 <instance part="R39" gate="G$1" x="337.82" y="347.98" rot="R180"/>
-<instance part="C80" gate="G$1" x="327.66" y="274.32" rot="R270"/>
 <instance part="R45" gate="G$1" x="337.82" y="274.32" rot="R180"/>
 <instance part="C45" gate="G$1" x="304.8" y="129.54"/>
 <instance part="C50" gate="G$1" x="312.42" y="129.54"/>
@@ -18157,6 +18158,26 @@ Source: http://www.irf.com/product-info/datasheets/data/irfr5305pbf.pdf</descrip
 <instance part="C90" gate="G$1" x="289.56" y="129.54"/>
 <instance part="C91" gate="G$1" x="297.18" y="129.54"/>
 <instance part="C87" gate="G$1" x="312.42" y="101.6"/>
+<instance part="R52" gate="G$1" x="154.94" y="261.62" rot="R90"/>
+<instance part="SUPPLY65" gate="G$1" x="154.94" y="251.46"/>
+<instance part="R53" gate="G$1" x="154.94" y="236.22" rot="R90"/>
+<instance part="SUPPLY66" gate="G$1" x="154.94" y="226.06"/>
+<instance part="R54" gate="G$1" x="154.94" y="190.5" rot="R90"/>
+<instance part="SUPPLY67" gate="G$1" x="154.94" y="180.34"/>
+<instance part="R55" gate="G$1" x="154.94" y="165.1" rot="R90"/>
+<instance part="SUPPLY68" gate="G$1" x="154.94" y="154.94"/>
+<instance part="R56" gate="G$1" x="154.94" y="119.38" rot="R90"/>
+<instance part="SUPPLY69" gate="G$1" x="154.94" y="109.22"/>
+<instance part="R57" gate="G$1" x="154.94" y="93.98" rot="R90"/>
+<instance part="SUPPLY70" gate="G$1" x="154.94" y="83.82"/>
+<instance part="R58" gate="G$1" x="132.08" y="48.26" rot="R90"/>
+<instance part="SUPPLY71" gate="G$1" x="132.08" y="38.1"/>
+<instance part="R59" gate="G$1" x="132.08" y="20.32" rot="R90"/>
+<instance part="SUPPLY72" gate="G$1" x="132.08" y="10.16"/>
+<instance part="R60" gate="G$1" x="154.94" y="330.2" rot="R90"/>
+<instance part="SUPPLY73" gate="G$1" x="154.94" y="320.04"/>
+<instance part="R61" gate="G$1" x="154.94" y="304.8" rot="R90"/>
+<instance part="SUPPLY74" gate="G$1" x="154.94" y="294.64"/>
 </instances>
 <busses>
 </busses>
@@ -18168,9 +18189,9 @@ Source: http://www.irf.com/product-info/datasheets/data/irfr5305pbf.pdf</descrip
 <pinref part="IC5" gate="PGA2311" pin="VOUTL"/>
 </segment>
 <segment>
-<pinref part="C79" gate="G$1" pin="2"/>
-<wire x1="322.58" y1="347.98" x2="314.96" y2="347.98" width="0.1524" layer="91"/>
-<label x="304.8" y="347.98" size="1.778" layer="95"/>
+<label x="312.42" y="347.98" size="1.778" layer="95"/>
+<pinref part="R39" gate="G$1" pin="2"/>
+<wire x1="320.04" y1="347.98" x2="332.74" y2="347.98" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$5" class="0">
@@ -18194,9 +18215,9 @@ Source: http://www.irf.com/product-info/datasheets/data/irfr5305pbf.pdf</descrip
 <pinref part="IC5" gate="PGA2311" pin="VOUTR"/>
 </segment>
 <segment>
-<pinref part="C80" gate="G$1" pin="2"/>
-<wire x1="322.58" y1="274.32" x2="314.96" y2="274.32" width="0.1524" layer="91"/>
-<label x="304.8" y="289.56" size="1.778" layer="95"/>
+<label x="312.42" y="274.32" size="1.778" layer="95"/>
+<pinref part="R45" gate="G$1" pin="2"/>
+<wire x1="320.04" y1="274.32" x2="332.74" y2="274.32" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$17" class="0">
@@ -18568,6 +18589,56 @@ Source: http://www.irf.com/product-info/datasheets/data/irfr5305pbf.pdf</descrip
 <pinref part="X2" gate="G$1" pin="1"/>
 <wire x1="386.08" y1="152.4" x2="396.24" y2="152.4" width="0.1524" layer="91"/>
 </segment>
+<segment>
+<pinref part="R52" gate="G$1" pin="1"/>
+<wire x1="154.94" y1="256.54" x2="154.94" y2="254" width="0.1524" layer="91"/>
+<pinref part="SUPPLY65" gate="G$1" pin="AGND"/>
+</segment>
+<segment>
+<pinref part="R53" gate="G$1" pin="1"/>
+<wire x1="154.94" y1="231.14" x2="154.94" y2="228.6" width="0.1524" layer="91"/>
+<pinref part="SUPPLY66" gate="G$1" pin="AGND"/>
+</segment>
+<segment>
+<pinref part="R54" gate="G$1" pin="1"/>
+<wire x1="154.94" y1="185.42" x2="154.94" y2="182.88" width="0.1524" layer="91"/>
+<pinref part="SUPPLY67" gate="G$1" pin="AGND"/>
+</segment>
+<segment>
+<pinref part="R55" gate="G$1" pin="1"/>
+<wire x1="154.94" y1="160.02" x2="154.94" y2="157.48" width="0.1524" layer="91"/>
+<pinref part="SUPPLY68" gate="G$1" pin="AGND"/>
+</segment>
+<segment>
+<pinref part="R56" gate="G$1" pin="1"/>
+<wire x1="154.94" y1="114.3" x2="154.94" y2="111.76" width="0.1524" layer="91"/>
+<pinref part="SUPPLY69" gate="G$1" pin="AGND"/>
+</segment>
+<segment>
+<pinref part="R57" gate="G$1" pin="1"/>
+<wire x1="154.94" y1="88.9" x2="154.94" y2="86.36" width="0.1524" layer="91"/>
+<pinref part="SUPPLY70" gate="G$1" pin="AGND"/>
+</segment>
+<segment>
+<pinref part="R58" gate="G$1" pin="1"/>
+<wire x1="132.08" y1="43.18" x2="132.08" y2="40.64" width="0.1524" layer="91"/>
+<pinref part="SUPPLY71" gate="G$1" pin="AGND"/>
+</segment>
+<segment>
+<pinref part="R59" gate="G$1" pin="1"/>
+<wire x1="132.08" y1="15.24" x2="132.08" y2="12.7" width="0.1524" layer="91"/>
+<pinref part="SUPPLY72" gate="G$1" pin="AGND"/>
+</segment>
+<segment>
+<pinref part="R60" gate="G$1" pin="1"/>
+<wire x1="154.94" y1="325.12" x2="154.94" y2="322.58" width="0.1524" layer="91"/>
+<pinref part="SUPPLY73" gate="G$1" pin="AGND"/>
+</segment>
+<segment>
+<pinref part="R61" gate="G$1" pin="1"/>
+<wire x1="154.94" y1="299.72" x2="154.94" y2="297.18" width="0.1524" layer="91"/>
+<pinref part="SUPPLY74" gate="G$1" pin="AGND"/>
+</segment>
 </net>
 <net name="N$1" class="0">
 <segment>
@@ -18586,15 +18657,23 @@ Source: http://www.irf.com/product-info/datasheets/data/irfr5305pbf.pdf</descrip
 <net name="FRONT_L" class="0">
 <segment>
 <pinref part="C1" gate="G$1" pin="1"/>
-<wire x1="149.86" y1="337.82" x2="152.4" y2="337.82" width="0.1524" layer="91"/>
-<label x="152.4" y="337.82" size="1.778" layer="95"/>
+<wire x1="149.86" y1="337.82" x2="154.94" y2="337.82" width="0.1524" layer="91"/>
+<label x="157.48" y="337.82" size="1.778" layer="95"/>
+<pinref part="R60" gate="G$1" pin="2"/>
+<wire x1="154.94" y1="337.82" x2="157.48" y2="337.82" width="0.1524" layer="91"/>
+<wire x1="154.94" y1="335.28" x2="154.94" y2="337.82" width="0.1524" layer="91"/>
+<junction x="154.94" y="337.82"/>
 </segment>
 </net>
 <net name="FRONT_R" class="0">
 <segment>
 <pinref part="C2" gate="G$1" pin="1"/>
-<wire x1="149.86" y1="312.42" x2="152.4" y2="312.42" width="0.1524" layer="91"/>
-<label x="152.4" y="312.42" size="1.778" layer="95"/>
+<wire x1="149.86" y1="312.42" x2="154.94" y2="312.42" width="0.1524" layer="91"/>
+<label x="157.48" y="312.42" size="1.778" layer="95"/>
+<pinref part="R61" gate="G$1" pin="2"/>
+<wire x1="154.94" y1="312.42" x2="157.48" y2="312.42" width="0.1524" layer="91"/>
+<wire x1="154.94" y1="309.88" x2="154.94" y2="312.42" width="0.1524" layer="91"/>
+<junction x="154.94" y="312.42"/>
 </segment>
 </net>
 <net name="N$4" class="0">
@@ -18672,15 +18751,23 @@ Source: http://www.irf.com/product-info/datasheets/data/irfr5305pbf.pdf</descrip
 <net name="REAR_L" class="0">
 <segment>
 <pinref part="C5" gate="G$1" pin="1"/>
-<wire x1="149.86" y1="269.24" x2="152.4" y2="269.24" width="0.1524" layer="91"/>
-<label x="152.4" y="269.24" size="1.778" layer="95"/>
+<wire x1="149.86" y1="269.24" x2="154.94" y2="269.24" width="0.1524" layer="91"/>
+<label x="157.48" y="269.24" size="1.778" layer="95"/>
+<pinref part="R52" gate="G$1" pin="2"/>
+<wire x1="154.94" y1="269.24" x2="157.48" y2="269.24" width="0.1524" layer="91"/>
+<wire x1="154.94" y1="266.7" x2="154.94" y2="269.24" width="0.1524" layer="91"/>
+<junction x="154.94" y="269.24"/>
 </segment>
 </net>
 <net name="REAR_R" class="0">
 <segment>
 <pinref part="C6" gate="G$1" pin="1"/>
-<wire x1="149.86" y1="243.84" x2="152.4" y2="243.84" width="0.1524" layer="91"/>
-<label x="152.4" y="243.84" size="1.778" layer="95"/>
+<wire x1="149.86" y1="243.84" x2="154.94" y2="243.84" width="0.1524" layer="91"/>
+<label x="157.48" y="243.84" size="1.778" layer="95"/>
+<pinref part="R53" gate="G$1" pin="2"/>
+<wire x1="154.94" y1="243.84" x2="157.48" y2="243.84" width="0.1524" layer="91"/>
+<wire x1="154.94" y1="241.3" x2="154.94" y2="243.84" width="0.1524" layer="91"/>
+<junction x="154.94" y="243.84"/>
 </segment>
 </net>
 <net name="N$15" class="0">
@@ -18758,15 +18845,23 @@ Source: http://www.irf.com/product-info/datasheets/data/irfr5305pbf.pdf</descrip
 <net name="LINE_L" class="0">
 <segment>
 <pinref part="C9" gate="G$1" pin="1"/>
-<wire x1="149.86" y1="198.12" x2="152.4" y2="198.12" width="0.1524" layer="91"/>
-<label x="152.4" y="198.12" size="1.778" layer="95"/>
+<wire x1="149.86" y1="198.12" x2="154.94" y2="198.12" width="0.1524" layer="91"/>
+<label x="157.48" y="198.12" size="1.778" layer="95"/>
+<pinref part="R54" gate="G$1" pin="2"/>
+<wire x1="154.94" y1="198.12" x2="157.48" y2="198.12" width="0.1524" layer="91"/>
+<wire x1="154.94" y1="195.58" x2="154.94" y2="198.12" width="0.1524" layer="91"/>
+<junction x="154.94" y="198.12"/>
 </segment>
 </net>
 <net name="LINE_R" class="0">
 <segment>
 <pinref part="C10" gate="G$1" pin="1"/>
-<wire x1="149.86" y1="172.72" x2="152.4" y2="172.72" width="0.1524" layer="91"/>
-<label x="152.4" y="172.72" size="1.778" layer="95"/>
+<wire x1="149.86" y1="172.72" x2="154.94" y2="172.72" width="0.1524" layer="91"/>
+<label x="157.48" y="172.72" size="1.778" layer="95"/>
+<pinref part="R55" gate="G$1" pin="2"/>
+<wire x1="154.94" y1="172.72" x2="157.48" y2="172.72" width="0.1524" layer="91"/>
+<wire x1="154.94" y1="170.18" x2="154.94" y2="172.72" width="0.1524" layer="91"/>
+<junction x="154.94" y="172.72"/>
 </segment>
 </net>
 <net name="N$19" class="0">
@@ -18844,15 +18939,23 @@ Source: http://www.irf.com/product-info/datasheets/data/irfr5305pbf.pdf</descrip
 <net name="SPDIF_L" class="0">
 <segment>
 <pinref part="C13" gate="G$1" pin="1"/>
-<wire x1="149.86" y1="127" x2="152.4" y2="127" width="0.1524" layer="91"/>
-<label x="152.4" y="127" size="1.778" layer="95"/>
+<wire x1="149.86" y1="127" x2="154.94" y2="127" width="0.1524" layer="91"/>
+<label x="157.48" y="127" size="1.778" layer="95"/>
+<pinref part="R56" gate="G$1" pin="2"/>
+<wire x1="154.94" y1="127" x2="157.48" y2="127" width="0.1524" layer="91"/>
+<wire x1="154.94" y1="124.46" x2="154.94" y2="127" width="0.1524" layer="91"/>
+<junction x="154.94" y="127"/>
 </segment>
 </net>
 <net name="SPDIF_R" class="0">
 <segment>
 <pinref part="C14" gate="G$1" pin="1"/>
-<wire x1="149.86" y1="101.6" x2="152.4" y2="101.6" width="0.1524" layer="91"/>
-<label x="152.4" y="101.6" size="1.778" layer="95"/>
+<wire x1="149.86" y1="101.6" x2="154.94" y2="101.6" width="0.1524" layer="91"/>
+<label x="157.48" y="101.6" size="1.778" layer="95"/>
+<pinref part="R57" gate="G$1" pin="2"/>
+<wire x1="154.94" y1="101.6" x2="157.48" y2="101.6" width="0.1524" layer="91"/>
+<wire x1="154.94" y1="99.06" x2="154.94" y2="101.6" width="0.1524" layer="91"/>
+<junction x="154.94" y="101.6"/>
 </segment>
 </net>
 <net name="N$36" class="0">
@@ -18942,29 +19045,12 @@ Source: http://www.irf.com/product-info/datasheets/data/irfr5305pbf.pdf</descrip
 </segment>
 <segment>
 <pinref part="C20" gate="G$1" pin="1"/>
-<wire x1="127" y1="27.94" x2="129.54" y2="27.94" width="0.1524" layer="91"/>
-<label x="129.54" y="27.94" size="1.778" layer="95"/>
-</segment>
-</net>
-<net name="N$48" class="0">
-<segment>
-<pinref part="R19" gate="G$1" pin="2"/>
-<pinref part="C21" gate="G$1" pin="1"/>
-<wire x1="228.6" y1="332.74" x2="226.06" y2="332.74" width="0.1524" layer="91"/>
-</segment>
-</net>
-<net name="N$49" class="0">
-<segment>
-<pinref part="C24" gate="G$1" pin="1"/>
-<wire x1="226.06" y1="320.04" x2="228.6" y2="320.04" width="0.1524" layer="91"/>
-<pinref part="R20" gate="G$1" pin="2"/>
-</segment>
-</net>
-<net name="N$50" class="0">
-<segment>
-<pinref part="C22" gate="G$1" pin="1"/>
-<wire x1="226.06" y1="345.44" x2="228.6" y2="345.44" width="0.1524" layer="91"/>
-<pinref part="R21" gate="G$1" pin="2"/>
+<wire x1="127" y1="27.94" x2="132.08" y2="27.94" width="0.1524" layer="91"/>
+<label x="139.7" y="27.94" size="1.778" layer="95"/>
+<pinref part="R59" gate="G$1" pin="2"/>
+<wire x1="132.08" y1="27.94" x2="139.7" y2="27.94" width="0.1524" layer="91"/>
+<wire x1="132.08" y1="25.4" x2="132.08" y2="27.94" width="0.1524" layer="91"/>
+<junction x="132.08" y="27.94"/>
 </segment>
 </net>
 <net name="V_FRONT_L" class="0">
@@ -18974,9 +19060,9 @@ Source: http://www.irf.com/product-info/datasheets/data/irfr5305pbf.pdf</descrip
 <label x="68.58" y="345.44" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="C24" gate="G$1" pin="2"/>
-<wire x1="218.44" y1="320.04" x2="210.82" y2="320.04" width="0.1524" layer="91"/>
-<label x="203.2" y="320.04" size="1.778" layer="95"/>
+<label x="213.36" y="320.04" size="1.778" layer="95"/>
+<pinref part="R20" gate="G$1" pin="2"/>
+<wire x1="220.98" y1="320.04" x2="228.6" y2="320.04" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="V_FRONT_R" class="0">
@@ -18986,9 +19072,9 @@ Source: http://www.irf.com/product-info/datasheets/data/irfr5305pbf.pdf</descrip
 <label x="68.58" y="332.74" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="C28" gate="G$1" pin="2"/>
-<wire x1="218.44" y1="246.38" x2="210.82" y2="246.38" width="0.1524" layer="91"/>
-<label x="203.2" y="246.38" size="1.778" layer="95"/>
+<label x="213.36" y="246.38" size="1.778" layer="95"/>
+<pinref part="R25" gate="G$1" pin="2"/>
+<wire x1="220.98" y1="246.38" x2="228.6" y2="246.38" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="V_REAR_L" class="0">
@@ -18998,9 +19084,9 @@ Source: http://www.irf.com/product-info/datasheets/data/irfr5305pbf.pdf</descrip
 <pinref part="IC2" gate="PGA2311" pin="VOUTL"/>
 </segment>
 <segment>
-<pinref part="C32" gate="G$1" pin="2"/>
-<wire x1="322.58" y1="335.28" x2="314.96" y2="335.28" width="0.1524" layer="91"/>
-<label x="307.34" y="335.28" size="1.778" layer="95"/>
+<label x="312.42" y="335.28" size="1.778" layer="95"/>
+<pinref part="R32" gate="G$1" pin="2"/>
+<wire x1="320.04" y1="335.28" x2="332.74" y2="335.28" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="V_REAR_R" class="0">
@@ -19010,9 +19096,9 @@ Source: http://www.irf.com/product-info/datasheets/data/irfr5305pbf.pdf</descrip
 <pinref part="IC2" gate="PGA2311" pin="VOUTR"/>
 </segment>
 <segment>
-<pinref part="C33" gate="G$1" pin="2"/>
-<wire x1="322.58" y1="261.62" x2="314.96" y2="261.62" width="0.1524" layer="91"/>
-<label x="307.34" y="276.86" size="1.778" layer="95"/>
+<label x="312.42" y="261.62" size="1.778" layer="95"/>
+<pinref part="R36" gate="G$1" pin="2"/>
+<wire x1="320.04" y1="261.62" x2="332.74" y2="261.62" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="V_LINE_L" class="0">
@@ -19022,9 +19108,9 @@ Source: http://www.irf.com/product-info/datasheets/data/irfr5305pbf.pdf</descrip
 <pinref part="IC3" gate="PGA2311" pin="VOUTL"/>
 </segment>
 <segment>
-<pinref part="C22" gate="G$1" pin="2"/>
-<wire x1="218.44" y1="345.44" x2="210.82" y2="345.44" width="0.1524" layer="91"/>
-<label x="203.2" y="345.44" size="1.778" layer="95"/>
+<label x="213.36" y="345.44" size="1.778" layer="95"/>
+<pinref part="R21" gate="G$1" pin="2"/>
+<wire x1="220.98" y1="345.44" x2="228.6" y2="345.44" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="V_LINE_R" class="0">
@@ -19034,9 +19120,9 @@ Source: http://www.irf.com/product-info/datasheets/data/irfr5305pbf.pdf</descrip
 <pinref part="IC3" gate="PGA2311" pin="VOUTR"/>
 </segment>
 <segment>
-<pinref part="C26" gate="G$1" pin="2"/>
-<wire x1="218.44" y1="271.78" x2="210.82" y2="271.78" width="0.1524" layer="91"/>
-<label x="203.2" y="271.78" size="1.778" layer="95"/>
+<label x="213.36" y="271.78" size="1.778" layer="95"/>
+<pinref part="R26" gate="G$1" pin="2"/>
+<wire x1="220.98" y1="271.78" x2="228.6" y2="271.78" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="V_SPDIF_L" class="0">
@@ -19046,9 +19132,9 @@ Source: http://www.irf.com/product-info/datasheets/data/irfr5305pbf.pdf</descrip
 <pinref part="IC4" gate="PGA2311" pin="VOUTL"/>
 </segment>
 <segment>
-<pinref part="C21" gate="G$1" pin="2"/>
-<wire x1="218.44" y1="332.74" x2="210.82" y2="332.74" width="0.1524" layer="91"/>
-<label x="203.2" y="332.74" size="1.778" layer="95"/>
+<label x="213.36" y="332.74" size="1.778" layer="95"/>
+<pinref part="R19" gate="G$1" pin="2"/>
+<wire x1="220.98" y1="332.74" x2="228.6" y2="332.74" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="V_SPDIF_R" class="0">
@@ -19058,9 +19144,9 @@ Source: http://www.irf.com/product-info/datasheets/data/irfr5305pbf.pdf</descrip
 <pinref part="IC4" gate="PGA2311" pin="VOUTR"/>
 </segment>
 <segment>
-<pinref part="C25" gate="G$1" pin="2"/>
-<wire x1="218.44" y1="259.08" x2="210.82" y2="259.08" width="0.1524" layer="91"/>
-<label x="203.2" y="259.08" size="1.778" layer="95"/>
+<label x="213.36" y="259.08" size="1.778" layer="95"/>
+<pinref part="R24" gate="G$1" pin="2"/>
+<wire x1="220.98" y1="259.08" x2="228.6" y2="259.08" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$52" class="0">
@@ -19091,27 +19177,6 @@ Source: http://www.irf.com/product-info/datasheets/data/irfr5305pbf.pdf</descrip
 <junction x="243.84" y="259.08"/>
 </segment>
 </net>
-<net name="N$54" class="0">
-<segment>
-<pinref part="R24" gate="G$1" pin="2"/>
-<pinref part="C25" gate="G$1" pin="1"/>
-<wire x1="228.6" y1="259.08" x2="226.06" y2="259.08" width="0.1524" layer="91"/>
-</segment>
-</net>
-<net name="N$55" class="0">
-<segment>
-<pinref part="C28" gate="G$1" pin="1"/>
-<wire x1="226.06" y1="246.38" x2="228.6" y2="246.38" width="0.1524" layer="91"/>
-<pinref part="R25" gate="G$1" pin="2"/>
-</segment>
-</net>
-<net name="N$56" class="0">
-<segment>
-<pinref part="C26" gate="G$1" pin="1"/>
-<wire x1="226.06" y1="271.78" x2="228.6" y2="271.78" width="0.1524" layer="91"/>
-<pinref part="R26" gate="G$1" pin="2"/>
-</segment>
-</net>
 <net name="M_FRONT_R" class="0">
 <segment>
 <pinref part="IC11" gate="B" pin="OUT"/>
@@ -19125,8 +19190,12 @@ Source: http://www.irf.com/product-info/datasheets/data/irfr5305pbf.pdf</descrip
 </segment>
 <segment>
 <pinref part="C19" gate="G$1" pin="1"/>
-<wire x1="127" y1="55.88" x2="129.54" y2="55.88" width="0.1524" layer="91"/>
-<label x="129.54" y="55.88" size="1.778" layer="95"/>
+<wire x1="127" y1="55.88" x2="132.08" y2="55.88" width="0.1524" layer="91"/>
+<label x="139.7" y="55.88" size="1.778" layer="95"/>
+<pinref part="R58" gate="G$1" pin="2"/>
+<wire x1="132.08" y1="55.88" x2="139.7" y2="55.88" width="0.1524" layer="91"/>
+<wire x1="132.08" y1="53.34" x2="132.08" y2="55.88" width="0.1524" layer="91"/>
+<junction x="132.08" y="55.88"/>
 </segment>
 </net>
 <net name="N$58" class="0">
@@ -19137,26 +19206,12 @@ Source: http://www.irf.com/product-info/datasheets/data/irfr5305pbf.pdf</descrip
 <pinref part="R29" gate="G$1" pin="2"/>
 </segment>
 </net>
-<net name="N$61" class="0">
-<segment>
-<pinref part="C32" gate="G$1" pin="1"/>
-<wire x1="330.2" y1="335.28" x2="332.74" y2="335.28" width="0.1524" layer="91"/>
-<pinref part="R32" gate="G$1" pin="2"/>
-</segment>
-</net>
 <net name="N$64" class="0">
 <segment>
 <wire x1="360.68" y1="266.7" x2="355.6" y2="266.7" width="0.1524" layer="91"/>
 <wire x1="355.6" y1="266.7" x2="355.6" y2="256.54" width="0.1524" layer="91"/>
 <pinref part="R35" gate="G$1" pin="2"/>
 <pinref part="IC12" gate="B" pin="+IN"/>
-</segment>
-</net>
-<net name="N$66" class="0">
-<segment>
-<pinref part="R36" gate="G$1" pin="2"/>
-<pinref part="C33" gate="G$1" pin="1"/>
-<wire x1="332.74" y1="261.62" x2="330.2" y2="261.62" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="M_REAR_R" class="0">
@@ -19494,20 +19549,6 @@ Source: http://www.irf.com/product-info/datasheets/data/irfr5305pbf.pdf</descrip
 <wire x1="347.98" y1="335.28" x2="350.52" y2="335.28" width="0.1524" layer="91"/>
 <wire x1="347.98" y1="347.98" x2="347.98" y2="335.28" width="0.1524" layer="91"/>
 <junction x="347.98" y="335.28"/>
-</segment>
-</net>
-<net name="N$75" class="0">
-<segment>
-<pinref part="C79" gate="G$1" pin="1"/>
-<wire x1="330.2" y1="347.98" x2="332.74" y2="347.98" width="0.1524" layer="91"/>
-<pinref part="R39" gate="G$1" pin="2"/>
-</segment>
-</net>
-<net name="N$77" class="0">
-<segment>
-<pinref part="C80" gate="G$1" pin="1"/>
-<wire x1="330.2" y1="274.32" x2="332.74" y2="274.32" width="0.1524" layer="91"/>
-<pinref part="R45" gate="G$1" pin="2"/>
 </segment>
 </net>
 <net name="N$51" class="0">
