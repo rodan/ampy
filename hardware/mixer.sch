@@ -15532,6 +15532,93 @@ In this library the device names are the same as the pin names of the symbols, t
 <pad name="4" x="3.75" y="0" drill="0.6" diameter="0.9" shape="long" rot="R90"/>
 <pad name="3" x="2.5" y="0" drill="0.6" diameter="0.9" shape="long" rot="R90"/>
 </package>
+<package name="PAK100/2500-12">
+<description>&lt;b&gt;3M (TM) Pak 100 4-Wall Header&lt;/b&gt; Straight&lt;p&gt;
+Source: 3M</description>
+<wire x1="-11.27" y1="4.2" x2="-6.963" y2="4.2" width="0.2032" layer="21"/>
+<wire x1="-6.963" y1="4.2" x2="-3.197" y2="4.2" width="0.2032" layer="21"/>
+<wire x1="-3.197" y1="4.2" x2="3.197" y2="4.2" width="0.2032" layer="21"/>
+<wire x1="3.197" y1="4.2" x2="6.963" y2="4.2" width="0.2032" layer="21"/>
+<wire x1="6.963" y1="4.2" x2="11.27" y2="4.2" width="0.2032" layer="21"/>
+<wire x1="11.27" y1="4.2" x2="11.27" y2="-4.2" width="0.2032" layer="21"/>
+<wire x1="11.27" y1="-4.2" x2="7.208" y2="-4.2" width="0.2032" layer="21"/>
+<wire x1="7.208" y1="-4.2" x2="7.208" y2="-3.9" width="0.2032" layer="21"/>
+<wire x1="7.208" y1="-3.9" x2="5.729" y2="-3.9" width="0.2032" layer="21"/>
+<wire x1="5.729" y1="-3.9" x2="5.729" y2="-4.2" width="0.2032" layer="21"/>
+<wire x1="5.729" y1="-4.2" x2="1.883" y2="-4.2" width="0.2032" layer="21"/>
+<wire x1="1.883" y1="-4.2" x2="1.883" y2="-2.65" width="0.2032" layer="21"/>
+<wire x1="1.883" y1="-2.65" x2="-1.883" y2="-2.65" width="0.2032" layer="21"/>
+<wire x1="-1.883" y1="-2.65" x2="-1.883" y2="-4.2" width="0.2032" layer="21"/>
+<wire x1="1.883" y1="-4.2" x2="-1.883" y2="-4.2" width="0.2032" layer="21"/>
+<wire x1="-1.883" y1="-4.2" x2="-11.27" y2="-4.2" width="0.2032" layer="21"/>
+<wire x1="-11.27" y1="-4.2" x2="-11.27" y2="4.2" width="0.2032" layer="21"/>
+<wire x1="-10.145" y1="3.275" x2="-6.97" y2="3.275" width="0.2032" layer="21"/>
+<wire x1="-3.195" y1="3.275" x2="3.195" y2="3.275" width="0.2032" layer="21"/>
+<wire x1="6.97" y1="3.275" x2="10.145" y2="3.275" width="0.2032" layer="21"/>
+<wire x1="10.145" y1="3.275" x2="10.145" y2="-3.275" width="0.2032" layer="21"/>
+<wire x1="10.145" y1="-3.275" x2="1.883" y2="-3.275" width="0.2032" layer="21"/>
+<wire x1="-1.883" y1="-3.275" x2="-10.145" y2="-3.275" width="0.2032" layer="21"/>
+<wire x1="-10.145" y1="-3.275" x2="-10.145" y2="3.275" width="0.2032" layer="21"/>
+<wire x1="-6.963" y1="4.2" x2="-6.963" y2="2.65" width="0.2032" layer="21"/>
+<wire x1="-6.963" y1="2.65" x2="-3.197" y2="2.65" width="0.2032" layer="21"/>
+<wire x1="-3.197" y1="2.65" x2="-3.197" y2="4.2" width="0.2032" layer="21"/>
+<wire x1="3.197" y1="4.2" x2="3.197" y2="2.65" width="0.2032" layer="21"/>
+<wire x1="3.197" y1="2.65" x2="6.963" y2="2.65" width="0.2032" layer="21"/>
+<wire x1="6.963" y1="2.65" x2="6.963" y2="4.2" width="0.2032" layer="21"/>
+<pad name="1" x="-6.35" y="-1.27" drill="1" diameter="1.4224"/>
+<pad name="2" x="-6.35" y="1.27" drill="1" diameter="1.4224"/>
+<pad name="3" x="-3.81" y="-1.27" drill="1" diameter="1.4224"/>
+<pad name="4" x="-3.81" y="1.27" drill="1" diameter="1.4224"/>
+<pad name="5" x="-1.27" y="-1.27" drill="1" diameter="1.4224"/>
+<pad name="6" x="-1.27" y="1.27" drill="1" diameter="1.4224"/>
+<pad name="7" x="1.27" y="-1.27" drill="1" diameter="1.4224"/>
+<pad name="8" x="1.27" y="1.27" drill="1" diameter="1.4224"/>
+<pad name="9" x="3.81" y="-1.27" drill="1" diameter="1.4224"/>
+<pad name="10" x="3.81" y="1.27" drill="1" diameter="1.4224"/>
+<pad name="11" x="6.35" y="-1.27" drill="1" diameter="1.4224"/>
+<pad name="12" x="6.35" y="1.27" drill="1" diameter="1.4224"/>
+<text x="-12.7" y="4.572" size="1.27" layer="25">&gt;NAME</text>
+<text x="-5.08" y="4.572" size="1.27" layer="27">&gt;VALUE</text>
+</package>
+<package name="PAK100/2500-5-12">
+<description>&lt;b&gt;3M (TM) Pak 100 4-Wall Header&lt;/b&gt; Right Angle&lt;p&gt;
+Source: 3M</description>
+<wire x1="11.27" y1="1.875" x2="11.27" y2="11.075" width="0.2032" layer="21"/>
+<wire x1="11.27" y1="11.075" x2="5.938" y2="11.075" width="0.2032" layer="21"/>
+<wire x1="4.459" y1="11.075" x2="5.938" y2="11.075" width="0.2032" layer="21"/>
+<wire x1="5.938" y1="11.075" x2="5.938" y2="10.105" width="0.2032" layer="21"/>
+<wire x1="5.938" y1="10.105" x2="4.459" y2="10.105" width="0.2032" layer="21"/>
+<wire x1="4.459" y1="10.105" x2="4.459" y2="11.075" width="0.2032" layer="21"/>
+<wire x1="4.459" y1="11.075" x2="1.883" y2="11.075" width="0.2032" layer="21"/>
+<wire x1="1.883" y1="11.075" x2="1.883" y2="4.01" width="0.2032" layer="21"/>
+<wire x1="1.883" y1="4.01" x2="-1.883" y2="4.01" width="0.2032" layer="21"/>
+<wire x1="-1.883" y1="4.01" x2="-1.883" y2="11.075" width="0.2032" layer="21"/>
+<wire x1="1.883" y1="11.075" x2="-1.883" y2="11.075" width="0.2032" layer="21"/>
+<wire x1="-1.883" y1="11.075" x2="-11.27" y2="11.075" width="0.2032" layer="21"/>
+<wire x1="-11.27" y1="11.075" x2="-11.27" y2="1.875" width="0.2032" layer="21"/>
+<wire x1="-8.996" y1="1.875" x2="-11.27" y2="1.875" width="0.2032" layer="21"/>
+<wire x1="8.979" y1="1.875" x2="-8.992" y2="1.875" width="0.2032" layer="51"/>
+<wire x1="11.27" y1="1.875" x2="8.983" y2="1.875" width="0.2032" layer="21"/>
+<pad name="1" x="-6.35" y="-1.27" drill="1" diameter="1.4224"/>
+<pad name="2" x="-6.35" y="1.27" drill="1" diameter="1.4224"/>
+<pad name="3" x="-3.81" y="-1.27" drill="1" diameter="1.4224"/>
+<pad name="4" x="-3.81" y="1.27" drill="1" diameter="1.4224"/>
+<pad name="5" x="-1.27" y="-1.27" drill="1" diameter="1.4224"/>
+<pad name="6" x="-1.27" y="1.27" drill="1" diameter="1.4224"/>
+<pad name="7" x="1.27" y="-1.27" drill="1" diameter="1.4224"/>
+<pad name="8" x="1.27" y="1.27" drill="1" diameter="1.4224"/>
+<pad name="9" x="3.81" y="-1.27" drill="1" diameter="1.4224"/>
+<pad name="10" x="3.81" y="1.27" drill="1" diameter="1.4224"/>
+<pad name="11" x="6.35" y="-1.27" drill="1" diameter="1.4224"/>
+<pad name="12" x="6.35" y="1.27" drill="1" diameter="1.4224"/>
+<text x="-12.7" y="-3.81" size="1.27" layer="25">&gt;NAME</text>
+<text x="-5.08" y="-3.81" size="1.27" layer="27">&gt;VALUE</text>
+<polygon width="0.2032" layer="21">
+<vertex x="-8.9" y="10.945"/>
+<vertex x="-6.35" y="10.945"/>
+<vertex x="-7.625" y="8.37"/>
+</polygon>
+</package>
 </packages>
 <symbols>
 <symbol name="CON6">
@@ -15563,6 +15650,17 @@ In this library the device names are the same as the pin names of the symbols, t
 <wire x1="0" y1="-2.54" x2="1.27" y2="-2.54" width="0.6096" layer="94"/>
 <pin name="4" x="-2.54" y="-5.08" visible="pad" length="short" direction="pas"/>
 <wire x1="0" y1="-5.08" x2="1.27" y2="-5.08" width="0.6096" layer="94"/>
+</symbol>
+<symbol name="PINV">
+<text x="-1.27" y="0.889" size="1.778" layer="95" rot="R180">&gt;NAME</text>
+<text x="-3.81" y="2.667" size="1.778" layer="96">&gt;VALUE</text>
+<rectangle x1="0" y1="-0.254" x2="2.794" y2="0.254" layer="94"/>
+<pin name="KL" x="5.08" y="0" visible="off" length="short" direction="pas" rot="R180"/>
+</symbol>
+<symbol name="PIN">
+<text x="-1.27" y="0.889" size="1.778" layer="95" rot="R180">&gt;NAME</text>
+<rectangle x1="0" y1="-0.254" x2="2.794" y2="0.254" layer="94"/>
+<pin name="KL" x="5.08" y="0" visible="off" length="short" direction="pas" rot="R180"/>
 </symbol>
 </symbols>
 <devicesets>
@@ -15628,6 +15726,74 @@ In this library the device names are the same as the pin names of the symbols, t
 </connects>
 <technologies>
 <technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="2512-" prefix="X">
+<description>&lt;b&gt;3M (TM) Pak 100 4-Wall Header&lt;/b&gt;&lt;p&gt;
+Source: 3M</description>
+<gates>
+<gate name="-1" symbol="PINV" x="0" y="0" addlevel="always"/>
+<gate name="-2" symbol="PIN" x="0" y="-2.54" addlevel="always"/>
+<gate name="-3" symbol="PIN" x="0" y="-5.08" addlevel="always"/>
+<gate name="-4" symbol="PIN" x="0" y="-7.62" addlevel="always"/>
+<gate name="-5" symbol="PIN" x="0" y="-10.16" addlevel="always"/>
+<gate name="-6" symbol="PIN" x="0" y="-12.7" addlevel="always"/>
+<gate name="-7" symbol="PIN" x="0" y="-15.24" addlevel="always"/>
+<gate name="-8" symbol="PIN" x="0" y="-17.78" addlevel="always"/>
+<gate name="-9" symbol="PIN" x="0" y="-20.32" addlevel="always"/>
+<gate name="-10" symbol="PIN" x="0" y="-22.86" addlevel="always"/>
+<gate name="-11" symbol="PIN" x="0" y="-25.4" addlevel="always"/>
+<gate name="-12" symbol="PIN" x="0" y="-27.94" addlevel="always"/>
+</gates>
+<devices>
+<device name="" package="PAK100/2500-12">
+<connects>
+<connect gate="-1" pin="KL" pad="1"/>
+<connect gate="-10" pin="KL" pad="10"/>
+<connect gate="-11" pin="KL" pad="11"/>
+<connect gate="-12" pin="KL" pad="12"/>
+<connect gate="-2" pin="KL" pad="2"/>
+<connect gate="-3" pin="KL" pad="3"/>
+<connect gate="-4" pin="KL" pad="4"/>
+<connect gate="-5" pin="KL" pad="5"/>
+<connect gate="-6" pin="KL" pad="6"/>
+<connect gate="-7" pin="KL" pad="7"/>
+<connect gate="-8" pin="KL" pad="8"/>
+<connect gate="-9" pin="KL" pad="9"/>
+</connects>
+<technologies>
+<technology name="">
+<attribute name="MF" value="" constant="no"/>
+<attribute name="MPN" value="" constant="no"/>
+<attribute name="OC_FARNELL" value="unknown" constant="no"/>
+<attribute name="OC_NEWARK" value="unknown" constant="no"/>
+</technology>
+</technologies>
+</device>
+<device name="5" package="PAK100/2500-5-12">
+<connects>
+<connect gate="-1" pin="KL" pad="1"/>
+<connect gate="-10" pin="KL" pad="10"/>
+<connect gate="-11" pin="KL" pad="11"/>
+<connect gate="-12" pin="KL" pad="12"/>
+<connect gate="-2" pin="KL" pad="2"/>
+<connect gate="-3" pin="KL" pad="3"/>
+<connect gate="-4" pin="KL" pad="4"/>
+<connect gate="-5" pin="KL" pad="5"/>
+<connect gate="-6" pin="KL" pad="6"/>
+<connect gate="-7" pin="KL" pad="7"/>
+<connect gate="-8" pin="KL" pad="8"/>
+<connect gate="-9" pin="KL" pad="9"/>
+</connects>
+<technologies>
+<technology name="">
+<attribute name="MF" value="" constant="no"/>
+<attribute name="MPN" value="N2514-5002RB" constant="no"/>
+<attribute name="OC_FARNELL" value="1788673" constant="no"/>
+<attribute name="OC_NEWARK" value="97K6709" constant="no"/>
+</technology>
 </technologies>
 </device>
 </devices>
@@ -18342,97 +18508,6 @@ PCMCIA-CompactFlash Connectors&lt;p&gt;
 Zero Insertion Force Socked&lt;p&gt;
 &lt;author&gt;Created by librarian@cadsoft.de&lt;/author&gt;</description>
 <packages>
-<package name="PAK100/2500-14">
-<description>&lt;b&gt;3M (TM) Pak 100 4-Wall Header&lt;/b&gt; Straight&lt;p&gt;
-Source: 3M</description>
-<wire x1="-12.54" y1="4.2" x2="-6.963" y2="4.2" width="0.2032" layer="21"/>
-<wire x1="-6.963" y1="4.2" x2="-3.197" y2="4.2" width="0.2032" layer="21"/>
-<wire x1="-3.197" y1="4.2" x2="3.197" y2="4.2" width="0.2032" layer="21"/>
-<wire x1="3.197" y1="4.2" x2="6.963" y2="4.2" width="0.2032" layer="21"/>
-<wire x1="6.963" y1="4.2" x2="12.54" y2="4.2" width="0.2032" layer="21"/>
-<wire x1="12.54" y1="4.2" x2="12.54" y2="-4.2" width="0.2032" layer="21"/>
-<wire x1="12.54" y1="-4.2" x2="7.208" y2="-4.2" width="0.2032" layer="21"/>
-<wire x1="7.208" y1="-4.2" x2="7.208" y2="-3.9" width="0.2032" layer="21"/>
-<wire x1="7.208" y1="-3.9" x2="5.729" y2="-3.9" width="0.2032" layer="21"/>
-<wire x1="5.729" y1="-3.9" x2="5.729" y2="-4.2" width="0.2032" layer="21"/>
-<wire x1="5.729" y1="-4.2" x2="1.883" y2="-4.2" width="0.2032" layer="21"/>
-<wire x1="1.883" y1="-4.2" x2="1.883" y2="-2.65" width="0.2032" layer="21"/>
-<wire x1="1.883" y1="-2.65" x2="-1.883" y2="-2.65" width="0.2032" layer="21"/>
-<wire x1="-1.883" y1="-2.65" x2="-1.883" y2="-4.2" width="0.2032" layer="21"/>
-<wire x1="1.883" y1="-4.2" x2="-1.883" y2="-4.2" width="0.2032" layer="21"/>
-<wire x1="-1.883" y1="-4.2" x2="-12.54" y2="-4.2" width="0.2032" layer="21"/>
-<wire x1="-12.54" y1="-4.2" x2="-12.54" y2="4.2" width="0.2032" layer="21"/>
-<wire x1="-11.415" y1="3.275" x2="-6.97" y2="3.275" width="0.2032" layer="21"/>
-<wire x1="-3.195" y1="3.275" x2="3.195" y2="3.275" width="0.2032" layer="21"/>
-<wire x1="6.97" y1="3.275" x2="11.415" y2="3.275" width="0.2032" layer="21"/>
-<wire x1="11.415" y1="3.275" x2="11.415" y2="-3.275" width="0.2032" layer="21"/>
-<wire x1="11.415" y1="-3.275" x2="1.883" y2="-3.275" width="0.2032" layer="21"/>
-<wire x1="-1.883" y1="-3.275" x2="-11.415" y2="-3.275" width="0.2032" layer="21"/>
-<wire x1="-11.415" y1="-3.275" x2="-11.415" y2="3.275" width="0.2032" layer="21"/>
-<wire x1="-6.963" y1="4.2" x2="-6.963" y2="2.65" width="0.2032" layer="21"/>
-<wire x1="-6.963" y1="2.65" x2="-3.197" y2="2.65" width="0.2032" layer="21"/>
-<wire x1="-3.197" y1="2.65" x2="-3.197" y2="4.2" width="0.2032" layer="21"/>
-<wire x1="3.197" y1="4.2" x2="3.197" y2="2.65" width="0.2032" layer="21"/>
-<wire x1="3.197" y1="2.65" x2="6.963" y2="2.65" width="0.2032" layer="21"/>
-<wire x1="6.963" y1="2.65" x2="6.963" y2="4.2" width="0.2032" layer="21"/>
-<pad name="1" x="-7.62" y="-1.27" drill="1" diameter="1.4224"/>
-<pad name="2" x="-7.62" y="1.27" drill="1" diameter="1.4224"/>
-<pad name="3" x="-5.08" y="-1.27" drill="1" diameter="1.4224"/>
-<pad name="4" x="-5.08" y="1.27" drill="1" diameter="1.4224"/>
-<pad name="5" x="-2.54" y="-1.27" drill="1" diameter="1.4224"/>
-<pad name="6" x="-2.54" y="1.27" drill="1" diameter="1.4224"/>
-<pad name="7" x="0" y="-1.27" drill="1" diameter="1.4224"/>
-<pad name="8" x="0" y="1.27" drill="1" diameter="1.4224"/>
-<pad name="9" x="2.54" y="-1.27" drill="1" diameter="1.4224"/>
-<pad name="10" x="2.54" y="1.27" drill="1" diameter="1.4224"/>
-<pad name="11" x="5.08" y="-1.27" drill="1" diameter="1.4224"/>
-<pad name="12" x="5.08" y="1.27" drill="1" diameter="1.4224"/>
-<pad name="13" x="7.62" y="-1.27" drill="1" diameter="1.4224"/>
-<pad name="14" x="7.62" y="1.27" drill="1" diameter="1.4224"/>
-<text x="-12.7" y="4.572" size="1.27" layer="25">&gt;NAME</text>
-<text x="-5.08" y="4.572" size="1.27" layer="27">&gt;VALUE</text>
-</package>
-<package name="PAK100/2500-5-14">
-<description>&lt;b&gt;3M (TM) Pak 100 4-Wall Header&lt;/b&gt; Right Angle&lt;p&gt;
-Source: 3M</description>
-<wire x1="12.54" y1="1.875" x2="12.54" y2="11.075" width="0.2032" layer="21"/>
-<wire x1="12.54" y1="11.075" x2="5.938" y2="11.075" width="0.2032" layer="21"/>
-<wire x1="4.459" y1="11.075" x2="5.938" y2="11.075" width="0.2032" layer="21"/>
-<wire x1="5.938" y1="11.075" x2="5.938" y2="10.105" width="0.2032" layer="21"/>
-<wire x1="5.938" y1="10.105" x2="4.459" y2="10.105" width="0.2032" layer="21"/>
-<wire x1="4.459" y1="10.105" x2="4.459" y2="11.075" width="0.2032" layer="21"/>
-<wire x1="4.459" y1="11.075" x2="1.883" y2="11.075" width="0.2032" layer="21"/>
-<wire x1="1.883" y1="11.075" x2="1.883" y2="4.01" width="0.2032" layer="21"/>
-<wire x1="1.883" y1="4.01" x2="-1.883" y2="4.01" width="0.2032" layer="21"/>
-<wire x1="-1.883" y1="4.01" x2="-1.883" y2="11.075" width="0.2032" layer="21"/>
-<wire x1="1.883" y1="11.075" x2="-1.883" y2="11.075" width="0.2032" layer="21"/>
-<wire x1="-1.883" y1="11.075" x2="-12.54" y2="11.075" width="0.2032" layer="21"/>
-<wire x1="-12.54" y1="11.075" x2="-12.54" y2="1.875" width="0.2032" layer="21"/>
-<wire x1="-8.996" y1="1.875" x2="-12.54" y2="1.875" width="0.2032" layer="21"/>
-<wire x1="8.979" y1="1.875" x2="-8.992" y2="1.875" width="0.2032" layer="51"/>
-<wire x1="12.54" y1="1.875" x2="8.983" y2="1.875" width="0.2032" layer="21"/>
-<pad name="1" x="-7.62" y="-1.27" drill="1" diameter="1.4224"/>
-<pad name="2" x="-7.62" y="1.27" drill="1" diameter="1.4224"/>
-<pad name="3" x="-5.08" y="-1.27" drill="1" diameter="1.4224"/>
-<pad name="4" x="-5.08" y="1.27" drill="1" diameter="1.4224"/>
-<pad name="5" x="-2.54" y="-1.27" drill="1" diameter="1.4224"/>
-<pad name="6" x="-2.54" y="1.27" drill="1" diameter="1.4224"/>
-<pad name="7" x="0" y="-1.27" drill="1" diameter="1.4224"/>
-<pad name="8" x="0" y="1.27" drill="1" diameter="1.4224"/>
-<pad name="9" x="2.54" y="-1.27" drill="1" diameter="1.4224"/>
-<pad name="10" x="2.54" y="1.27" drill="1" diameter="1.4224"/>
-<pad name="11" x="5.08" y="-1.27" drill="1" diameter="1.4224"/>
-<pad name="12" x="5.08" y="1.27" drill="1" diameter="1.4224"/>
-<pad name="13" x="7.62" y="-1.27" drill="1" diameter="1.4224"/>
-<pad name="14" x="7.62" y="1.27" drill="1" diameter="1.4224"/>
-<text x="-12.7" y="-3.81" size="1.27" layer="25">&gt;NAME</text>
-<text x="-5.08" y="-3.81" size="1.27" layer="27">&gt;VALUE</text>
-<polygon width="0.2032" layer="21">
-<vertex x="-8.9" y="10.945"/>
-<vertex x="-6.35" y="10.945"/>
-<vertex x="-7.625" y="8.37"/>
-</polygon>
-</package>
 <package name="PAK100/2500-16">
 <description>&lt;b&gt;3M (TM) Pak 100 4-Wall Header&lt;/b&gt; Straight&lt;p&gt;
 Source: 3M</description>
@@ -18552,80 +18627,6 @@ Source: 3M</description>
 </symbol>
 </symbols>
 <devicesets>
-<deviceset name="2514-" prefix="X">
-<description>&lt;b&gt;3M (TM) Pak 100 4-Wall Header&lt;/b&gt;&lt;p&gt;
-Source: 3M</description>
-<gates>
-<gate name="-1" symbol="PINV" x="0" y="0" addlevel="always"/>
-<gate name="-2" symbol="PIN" x="0" y="-2.54" addlevel="always"/>
-<gate name="-3" symbol="PIN" x="0" y="-5.08" addlevel="always"/>
-<gate name="-4" symbol="PIN" x="0" y="-7.62" addlevel="always"/>
-<gate name="-5" symbol="PIN" x="0" y="-10.16" addlevel="always"/>
-<gate name="-6" symbol="PIN" x="0" y="-12.7" addlevel="always"/>
-<gate name="-7" symbol="PIN" x="0" y="-15.24" addlevel="always"/>
-<gate name="-8" symbol="PIN" x="0" y="-17.78" addlevel="always"/>
-<gate name="-9" symbol="PIN" x="0" y="-20.32" addlevel="always"/>
-<gate name="-10" symbol="PIN" x="0" y="-22.86" addlevel="always"/>
-<gate name="-11" symbol="PIN" x="0" y="-25.4" addlevel="always"/>
-<gate name="-12" symbol="PIN" x="0" y="-27.94" addlevel="always"/>
-<gate name="-13" symbol="PIN" x="0" y="-30.48" addlevel="always"/>
-<gate name="-14" symbol="PIN" x="0" y="-33.02" addlevel="always"/>
-</gates>
-<devices>
-<device name="" package="PAK100/2500-14">
-<connects>
-<connect gate="-1" pin="KL" pad="1"/>
-<connect gate="-10" pin="KL" pad="10"/>
-<connect gate="-11" pin="KL" pad="11"/>
-<connect gate="-12" pin="KL" pad="12"/>
-<connect gate="-13" pin="KL" pad="13"/>
-<connect gate="-14" pin="KL" pad="14"/>
-<connect gate="-2" pin="KL" pad="2"/>
-<connect gate="-3" pin="KL" pad="3"/>
-<connect gate="-4" pin="KL" pad="4"/>
-<connect gate="-5" pin="KL" pad="5"/>
-<connect gate="-6" pin="KL" pad="6"/>
-<connect gate="-7" pin="KL" pad="7"/>
-<connect gate="-8" pin="KL" pad="8"/>
-<connect gate="-9" pin="KL" pad="9"/>
-</connects>
-<technologies>
-<technology name="">
-<attribute name="MF" value="" constant="no"/>
-<attribute name="MPN" value="" constant="no"/>
-<attribute name="OC_FARNELL" value="unknown" constant="no"/>
-<attribute name="OC_NEWARK" value="unknown" constant="no"/>
-</technology>
-</technologies>
-</device>
-<device name="5" package="PAK100/2500-5-14">
-<connects>
-<connect gate="-1" pin="KL" pad="1"/>
-<connect gate="-10" pin="KL" pad="10"/>
-<connect gate="-11" pin="KL" pad="11"/>
-<connect gate="-12" pin="KL" pad="12"/>
-<connect gate="-13" pin="KL" pad="13"/>
-<connect gate="-14" pin="KL" pad="14"/>
-<connect gate="-2" pin="KL" pad="2"/>
-<connect gate="-3" pin="KL" pad="3"/>
-<connect gate="-4" pin="KL" pad="4"/>
-<connect gate="-5" pin="KL" pad="5"/>
-<connect gate="-6" pin="KL" pad="6"/>
-<connect gate="-7" pin="KL" pad="7"/>
-<connect gate="-8" pin="KL" pad="8"/>
-<connect gate="-9" pin="KL" pad="9"/>
-</connects>
-<technologies>
-<technology name="">
-<attribute name="MF" value="" constant="no"/>
-<attribute name="MPN" value="N2514-5002RB" constant="no"/>
-<attribute name="OC_FARNELL" value="1788673" constant="no"/>
-<attribute name="OC_NEWARK" value="97K6709" constant="no"/>
-</technology>
-</technologies>
-</device>
-</devices>
-</deviceset>
 <deviceset name="2516-" prefix="X">
 <description>&lt;b&gt;3M (TM) Pak 100 4-Wall Header&lt;/b&gt;&lt;p&gt;
 Source: 3M</description>
@@ -25953,8 +25954,6 @@ We've spent an enormous amount of time creating and checking these footprints an
 <part name="C107" library="rcl" deviceset="CPOL-EU" device="153CLV-0405" value="10u"/>
 <part name="C108" library="rcl" deviceset="CPOL-EU" device="153CLV-0405" value="10u"/>
 <part name="X4" library="con-3m" deviceset="2516-" device="5" value="input"/>
-<part name="X5" library="con-3m" deviceset="2514-" device="5" value="output"/>
-<part name="X2" library="con-3m" deviceset="2514-" device="5"/>
 <part name="TP1" library="SparkFun-Passives" deviceset="TEST-POINT" device="3"/>
 <part name="TP2" library="SparkFun-Passives" deviceset="TEST-POINT" device="3"/>
 <part name="TP3" library="SparkFun-Passives" deviceset="TEST-POINT" device="3"/>
@@ -25962,6 +25961,14 @@ We've spent an enormous amount of time creating and checking these footprints an
 <part name="C109" library="rcl" deviceset="CPOL-EU" device="153CLV-0405" value="10u"/>
 <part name="SUPPLY156" library="supply2" deviceset="+5V/1" device="" value="+5V dig"/>
 <part name="SUPPLY157" library="supply2" deviceset="DGND" device=""/>
+<part name="SUPPLY129" library="supply2" deviceset="AGND" device=""/>
+<part name="SUPPLY130" library="supply2" deviceset="DGND" device=""/>
+<part name="R113" library="Simplex-Jumpers" deviceset="0R" device="_0805"/>
+<part name="TP5" library="SparkFun-Passives" deviceset="TEST-POINT" device="3"/>
+<part name="TP6" library="SparkFun-Passives" deviceset="TEST-POINT" device="3"/>
+<part name="TP7" library="SparkFun-Passives" deviceset="TEST-POINT" device="3"/>
+<part name="X6" library="Simplex-Connectors" deviceset="2512-" device="5"/>
+<part name="X5" library="Simplex-Connectors" deviceset="2512-" device="5"/>
 </parts>
 <sheets>
 <sheet>
@@ -26347,20 +26354,21 @@ We've spent an enormous amount of time creating and checking these footprints an
 <instance part="X4" gate="-14" x="220.98" y="175.26" rot="MR0"/>
 <instance part="X4" gate="-15" x="220.98" y="172.72" rot="MR0"/>
 <instance part="X4" gate="-16" x="220.98" y="170.18" rot="MR0"/>
-<instance part="X5" gate="-1" x="223.52" y="139.7" rot="MR0"/>
-<instance part="X5" gate="-2" x="223.52" y="137.16" rot="MR0"/>
-<instance part="X5" gate="-3" x="223.52" y="134.62" rot="MR0"/>
-<instance part="X5" gate="-4" x="223.52" y="132.08" rot="MR0"/>
-<instance part="X5" gate="-5" x="223.52" y="129.54" rot="MR0"/>
-<instance part="X5" gate="-6" x="223.52" y="127" rot="MR0"/>
-<instance part="X5" gate="-7" x="223.52" y="124.46" rot="MR0"/>
-<instance part="X5" gate="-8" x="223.52" y="121.92" rot="MR0"/>
-<instance part="X5" gate="-9" x="223.52" y="119.38" rot="MR0"/>
-<instance part="X5" gate="-10" x="223.52" y="116.84" rot="MR0"/>
-<instance part="X5" gate="-11" x="223.52" y="114.3" rot="MR0"/>
-<instance part="X5" gate="-12" x="223.52" y="111.76" rot="MR0"/>
-<instance part="X5" gate="-13" x="223.52" y="109.22" rot="MR0"/>
-<instance part="X5" gate="-14" x="223.52" y="106.68" rot="MR0"/>
+<instance part="SUPPLY129" gate="G$1" x="259.08" y="96.52"/>
+<instance part="SUPPLY130" gate="G$1" x="279.4" y="96.52"/>
+<instance part="R113" gate="G$1" x="269.24" y="104.14"/>
+<instance part="X6" gate="-1" x="223.52" y="134.62" rot="MR0"/>
+<instance part="X6" gate="-2" x="223.52" y="137.16" rot="MR0"/>
+<instance part="X6" gate="-3" x="223.52" y="129.54" rot="MR0"/>
+<instance part="X6" gate="-4" x="223.52" y="132.08" rot="MR0"/>
+<instance part="X6" gate="-5" x="223.52" y="124.46" rot="MR0"/>
+<instance part="X6" gate="-6" x="223.52" y="127" rot="MR0"/>
+<instance part="X6" gate="-7" x="223.52" y="119.38" rot="MR0"/>
+<instance part="X6" gate="-8" x="223.52" y="121.92" rot="MR0"/>
+<instance part="X6" gate="-9" x="223.52" y="114.3" rot="MR0"/>
+<instance part="X6" gate="-10" x="223.52" y="116.84" rot="MR0"/>
+<instance part="X6" gate="-11" x="223.52" y="109.22" rot="MR0"/>
+<instance part="X6" gate="-12" x="223.52" y="111.76" rot="MR0"/>
 </instances>
 <busses>
 </busses>
@@ -26969,27 +26977,23 @@ We've spent an enormous amount of time creating and checking these footprints an
 <wire x1="213.36" y1="127" x2="213.36" y2="121.92" width="0.1524" layer="91"/>
 <wire x1="213.36" y1="121.92" x2="213.36" y2="116.84" width="0.1524" layer="91"/>
 <wire x1="213.36" y1="116.84" x2="213.36" y2="111.76" width="0.1524" layer="91"/>
-<wire x1="213.36" y1="111.76" x2="213.36" y2="106.68" width="0.1524" layer="91"/>
-<wire x1="213.36" y1="106.68" x2="213.36" y2="99.06" width="0.1524" layer="91"/>
+<wire x1="213.36" y1="111.76" x2="213.36" y2="99.06" width="0.1524" layer="91"/>
 <wire x1="218.44" y1="132.08" x2="213.36" y2="132.08" width="0.1524" layer="91"/>
 <wire x1="218.44" y1="127" x2="213.36" y2="127" width="0.1524" layer="91"/>
 <wire x1="218.44" y1="121.92" x2="213.36" y2="121.92" width="0.1524" layer="91"/>
 <wire x1="218.44" y1="116.84" x2="213.36" y2="116.84" width="0.1524" layer="91"/>
 <wire x1="218.44" y1="111.76" x2="213.36" y2="111.76" width="0.1524" layer="91"/>
-<wire x1="218.44" y1="106.68" x2="213.36" y2="106.68" width="0.1524" layer="91"/>
 <junction x="213.36" y="132.08"/>
 <junction x="213.36" y="127"/>
 <junction x="213.36" y="121.92"/>
 <junction x="213.36" y="116.84"/>
 <junction x="213.36" y="111.76"/>
-<junction x="213.36" y="106.68"/>
-<pinref part="X5" gate="-2" pin="KL"/>
-<pinref part="X5" gate="-4" pin="KL"/>
-<pinref part="X5" gate="-6" pin="KL"/>
-<pinref part="X5" gate="-8" pin="KL"/>
-<pinref part="X5" gate="-10" pin="KL"/>
-<pinref part="X5" gate="-12" pin="KL"/>
-<pinref part="X5" gate="-14" pin="KL"/>
+<pinref part="X6" gate="-2" pin="KL"/>
+<pinref part="X6" gate="-4" pin="KL"/>
+<pinref part="X6" gate="-6" pin="KL"/>
+<pinref part="X6" gate="-8" pin="KL"/>
+<pinref part="X6" gate="-10" pin="KL"/>
+<pinref part="X6" gate="-12" pin="KL"/>
 </segment>
 <segment>
 <pinref part="SUPPLY126" gate="G$1" pin="AGND"/>
@@ -27080,6 +27084,12 @@ We've spent an enormous amount of time creating and checking these footprints an
 <pinref part="SUPPLY155" gate="G$1" pin="AGND"/>
 <pinref part="R112" gate="G$1" pin="1"/>
 <wire x1="78.74" y1="7.62" x2="78.74" y2="10.16" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<pinref part="R113" gate="G$1" pin="P$1"/>
+<pinref part="SUPPLY129" gate="G$1" pin="AGND"/>
+<wire x1="264.16" y1="104.14" x2="259.08" y2="104.14" width="0.1524" layer="91"/>
+<wire x1="259.08" y1="104.14" x2="259.08" y2="99.06" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$1" class="0">
@@ -27533,7 +27543,7 @@ We've spent an enormous amount of time creating and checking these footprints an
 <segment>
 <wire x1="218.44" y1="129.54" x2="200.66" y2="129.54" width="0.1524" layer="91"/>
 <label x="200.66" y="129.54" size="1.778" layer="95"/>
-<pinref part="X5" gate="-5" pin="KL"/>
+<pinref part="X6" gate="-3" pin="KL"/>
 </segment>
 </net>
 <net name="V_FRONT_L" class="0">
@@ -27684,7 +27694,7 @@ We've spent an enormous amount of time creating and checking these footprints an
 <segment>
 <wire x1="218.44" y1="134.62" x2="200.66" y2="134.62" width="0.1524" layer="91"/>
 <label x="200.66" y="134.62" size="1.778" layer="95"/>
-<pinref part="X5" gate="-3" pin="KL"/>
+<pinref part="X6" gate="-1" pin="KL"/>
 </segment>
 </net>
 <net name="N$58" class="0">
@@ -27823,6 +27833,12 @@ We've spent an enormous amount of time creating and checking these footprints an
 <pinref part="R92" gate="G$1" pin="2"/>
 <pinref part="SUPPLY128" gate="G$1" pin="DGND"/>
 <wire x1="200.66" y1="20.32" x2="200.66" y2="17.78" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<pinref part="R113" gate="G$1" pin="P$2"/>
+<pinref part="SUPPLY130" gate="G$1" pin="DGND"/>
+<wire x1="274.32" y1="104.14" x2="279.4" y2="104.14" width="0.1524" layer="91"/>
+<wire x1="279.4" y1="104.14" x2="279.4" y2="99.06" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$74" class="0">
@@ -28221,7 +28237,7 @@ We've spent an enormous amount of time creating and checking these footprints an
 <segment>
 <wire x1="218.44" y1="119.38" x2="200.66" y2="119.38" width="0.1524" layer="91"/>
 <label x="200.66" y="119.38" size="1.778" layer="95"/>
-<pinref part="X5" gate="-9" pin="KL"/>
+<pinref part="X6" gate="-7" pin="KL"/>
 </segment>
 </net>
 <net name="N$71" class="0">
@@ -28259,7 +28275,7 @@ We've spent an enormous amount of time creating and checking these footprints an
 <segment>
 <wire x1="218.44" y1="124.46" x2="200.66" y2="124.46" width="0.1524" layer="91"/>
 <label x="200.66" y="124.46" size="1.778" layer="95"/>
-<pinref part="X5" gate="-7" pin="KL"/>
+<pinref part="X6" gate="-5" pin="KL"/>
 </segment>
 </net>
 <net name="N$75" class="0">
@@ -28983,7 +28999,7 @@ We've spent an enormous amount of time creating and checking these footprints an
 <segment>
 <wire x1="218.44" y1="114.3" x2="200.66" y2="114.3" width="0.1524" layer="91"/>
 <label x="200.66" y="114.3" size="1.778" layer="95"/>
-<pinref part="X5" gate="-11" pin="KL"/>
+<pinref part="X6" gate="-9" pin="KL"/>
 </segment>
 <segment>
 <wire x1="251.46" y1="55.88" x2="254" y2="55.88" width="0.1524" layer="91"/>
@@ -28995,7 +29011,7 @@ We've spent an enormous amount of time creating and checking these footprints an
 <segment>
 <wire x1="218.44" y1="109.22" x2="200.66" y2="109.22" width="0.1524" layer="91"/>
 <label x="200.66" y="109.22" size="1.778" layer="95"/>
-<pinref part="X5" gate="-13" pin="KL"/>
+<pinref part="X6" gate="-11" pin="KL"/>
 </segment>
 <segment>
 <wire x1="251.46" y1="43.18" x2="254" y2="43.18" width="0.1524" layer="91"/>
@@ -29078,20 +29094,6 @@ We've spent an enormous amount of time creating and checking these footprints an
 <instance part="C75" gate="G$1" x="203.2" y="177.8"/>
 <instance part="SUPPLY146" gate="G$1" x="127" y="165.1"/>
 <instance part="SUPPLY147" gate="G$1" x="203.2" y="165.1"/>
-<instance part="X2" gate="-1" x="187.96" y="93.98" rot="R180"/>
-<instance part="X2" gate="-2" x="187.96" y="96.52" rot="R180"/>
-<instance part="X2" gate="-3" x="187.96" y="99.06" rot="R180"/>
-<instance part="X2" gate="-4" x="187.96" y="101.6" rot="R180"/>
-<instance part="X2" gate="-5" x="187.96" y="104.14" rot="R180"/>
-<instance part="X2" gate="-6" x="187.96" y="106.68" rot="R180"/>
-<instance part="X2" gate="-7" x="187.96" y="109.22" rot="R180"/>
-<instance part="X2" gate="-8" x="187.96" y="111.76" rot="R180"/>
-<instance part="X2" gate="-9" x="187.96" y="114.3" rot="R180"/>
-<instance part="X2" gate="-10" x="187.96" y="116.84" rot="R180"/>
-<instance part="X2" gate="-11" x="187.96" y="119.38" rot="R180"/>
-<instance part="X2" gate="-12" x="187.96" y="121.92" rot="R180"/>
-<instance part="X2" gate="-13" x="187.96" y="124.46" rot="R180"/>
-<instance part="X2" gate="-14" x="187.96" y="127" rot="R180"/>
 <instance part="TP1" gate="G$1" x="142.24" y="132.08" rot="R180"/>
 <instance part="TP2" gate="G$1" x="149.86" y="132.08" rot="R180"/>
 <instance part="TP3" gate="G$1" x="157.48" y="132.08" rot="R180"/>
@@ -29099,6 +29101,21 @@ We've spent an enormous amount of time creating and checking these footprints an
 <instance part="C109" gate="G$1" x="218.44" y="111.76"/>
 <instance part="SUPPLY156" gate="G$1" x="218.44" y="119.38"/>
 <instance part="SUPPLY157" gate="G$1" x="218.44" y="99.06"/>
+<instance part="TP5" gate="G$1" x="172.72" y="147.32" rot="R180"/>
+<instance part="TP6" gate="G$1" x="180.34" y="147.32" rot="R180"/>
+<instance part="TP7" gate="G$1" x="93.98" y="172.72" rot="R90"/>
+<instance part="X5" gate="-1" x="187.96" y="99.06" rot="R180"/>
+<instance part="X5" gate="-2" x="187.96" y="101.6" rot="R180"/>
+<instance part="X5" gate="-3" x="187.96" y="104.14" rot="R180"/>
+<instance part="X5" gate="-4" x="187.96" y="106.68" rot="R180"/>
+<instance part="X5" gate="-5" x="187.96" y="109.22" rot="R180"/>
+<instance part="X5" gate="-6" x="187.96" y="111.76" rot="R180"/>
+<instance part="X5" gate="-7" x="187.96" y="114.3" rot="R180"/>
+<instance part="X5" gate="-8" x="187.96" y="116.84" rot="R180"/>
+<instance part="X5" gate="-9" x="187.96" y="119.38" rot="R180"/>
+<instance part="X5" gate="-10" x="187.96" y="121.92" rot="R180"/>
+<instance part="X5" gate="-11" x="187.96" y="124.46" rot="R180"/>
+<instance part="X5" gate="-12" x="187.96" y="127" rot="R180"/>
 </instances>
 <busses>
 </busses>
@@ -29228,7 +29245,10 @@ We've spent an enormous amount of time creating and checking these footprints an
 <wire x1="78.74" y1="172.72" x2="78.74" y2="167.64" width="0.1524" layer="91"/>
 <junction x="78.74" y="172.72"/>
 <pinref part="Q1" gate="G$1" pin="D"/>
-<wire x1="78.74" y1="172.72" x2="99.06" y2="172.72" width="0.1524" layer="91"/>
+<wire x1="78.74" y1="172.72" x2="93.98" y2="172.72" width="0.1524" layer="91"/>
+<pinref part="TP7" gate="G$1" pin="1"/>
+<wire x1="93.98" y1="172.72" x2="99.06" y2="172.72" width="0.1524" layer="91"/>
+<junction x="93.98" y="172.72"/>
 </segment>
 </net>
 <net name="N$40" class="0">
@@ -29347,8 +29367,8 @@ We've spent an enormous amount of time creating and checking these footprints an
 <wire x1="182.88" y1="127" x2="170.18" y2="127" width="0.1524" layer="91"/>
 <wire x1="170.18" y1="127" x2="170.18" y2="121.92" width="0.1524" layer="91"/>
 <junction x="170.18" y="121.92"/>
-<pinref part="X2" gate="-12" pin="KL"/>
-<pinref part="X2" gate="-14" pin="KL"/>
+<pinref part="X5" gate="-10" pin="KL"/>
+<pinref part="X5" gate="-12" pin="KL"/>
 </segment>
 <segment>
 <pinref part="U1" gate="G$1" pin="GND"/>
@@ -29412,11 +29432,8 @@ We've spent an enormous amount of time creating and checking these footprints an
 <net name="AGND" class="0">
 <segment>
 <pinref part="SUPPLY118" gate="G$1" pin="AGND"/>
-<wire x1="182.88" y1="96.52" x2="147.32" y2="96.52" width="0.1524" layer="91"/>
-<wire x1="147.32" y1="96.52" x2="147.32" y2="91.44" width="0.1524" layer="91"/>
 <wire x1="182.88" y1="101.6" x2="147.32" y2="101.6" width="0.1524" layer="91"/>
-<wire x1="147.32" y1="101.6" x2="147.32" y2="96.52" width="0.1524" layer="91"/>
-<junction x="147.32" y="96.52"/>
+<wire x1="147.32" y1="101.6" x2="147.32" y2="91.44" width="0.1524" layer="91"/>
 <wire x1="182.88" y1="106.68" x2="147.32" y2="106.68" width="0.1524" layer="91"/>
 <wire x1="147.32" y1="106.68" x2="147.32" y2="101.6" width="0.1524" layer="91"/>
 <junction x="147.32" y="101.6"/>
@@ -29426,11 +29443,10 @@ We've spent an enormous amount of time creating and checking these footprints an
 <wire x1="182.88" y1="116.84" x2="147.32" y2="116.84" width="0.1524" layer="91"/>
 <wire x1="147.32" y1="116.84" x2="147.32" y2="111.76" width="0.1524" layer="91"/>
 <junction x="147.32" y="111.76"/>
-<pinref part="X2" gate="-2" pin="KL"/>
-<pinref part="X2" gate="-4" pin="KL"/>
-<pinref part="X2" gate="-6" pin="KL"/>
-<pinref part="X2" gate="-8" pin="KL"/>
-<pinref part="X2" gate="-10" pin="KL"/>
+<pinref part="X5" gate="-2" pin="KL"/>
+<pinref part="X5" gate="-4" pin="KL"/>
+<pinref part="X5" gate="-6" pin="KL"/>
+<pinref part="X5" gate="-8" pin="KL"/>
 </segment>
 </net>
 <net name="N$85" class="0">
@@ -29438,7 +29454,7 @@ We've spent an enormous amount of time creating and checking these footprints an
 <wire x1="182.88" y1="99.06" x2="142.24" y2="99.06" width="0.1524" layer="91"/>
 <pinref part="U$2" gate="G$1" pin="P$1"/>
 <wire x1="142.24" y1="119.38" x2="142.24" y2="99.06" width="0.1524" layer="91"/>
-<pinref part="X2" gate="-3" pin="KL"/>
+<pinref part="X5" gate="-1" pin="KL"/>
 </segment>
 </net>
 <net name="N$86" class="0">
@@ -29446,7 +29462,7 @@ We've spent an enormous amount of time creating and checking these footprints an
 <wire x1="182.88" y1="104.14" x2="149.86" y2="104.14" width="0.1524" layer="91"/>
 <pinref part="U$5" gate="G$1" pin="P$1"/>
 <wire x1="149.86" y1="119.38" x2="149.86" y2="104.14" width="0.1524" layer="91"/>
-<pinref part="X2" gate="-5" pin="KL"/>
+<pinref part="X5" gate="-3" pin="KL"/>
 </segment>
 </net>
 <net name="N$88" class="0">
@@ -29454,7 +29470,7 @@ We've spent an enormous amount of time creating and checking these footprints an
 <wire x1="182.88" y1="109.22" x2="157.48" y2="109.22" width="0.1524" layer="91"/>
 <pinref part="U$6" gate="G$1" pin="P$1"/>
 <wire x1="157.48" y1="109.22" x2="157.48" y2="119.38" width="0.1524" layer="91"/>
-<pinref part="X2" gate="-7" pin="KL"/>
+<pinref part="X5" gate="-5" pin="KL"/>
 </segment>
 </net>
 <net name="N$89" class="0">
@@ -29462,7 +29478,7 @@ We've spent an enormous amount of time creating and checking these footprints an
 <wire x1="182.88" y1="114.3" x2="165.1" y2="114.3" width="0.1524" layer="91"/>
 <pinref part="U$9" gate="G$1" pin="P$1"/>
 <wire x1="165.1" y1="119.38" x2="165.1" y2="114.3" width="0.1524" layer="91"/>
-<pinref part="X2" gate="-9" pin="KL"/>
+<pinref part="X5" gate="-7" pin="KL"/>
 </segment>
 </net>
 <net name="N$90" class="0">
@@ -29470,7 +29486,7 @@ We've spent an enormous amount of time creating and checking these footprints an
 <wire x1="172.72" y1="119.38" x2="182.88" y2="119.38" width="0.1524" layer="91"/>
 <pinref part="U$12" gate="G$1" pin="P$1"/>
 <wire x1="172.72" y1="119.38" x2="172.72" y2="134.62" width="0.1524" layer="91"/>
-<pinref part="X2" gate="-11" pin="KL"/>
+<pinref part="X5" gate="-9" pin="KL"/>
 </segment>
 </net>
 <net name="-5V" class="0">
@@ -29514,6 +29530,8 @@ We've spent an enormous amount of time creating and checking these footprints an
 <pinref part="U$12" gate="G$1" pin="P$2"/>
 <pinref part="SUPPLY119" gate="G$1" pin="+5V/1"/>
 <wire x1="172.72" y1="144.78" x2="172.72" y2="147.32" width="0.1524" layer="91"/>
+<pinref part="TP5" gate="G$1" pin="1"/>
+<junction x="172.72" y="147.32"/>
 </segment>
 <segment>
 <pinref part="SUPPLY41" gate="G$1" pin="+5V/1"/>
@@ -29554,7 +29572,7 @@ We've spent an enormous amount of time creating and checking these footprints an
 <pinref part="U$13" gate="G$1" pin="P$1"/>
 <wire x1="180.34" y1="134.62" x2="180.34" y2="124.46" width="0.1524" layer="91"/>
 <wire x1="180.34" y1="124.46" x2="182.88" y2="124.46" width="0.1524" layer="91"/>
-<pinref part="X2" gate="-13" pin="KL"/>
+<pinref part="X5" gate="-11" pin="KL"/>
 </segment>
 </net>
 <net name="3V3" class="0">
@@ -29562,6 +29580,8 @@ We've spent an enormous amount of time creating and checking these footprints an
 <pinref part="U$13" gate="G$1" pin="P$2"/>
 <wire x1="180.34" y1="144.78" x2="180.34" y2="147.32" width="0.1524" layer="91"/>
 <pinref part="U$14" gate="G$1" pin="3V3"/>
+<pinref part="TP6" gate="G$1" pin="1"/>
+<junction x="180.34" y="147.32"/>
 </segment>
 <segment>
 <pinref part="U$11" gate="G$1" pin="28"/>
