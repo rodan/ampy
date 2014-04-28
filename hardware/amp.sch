@@ -3873,6 +3873,239 @@
 </deviceset>
 </devicesets>
 </library>
+<library name="Simplex-ICs">
+<description>finest footprints by petre rodan</description>
+<packages>
+<package name="STK465-V">
+<description>&lt;b&gt;STK 461, STK 463, STK 465&lt;/b&gt; stereo amplifier</description>
+<pad name="1" x="-19.05" y="0" drill="0.8"/>
+<pad name="2" x="-16.51" y="0" drill="0.8"/>
+<pad name="3" x="-13.97" y="0" drill="0.8"/>
+<pad name="4" x="-11.43" y="0" drill="0.8"/>
+<pad name="5" x="-8.89" y="0" drill="0.8"/>
+<pad name="6" x="-6.35" y="0" drill="0.8"/>
+<pad name="7" x="-3.81" y="0" drill="0.8"/>
+<pad name="8" x="-1.27" y="0" drill="0.8"/>
+<pad name="9" x="1.27" y="0" drill="0.8"/>
+<pad name="10" x="3.81" y="0" drill="0.8"/>
+<pad name="11" x="6.35" y="0" drill="0.8"/>
+<pad name="12" x="8.89" y="0" drill="0.8"/>
+<pad name="13" x="11.43" y="0" drill="0.8"/>
+<pad name="14" x="13.97" y="0" drill="0.8"/>
+<pad name="15" x="16.51" y="0" drill="0.8"/>
+<pad name="16" x="19.05" y="0" drill="0.8"/>
+<wire x1="-39" y1="3.5" x2="39" y2="3.5" width="0.127" layer="20"/>
+<polygon width="0.127" layer="20">
+<vertex x="-30.5" y="3.5"/>
+<vertex x="-30.5" y="1.5"/>
+<vertex x="30.5" y="1.5"/>
+<vertex x="30.5" y="3.5"/>
+</polygon>
+<wire x1="-39" y1="-6" x2="39" y2="-6" width="0.127" layer="20"/>
+<wire x1="-39" y1="3.5" x2="-39" y2="-6" width="0.127" layer="20"/>
+<wire x1="39" y1="3.5" x2="39" y2="-6" width="0.127" layer="20"/>
+<circle x="-20.32" y="-1.27" radius="0.3" width="0.127" layer="20"/>
+</package>
+<package name="STK465-HT">
+<pad name="1" x="-19.05" y="1.27" drill="0.8"/>
+<pad name="2" x="-16.51" y="1.27" drill="0.8"/>
+<pad name="3" x="-13.97" y="1.27" drill="0.8"/>
+<pad name="4" x="-11.43" y="1.27" drill="0.8"/>
+<pad name="5" x="-8.89" y="1.27" drill="0.8"/>
+<pad name="6" x="-6.35" y="1.27" drill="0.8"/>
+<pad name="7" x="-3.81" y="1.27" drill="0.8"/>
+<pad name="8" x="-1.27" y="1.27" drill="0.8"/>
+<pad name="9" x="1.27" y="1.27" drill="0.8"/>
+<pad name="10" x="3.81" y="1.27" drill="0.8"/>
+<pad name="11" x="6.35" y="1.27" drill="0.8"/>
+<pad name="12" x="8.89" y="1.27" drill="0.8"/>
+<pad name="13" x="11.43" y="1.27" drill="0.8"/>
+<pad name="14" x="13.97" y="1.27" drill="0.8"/>
+<pad name="15" x="16.51" y="1.27" drill="0.8"/>
+<pad name="16" x="19.05" y="1.27" drill="0.8"/>
+<wire x1="-31.5" y1="7" x2="31.5" y2="7" width="0.127" layer="20"/>
+<circle x="-19.05" y="11.43" radius="0.5" width="0.6096" layer="20"/>
+<wire x1="-31.5" y1="51" x2="31.5" y2="51" width="0.127" layer="20"/>
+<hole x="35" y="29" drill="4"/>
+<hole x="-35" y="29" drill="4"/>
+<wire x1="31.5" y1="51" x2="31.5" y2="7" width="0.127" layer="20" curve="-72"/>
+<wire x1="-31.5" y1="7" x2="-31.5" y2="51" width="0.127" layer="20" curve="-72"/>
+<text x="-10.16" y="31.75" size="3.81" layer="20" font="vector">STK46x</text>
+<text x="-15.24" y="24.13" size="2.1844" layer="20" font="vector">STEREO AMPLIFIER</text>
+</package>
+<package name="STK465-HB">
+<description>&lt;b&gt;STK 461, STK 463, STK 465&lt;/b&gt; stereo amplifier</description>
+<pad name="1" x="19.05" y="0" drill="0.8" rot="R180"/>
+<pad name="2" x="16.51" y="0" drill="0.8" rot="R180"/>
+<pad name="3" x="13.97" y="0" drill="0.8" rot="R180"/>
+<pad name="4" x="11.43" y="0" drill="0.8" rot="R180"/>
+<pad name="5" x="8.89" y="0" drill="0.8" rot="R180"/>
+<pad name="6" x="6.35" y="0" drill="0.8" rot="R180"/>
+<pad name="7" x="3.81" y="0" drill="0.8" rot="R180"/>
+<pad name="8" x="1.27" y="0" drill="0.8" rot="R180"/>
+<pad name="9" x="-1.27" y="0" drill="0.8" rot="R180"/>
+<pad name="10" x="-3.81" y="0" drill="0.8" rot="R180"/>
+<pad name="11" x="-6.35" y="0" drill="0.8" rot="R180"/>
+<pad name="12" x="-8.89" y="0" drill="0.8" rot="R180"/>
+<pad name="13" x="-11.43" y="0" drill="0.8" rot="R180"/>
+<pad name="14" x="-13.97" y="0" drill="0.8" rot="R180"/>
+<pad name="15" x="-16.51" y="0" drill="0.8" rot="R180"/>
+<pad name="16" x="-19.05" y="0" drill="0.8" rot="R180"/>
+<wire x1="-31.5" y1="5.73" x2="31.5" y2="5.73" width="0.127" layer="20"/>
+<circle x="19.05" y="2.54" radius="0.5" width="0.6096" layer="20"/>
+<wire x1="-31.5" y1="49.73" x2="31.5" y2="49.73" width="0.127" layer="20"/>
+<hole x="35" y="27.73" drill="4"/>
+<hole x="-35" y="27.73" drill="4"/>
+<wire x1="31.5" y1="49.73" x2="31.5" y2="5.73" width="0.127" layer="20" curve="-72"/>
+<wire x1="-31.5" y1="5.73" x2="-31.5" y2="49.73" width="0.127" layer="20" curve="-72"/>
+<rectangle x1="-31" y1="7.62" x2="31" y2="48.26" layer="20"/>
+<rectangle x1="-23" y1="6.35" x2="23" y2="7.62" layer="20"/>
+</package>
+</packages>
+<symbols>
+<symbol name="STK465-A">
+<description>&lt;b&gt;STK461, STK463, STK465&lt;/b&gt; stereo amplifier</description>
+<wire x1="-7.62" y1="-8.763" x2="-7.62" y2="8.763" width="0.254" layer="94"/>
+<wire x1="-7.62" y1="8.763" x2="10.414" y2="0" width="0.254" layer="94"/>
+<wire x1="10.414" y1="0" x2="-7.62" y2="-8.763" width="0.254" layer="94"/>
+<pin name="1" x="-10.16" y="5.08" visible="pad" length="short"/>
+<pin name="2" x="-5.08" y="-10.16" visible="pad" length="short" rot="R90"/>
+<pin name="3" x="-10.16" y="-5.08" visible="pad" length="short"/>
+<pin name="4" x="0" y="-7.62" visible="pad" length="short" rot="R90"/>
+<pin name="5" x="5.08" y="-5.08" visible="pad" length="short" rot="R90"/>
+<pin name="6" x="12.7" y="0" visible="pad" length="short" rot="R180"/>
+<pin name="7" x="5.08" y="5.08" visible="pad" length="short" rot="R270"/>
+<pin name="8" x="-5.08" y="10.16" visible="pad" length="short" rot="R270"/>
+<pin name="9" x="0" y="7.62" visible="pad" length="short" rot="R270"/>
+</symbol>
+<symbol name="STK465-B">
+<description>&lt;b&gt;STK 461, STK 463, STK 465&lt;/b&gt; stereo amplifier</description>
+<wire x1="7.62" y1="8.763" x2="7.62" y2="-8.763" width="0.254" layer="94"/>
+<wire x1="7.62" y1="-8.763" x2="-10.414" y2="0" width="0.254" layer="94"/>
+<wire x1="-10.414" y1="0" x2="7.62" y2="8.763" width="0.254" layer="94"/>
+<pin name="14" x="10.16" y="-5.08" visible="pad" length="short" rot="R180"/>
+<pin name="16" x="10.16" y="5.08" visible="pad" length="short" rot="R180"/>
+<pin name="10" x="-5.08" y="5.08" visible="pad" length="short" rot="R270"/>
+<pin name="11" x="-12.7" y="0" visible="pad" length="short"/>
+<pin name="12" x="-5.08" y="-5.08" visible="pad" length="short" rot="R90"/>
+<pin name="15" x="5.08" y="-10.16" visible="pad" length="short" rot="R90"/>
+<pin name="13" x="0" y="-7.62" visible="pad" length="short" rot="R90"/>
+</symbol>
+</symbols>
+<devicesets>
+<deviceset name="STK465">
+<description>&lt;b&gt;STK 461, STK 463, STK 465&lt;/b&gt; stereo amplifier</description>
+<gates>
+<gate name="G$1" symbol="STK465-A" x="-17.78" y="7.62" addlevel="always"/>
+<gate name="G$2" symbol="STK465-B" x="17.78" y="7.62" addlevel="always"/>
+</gates>
+<devices>
+<device name="VERT" package="STK465-V">
+<connects>
+<connect gate="G$1" pin="1" pad="1"/>
+<connect gate="G$1" pin="2" pad="2"/>
+<connect gate="G$1" pin="3" pad="3"/>
+<connect gate="G$1" pin="4" pad="4"/>
+<connect gate="G$1" pin="5" pad="5"/>
+<connect gate="G$1" pin="6" pad="6"/>
+<connect gate="G$1" pin="7" pad="7"/>
+<connect gate="G$1" pin="8" pad="8"/>
+<connect gate="G$1" pin="9" pad="9"/>
+<connect gate="G$2" pin="10" pad="10"/>
+<connect gate="G$2" pin="11" pad="11"/>
+<connect gate="G$2" pin="12" pad="12"/>
+<connect gate="G$2" pin="13" pad="13"/>
+<connect gate="G$2" pin="14" pad="14"/>
+<connect gate="G$2" pin="15" pad="15"/>
+<connect gate="G$2" pin="16" pad="16"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+<device name="HORIZ-TOP" package="STK465-HT">
+<connects>
+<connect gate="G$1" pin="1" pad="1"/>
+<connect gate="G$1" pin="2" pad="2"/>
+<connect gate="G$1" pin="3" pad="3"/>
+<connect gate="G$1" pin="4" pad="4"/>
+<connect gate="G$1" pin="5" pad="5"/>
+<connect gate="G$1" pin="6" pad="6"/>
+<connect gate="G$1" pin="7" pad="7"/>
+<connect gate="G$1" pin="8" pad="8"/>
+<connect gate="G$1" pin="9" pad="9"/>
+<connect gate="G$2" pin="10" pad="10"/>
+<connect gate="G$2" pin="11" pad="11"/>
+<connect gate="G$2" pin="12" pad="12"/>
+<connect gate="G$2" pin="13" pad="13"/>
+<connect gate="G$2" pin="14" pad="14"/>
+<connect gate="G$2" pin="15" pad="15"/>
+<connect gate="G$2" pin="16" pad="16"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+<device name="HORIZ-BOTTOM" package="STK465-HB">
+<connects>
+<connect gate="G$1" pin="1" pad="1"/>
+<connect gate="G$1" pin="2" pad="2"/>
+<connect gate="G$1" pin="3" pad="3"/>
+<connect gate="G$1" pin="4" pad="4"/>
+<connect gate="G$1" pin="5" pad="5"/>
+<connect gate="G$1" pin="6" pad="6"/>
+<connect gate="G$1" pin="7" pad="7"/>
+<connect gate="G$1" pin="8" pad="8"/>
+<connect gate="G$1" pin="9" pad="9"/>
+<connect gate="G$2" pin="10" pad="10"/>
+<connect gate="G$2" pin="11" pad="11"/>
+<connect gate="G$2" pin="12" pad="12"/>
+<connect gate="G$2" pin="13" pad="13"/>
+<connect gate="G$2" pin="14" pad="14"/>
+<connect gate="G$2" pin="15" pad="15"/>
+<connect gate="G$2" pin="16" pad="16"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+</devicesets>
+</library>
+<library name="supply1">
+<description>&lt;b&gt;Supply Symbols&lt;/b&gt;&lt;p&gt;
+ GND, VCC, 0V, +5V, -5V, etc.&lt;p&gt;
+ Please keep in mind, that these devices are necessary for the
+ automatic wiring of the supply signals.&lt;p&gt;
+ The pin name defined in the symbol is identical to the net which is to be wired automatically.&lt;p&gt;
+ In this library the device names are the same as the pin names of the symbols, therefore the correct signal names appear next to the supply symbols in the schematic.&lt;p&gt;
+ &lt;author&gt;Created by librarian@cadsoft.de&lt;/author&gt;</description>
+<packages>
+</packages>
+<symbols>
+<symbol name="GND">
+<wire x1="-1.905" y1="0" x2="1.905" y2="0" width="0.254" layer="94"/>
+<text x="-2.54" y="-2.54" size="1.778" layer="96">&gt;VALUE</text>
+<pin name="GND" x="0" y="2.54" visible="off" length="short" direction="sup" rot="R270"/>
+</symbol>
+</symbols>
+<devicesets>
+<deviceset name="GND" prefix="GND">
+<description>&lt;b&gt;SUPPLY SYMBOL&lt;/b&gt;</description>
+<gates>
+<gate name="1" symbol="GND" x="0" y="0"/>
+</gates>
+<devices>
+<device name="">
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+</devicesets>
+</library>
 </libraries>
 <attributes>
 </attributes>
@@ -3887,6 +4120,8 @@
 <parts>
 <part name="FRAME1" library="frames" deviceset="DOCFIELD" device="" value="ihaaa"/>
 <part name="U$7" library="SparkFun" deviceset="OSHW-LOGO" device="M"/>
+<part name="U$1" library="Simplex-ICs" deviceset="STK465" device="HORIZ-BOTTOM"/>
+<part name="GND1" library="supply1" deviceset="GND" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -3896,10 +4131,21 @@
 <instances>
 <instance part="FRAME1" gate="G$1" x="373.38" y="17.78"/>
 <instance part="U$7" gate="G$1" x="454.66" y="45.72"/>
+<instance part="U$1" gate="G$1" x="185.42" y="238.76"/>
+<instance part="U$1" gate="G$2" x="238.76" y="238.76"/>
+<instance part="GND1" gate="1" x="170.18" y="223.52"/>
 </instances>
 <busses>
 </busses>
 <nets>
+<net name="GND" class="0">
+<segment>
+<pinref part="U$1" gate="G$1" pin="3"/>
+<wire x1="175.26" y1="233.68" x2="170.18" y2="233.68" width="0.1524" layer="91"/>
+<wire x1="170.18" y1="233.68" x2="170.18" y2="226.06" width="0.1524" layer="91"/>
+<pinref part="GND1" gate="1" pin="GND"/>
+</segment>
+</net>
 </nets>
 </sheet>
 </sheets>
