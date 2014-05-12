@@ -25653,7 +25653,6 @@ We've spent an enormous amount of time creating and checking these footprints an
 <part name="SUPPLY38" library="supply2" deviceset="DGND" device=""/>
 <part name="U$11" library="TI_MSP430_v16" deviceset="F55[0/1]X---PT48" device=""/>
 <part name="C23" library="rcl" deviceset="C-EU" device="C0805" value="470nF"/>
-<part name="C27" library="rcl" deviceset="C-EU" device="C0805" value="220nF"/>
 <part name="R22" library="rcl" deviceset="R-EU_" device="R0805W" value="2.2K"/>
 <part name="R27" library="rcl" deviceset="R-EU_" device="R0805W" value="2.2K"/>
 <part name="Y1" library="Simplex-FreqCtrl" deviceset="CRYSTAL" device="3.2X1.5" value="32768Hz CFPX-217 12.5pF"/>
@@ -25673,7 +25672,6 @@ We've spent an enormous amount of time creating and checking these footprints an
 <part name="SUPPLY50" library="supply2" deviceset="DGND" device=""/>
 <part name="SUPPLY51" library="supply2" deviceset="DGND" device=""/>
 <part name="SUPPLY52" library="supply2" deviceset="DGND" device=""/>
-<part name="SUPPLY53" library="supply2" deviceset="DGND" device=""/>
 <part name="SUPPLY54" library="supply2" deviceset="DGND" device=""/>
 <part name="SUPPLY55" library="supply2" deviceset="DGND" device=""/>
 <part name="X1" library="Simplex-Connectors" deviceset="MOLEX_6" device="HORIZONTAL"/>
@@ -29027,7 +29025,6 @@ We've spent an enormous amount of time creating and checking these footprints an
 <instances>
 <instance part="U$11" gate="G$1" x="81.28" y="63.5"/>
 <instance part="C23" gate="G$1" x="40.64" y="60.96"/>
-<instance part="C27" gate="G$1" x="111.76" y="81.28" rot="R90"/>
 <instance part="R22" gate="G$1" x="114.3" y="58.42" rot="R180"/>
 <instance part="R27" gate="G$1" x="114.3" y="55.88" rot="R180"/>
 <instance part="Y1" gate="G$1" x="27.94" y="76.2" rot="R90"/>
@@ -29047,7 +29044,6 @@ We've spent an enormous amount of time creating and checking these footprints an
 <instance part="SUPPLY50" gate="G$1" x="40.64" y="53.34"/>
 <instance part="SUPPLY51" gate="G$1" x="25.4" y="86.36"/>
 <instance part="SUPPLY52" gate="G$1" x="116.84" y="30.48"/>
-<instance part="SUPPLY53" gate="G$1" x="119.38" y="73.66"/>
 <instance part="SUPPLY54" gate="G$1" x="127" y="78.74"/>
 <instance part="SUPPLY55" gate="G$1" x="132.08" y="60.96"/>
 <instance part="X1" gate="G$1" x="177.8" y="45.72"/>
@@ -29125,13 +29121,6 @@ We've spent an enormous amount of time creating and checking these footprints an
 <pinref part="C23" gate="G$1" pin="1"/>
 <pinref part="U$11" gate="G$1" pin="13"/>
 <wire x1="40.64" y1="63.5" x2="55.88" y2="63.5" width="0.1524" layer="91"/>
-</segment>
-</net>
-<net name="N$13" class="0">
-<segment>
-<pinref part="U$11" gate="G$1" pin="43"/>
-<pinref part="C27" gate="G$1" pin="1"/>
-<wire x1="109.22" y1="81.28" x2="106.68" y2="81.28" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$14" class="0">
@@ -29304,12 +29293,6 @@ We've spent an enormous amount of time creating and checking these footprints an
 <wire x1="106.68" y1="40.64" x2="116.84" y2="40.64" width="0.1524" layer="91"/>
 <wire x1="116.84" y1="40.64" x2="116.84" y2="33.02" width="0.1524" layer="91"/>
 <pinref part="SUPPLY52" gate="G$1" pin="DGND"/>
-</segment>
-<segment>
-<pinref part="C27" gate="G$1" pin="2"/>
-<wire x1="116.84" y1="81.28" x2="119.38" y2="81.28" width="0.1524" layer="91"/>
-<wire x1="119.38" y1="81.28" x2="119.38" y2="76.2" width="0.1524" layer="91"/>
-<pinref part="SUPPLY53" gate="G$1" pin="DGND"/>
 </segment>
 <segment>
 <pinref part="U$11" gate="G$1" pin="44"/>
@@ -29748,8 +29731,6 @@ We've spent an enormous amount of time creating and checking these footprints an
 </sheet>
 </sheets>
 <errors>
-<approved hash="101,1,408.94,104.14,X5-1,KL,,,,"/>
-<approved hash="101,2,182.88,93.98,X2-1,KL,,,,"/>
 <approved hash="104,1,66.04,320.04,IC1,AGNDL,AGND,,,"/>
 <approved hash="104,1,66.04,317.5,IC1,AGNDR,AGND,,,"/>
 <approved hash="104,1,50.8,304.8,IC1,VA-,-5V,,,"/>
@@ -29789,7 +29770,7 @@ We've spent an enormous amount of time creating and checking these footprints an
 <approved hash="104,2,106.68,66.04,U$11,37,DGND,,,"/>
 <approved hash="104,2,106.68,76.2,U$11,41,DGND,,,"/>
 <approved hash="204,2,106.68,78.74,U$11,42,,,,"/>
-<approved hash="104,2,106.68,81.28,U$11,43,N$13,,,"/>
+<approved hash="204,2,106.68,81.28,U$11,43,,,,"/>
 <approved hash="104,2,106.68,83.82,U$11,44,DGND,,,"/>
 <approved hash="204,2,106.68,88.9,U$11,46,,,,"/>
 <approved hash="104,1,261.62,342.9,IC10A,V+,+15V,,,"/>

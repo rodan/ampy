@@ -11527,13 +11527,13 @@ Source: http://www.onsemi.com/pub_link/Collateral/MBRA340T3-D.PDF</description>
 <part name="Q8" library="Simplex-DiscreteSemi" deviceset="MOSFET-NCHANNEL" device="_D-PAK" value="IRFR1205"/>
 <part name="OK1" library="optocoupler" deviceset="TLP283-4" device=""/>
 <part name="IC1" library="linear" deviceset="78*" device="T" technology="05"/>
-<part name="Q4" library="Simplex-DiscreteSemi" deviceset="MOSFET-NCHANNEL" device="_SOT23-3"/>
+<part name="Q4" library="Simplex-DiscreteSemi" deviceset="MOSFET-NCHANNEL" device="_SOT23-3" value="PMBF170"/>
 <part name="SUPPLY17" library="supply2" deviceset="DGND" device=""/>
 <part name="R11" library="rcl" deviceset="R-EU_" device="R0805W" value="10K"/>
 <part name="SUPPLY18" library="supply2" deviceset="DGND" device=""/>
 <part name="R12" library="rcl" deviceset="R-EU_" device="R0805W" value="560"/>
 <part name="R19" library="rcl" deviceset="R-EU_" device="R0805W" value="1K"/>
-<part name="Q3" library="Simplex-DiscreteSemi" deviceset="MOSFET-NCHANNEL" device="_SOT23-3"/>
+<part name="Q3" library="Simplex-DiscreteSemi" deviceset="MOSFET-NCHANNEL" device="_SOT23-3" value="PMBF170"/>
 <part name="SUPPLY5" library="supply2" deviceset="DGND" device=""/>
 <part name="R20" library="rcl" deviceset="R-EU_" device="R0805W" value="10K"/>
 <part name="SUPPLY19" library="supply2" deviceset="DGND" device=""/>
