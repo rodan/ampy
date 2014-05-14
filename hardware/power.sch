@@ -11088,18 +11088,6 @@ TS-003</description>
 <pin name="GND" x="0" y="-7.62" visible="pad" length="short" direction="pas" rot="R90"/>
 <pin name="VO" x="10.16" y="0" length="short" direction="pas" rot="R180"/>
 </symbol>
-<symbol name="79XX">
-<wire x1="-7.62" y1="-5.08" x2="7.62" y2="-5.08" width="0.4064" layer="94"/>
-<wire x1="7.62" y1="-5.08" x2="7.62" y2="2.54" width="0.4064" layer="94"/>
-<wire x1="7.62" y1="2.54" x2="-7.62" y2="2.54" width="0.4064" layer="94"/>
-<wire x1="-7.62" y1="2.54" x2="-7.62" y2="-5.08" width="0.4064" layer="94"/>
-<text x="-7.62" y="-7.62" size="1.778" layer="95">&gt;NAME</text>
-<text x="-7.62" y="-10.16" size="1.778" layer="96">&gt;VALUE</text>
-<text x="-2.032" y="0.254" size="1.524" layer="95">GND</text>
-<pin name="VI" x="-10.16" y="-2.54" length="short" direction="in"/>
-<pin name="GND" x="0" y="5.08" visible="pad" length="short" direction="pas" rot="R270"/>
-<pin name="VO" x="10.16" y="-2.54" length="short" direction="pas" rot="R180"/>
-</symbol>
 </symbols>
 <devicesets>
 <deviceset name="78*" prefix="IC">
@@ -11204,77 +11192,6 @@ http://www.fairchildsemi.com/ds/LM/LM7805.pdf</description>
 <technology name="24"/>
 <technology name="6"/>
 <technology name="8"/>
-</technologies>
-</device>
-</devices>
-</deviceset>
-<deviceset name="79*" prefix="IC" uservalue="yes">
-<description>Negative &lt;b&gt;VOLTAGE REGULATOR&lt;/b&gt;</description>
-<gates>
-<gate name="A1" symbol="79XX" x="0" y="2.54"/>
-</gates>
-<devices>
-<device name="L" package="TO92">
-<connects>
-<connect gate="A1" pin="GND" pad="1"/>
-<connect gate="A1" pin="VI" pad="2"/>
-<connect gate="A1" pin="VO" pad="3"/>
-</connects>
-<technologies>
-<technology name="05"/>
-<technology name="06"/>
-<technology name="08"/>
-<technology name="12"/>
-<technology name="15"/>
-<technology name="18"/>
-<technology name="24"/>
-</technologies>
-</device>
-<device name="H" package="TO39">
-<connects>
-<connect gate="A1" pin="GND" pad="1"/>
-<connect gate="A1" pin="VI" pad="2"/>
-<connect gate="A1" pin="VO" pad="3"/>
-</connects>
-<technologies>
-<technology name="05"/>
-<technology name="06"/>
-<technology name="08"/>
-<technology name="12"/>
-<technology name="15"/>
-<technology name="18"/>
-<technology name="24"/>
-</technologies>
-</device>
-<device name="T" package="TO220H">
-<connects>
-<connect gate="A1" pin="GND" pad="1"/>
-<connect gate="A1" pin="VI" pad="2"/>
-<connect gate="A1" pin="VO" pad="3"/>
-</connects>
-<technologies>
-<technology name="05"/>
-<technology name="06"/>
-<technology name="08"/>
-<technology name="12"/>
-<technology name="15"/>
-<technology name="18"/>
-<technology name="24"/>
-</technologies>
-</device>
-<device name="Z" package="TO92">
-<connects>
-<connect gate="A1" pin="GND" pad="1"/>
-<connect gate="A1" pin="VI" pad="2"/>
-<connect gate="A1" pin="VO" pad="3"/>
-</connects>
-<technologies>
-<technology name="L05"/>
-<technology name="L08"/>
-<technology name="L12"/>
-<technology name="L15"/>
-<technology name="L18"/>
-<technology name="L24"/>
 </technologies>
 </device>
 </devices>
@@ -11448,6 +11365,71 @@ Source: http://www.onsemi.com/pub_link/Collateral/MBRA340T3-D.PDF</description>
 </deviceset>
 </devicesets>
 </library>
+<library name="Simplex-ICs">
+<description>finest footprints by petre rodan</description>
+<packages>
+<package name="D2PACK">
+<description>D2PAK</description>
+<smd name="1" x="-2.54" y="1.75" dx="3.5" dy="1.6" layer="1" rot="R90"/>
+<smd name="3" x="2.54" y="1.75" dx="3.5" dy="1.6" layer="1" rot="R90"/>
+<smd name="4" x="0" y="12.025" dx="12.2" dy="9.75" layer="1"/>
+<text x="-2.54" y="19.05" size="1.27" layer="25">&gt;NAME</text>
+<text x="-2.54" y="-2.54" size="1.27" layer="27">&gt;VALUE</text>
+</package>
+</packages>
+<symbols>
+<symbol name="7[89]XX">
+<description>79xx linear regulator line</description>
+<pin name="VI" x="-10.16" y="2.54" length="short"/>
+<pin name="VO" x="10.16" y="2.54" length="short" rot="R180"/>
+<pin name="GND" x="0" y="-5.08" length="short" rot="R90"/>
+<wire x1="-7.62" y1="5.08" x2="-7.62" y2="-2.54" width="0.254" layer="94"/>
+<wire x1="-7.62" y1="-2.54" x2="7.62" y2="-2.54" width="0.254" layer="94"/>
+<wire x1="7.62" y1="-2.54" x2="7.62" y2="5.08" width="0.254" layer="94"/>
+<wire x1="7.62" y1="5.08" x2="-7.62" y2="5.08" width="0.254" layer="94"/>
+<text x="-5.08" y="7.62" size="1.27" layer="125">&gt;NAME</text>
+<text x="5.08" y="-5.08" size="1.27" layer="127">&gt;VALUE</text>
+</symbol>
+</symbols>
+<devicesets>
+<deviceset name="79XX" prefix="IC" uservalue="yes">
+<description>79xx negative voltage linear regulators</description>
+<gates>
+<gate name="IC$1" symbol="7[89]XX" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="D2PACK">
+<connects>
+<connect gate="IC$1" pin="GND" pad="1"/>
+<connect gate="IC$1" pin="VI" pad="4"/>
+<connect gate="IC$1" pin="VO" pad="3"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="78XX" prefix="IC" uservalue="yes">
+<description>78xx positive voltage linear regulators</description>
+<gates>
+<gate name="IC$1" symbol="7[89]XX" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="D2PACK">
+<connects>
+<connect gate="IC$1" pin="GND" pad="4"/>
+<connect gate="IC$1" pin="VI" pad="1"/>
+<connect gate="IC$1" pin="VO" pad="3"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+</devicesets>
+</library>
 </libraries>
 <attributes>
 </attributes>
@@ -11472,8 +11454,6 @@ Source: http://www.onsemi.com/pub_link/Collateral/MBRA340T3-D.PDF</description>
 <part name="GND16" library="SparkFun" deviceset="GND" device=""/>
 <part name="GND22" library="SparkFun" deviceset="GND" device=""/>
 <part name="C10" library="rcl" deviceset="C-EU" device="C0805" value="470nF"/>
-<part name="C11" library="rcl" deviceset="C-EU" device="C0805" value="220nF"/>
-<part name="GND23" library="SparkFun" deviceset="GND" device=""/>
 <part name="GND24" library="SparkFun" deviceset="GND" device=""/>
 <part name="R6" library="rcl" deviceset="R-EU_" device="R0805W" value="4.7k"/>
 <part name="R7" library="rcl" deviceset="R-EU_" device="R0805W" value="4.7k"/>
@@ -11526,7 +11506,6 @@ Source: http://www.onsemi.com/pub_link/Collateral/MBRA340T3-D.PDF</description>
 <part name="Q7" library="Simplex-DiscreteSemi" deviceset="MOSFET-PCHANNEL" device="_D-PAK" value="IRFR5305"/>
 <part name="Q8" library="Simplex-DiscreteSemi" deviceset="MOSFET-NCHANNEL" device="_D-PAK" value="IRFR1205"/>
 <part name="OK1" library="optocoupler" deviceset="TLP283-4" device=""/>
-<part name="IC1" library="linear" deviceset="78*" device="T" technology="05"/>
 <part name="Q4" library="Simplex-DiscreteSemi" deviceset="MOSFET-NCHANNEL" device="_SOT23-3" value="PMBF170"/>
 <part name="SUPPLY17" library="supply2" deviceset="DGND" device=""/>
 <part name="R11" library="rcl" deviceset="R-EU_" device="R0805W" value="10K"/>
@@ -11550,7 +11529,6 @@ Source: http://www.onsemi.com/pub_link/Collateral/MBRA340T3-D.PDF</description>
 <part name="SUPPLY24" library="supply2" deviceset="AGND" device=""/>
 <part name="SUPPLY25" library="supply2" deviceset="DGND" device=""/>
 <part name="R14" library="rcl" deviceset="R-EU_" device="R0805W" value="0R"/>
-<part name="IC3" library="linear" deviceset="78*" device="T" technology="05"/>
 <part name="SUPPLY26" library="supply2" deviceset="DGND" device=""/>
 <part name="SUPPLY27" library="supply2" deviceset="DGND" device=""/>
 <part name="SUPPLY28" library="supply2" deviceset="DGND" device=""/>
@@ -11587,7 +11565,6 @@ Source: http://www.onsemi.com/pub_link/Collateral/MBRA340T3-D.PDF</description>
 <part name="C12" library="rcl" deviceset="C-EU" device="C0805" value="100nF"/>
 <part name="Q2" library="Simplex-DiscreteSemi" deviceset="MOSFET-NCHANNEL" device="_SOT23-3_POWER" value="IRML6246"/>
 <part name="OK3" library="optocoupler" deviceset="TLP283-4" device=""/>
-<part name="IC4" library="linear" deviceset="79*" device="T" technology="05" value="7905"/>
 <part name="SUPPLY7" library="supply2" deviceset="AGND" device=""/>
 <part name="R28" library="rcl" deviceset="R-EU_" device="R0805W" value="560"/>
 <part name="OK4" library="optocoupler" deviceset="TLP283-4" device=""/>
@@ -11614,6 +11591,10 @@ Source: http://www.onsemi.com/pub_link/Collateral/MBRA340T3-D.PDF</description>
 <part name="R15" library="rcl" deviceset="R-EU_" device="R0805W" value="0R"/>
 <part name="R16" library="rcl" deviceset="R-EU_" device="R0805W" value="0R"/>
 <part name="R21" library="rcl" deviceset="R-EU_" device="R0805W" value="0R"/>
+<part name="IC3" library="linear" deviceset="78*" device="DT" technology="15"/>
+<part name="IC4" library="Simplex-ICs" deviceset="79XX" device="" value="7905"/>
+<part name="IC1" library="Simplex-ICs" deviceset="78XX" device="" value="7805"/>
+<part name="IC2" library="Simplex-ICs" deviceset="78XX" device="" value="7805"/>
 </parts>
 <sheets>
 <sheet>
@@ -11652,8 +11633,6 @@ OUTPUTS
 <instance part="GND16" gate="1" x="342.9" y="172.72"/>
 <instance part="GND22" gate="1" x="347.98" y="167.64"/>
 <instance part="C10" gate="G$1" x="347.98" y="175.26"/>
-<instance part="C11" gate="G$1" x="414.02" y="195.58" rot="R90"/>
-<instance part="GND23" gate="1" x="421.64" y="195.58" rot="R90"/>
 <instance part="GND24" gate="1" x="449.58" y="175.26"/>
 <instance part="R6" gate="G$1" x="419.1" y="172.72" rot="R180"/>
 <instance part="R7" gate="G$1" x="419.1" y="170.18" rot="R180"/>
@@ -11708,7 +11687,6 @@ OUTPUTS
 <instance part="OK1" gate="A" x="68.58" y="416.56"/>
 <instance part="OK1" gate="C" x="215.9" y="416.56"/>
 <instance part="OK1" gate="D" x="215.9" y="312.42"/>
-<instance part="IC1" gate="A1" x="25.4" y="452.12"/>
 <instance part="Q4" gate="G$1" x="116.84" y="114.3"/>
 <instance part="SUPPLY17" gate="G$1" x="116.84" y="96.52"/>
 <instance part="R11" gate="G$1" x="106.68" y="106.68" rot="R270"/>
@@ -11734,7 +11712,6 @@ OUTPUTS
 <instance part="SUPPLY24" gate="G$1" x="200.66" y="68.58"/>
 <instance part="SUPPLY25" gate="G$1" x="220.98" y="68.58"/>
 <instance part="R14" gate="G$1" x="210.82" y="76.2" rot="R180"/>
-<instance part="IC3" gate="A1" x="-154.94" y="452.12"/>
 <instance part="SUPPLY26" gate="G$1" x="-154.94" y="439.42"/>
 <instance part="SUPPLY27" gate="G$1" x="-132.08" y="426.72"/>
 <instance part="SUPPLY28" gate="G$1" x="-124.46" y="426.72"/>
@@ -11771,7 +11748,6 @@ OUTPUTS
 <instance part="C12" gate="G$1" x="91.44" y="337.82" rot="R180"/>
 <instance part="Q2" gate="G$1" x="81.28" y="347.98" rot="MR90"/>
 <instance part="OK3" gate="B" x="68.58" y="312.42"/>
-<instance part="IC4" gate="A1" x="25.4" y="345.44" rot="MR180"/>
 <instance part="SUPPLY7" gate="G$1" x="78.74" y="302.26"/>
 <instance part="R28" gate="G$1" x="43.18" y="309.88" rot="R180"/>
 <instance part="OK4" gate="B" x="119.38" y="312.42"/>
@@ -11798,6 +11774,10 @@ OUTPUTS
 <instance part="R15" gate="G$1" x="210.82" y="91.44" rot="R180"/>
 <instance part="R16" gate="G$1" x="210.82" y="99.06" rot="R180"/>
 <instance part="R21" gate="G$1" x="210.82" y="106.68" rot="R180"/>
+<instance part="IC3" gate="A1" x="-152.4" y="350.52"/>
+<instance part="IC4" gate="IC$1" x="25.4" y="345.44"/>
+<instance part="IC1" gate="IC$1" x="25.4" y="449.58"/>
+<instance part="IC2" gate="IC$1" x="-154.94" y="449.58"/>
 </instances>
 <busses>
 </busses>
@@ -11818,10 +11798,6 @@ OUTPUTS
 <wire x1="342.9" y1="180.34" x2="360.68" y2="180.34" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="C11" gate="G$1" pin="2"/>
-<pinref part="GND23" gate="1" pin="GND"/>
-</segment>
-<segment>
 <pinref part="U$1" gate="G$1" pin="37"/>
 <pinref part="GND24" gate="1" pin="GND"/>
 <wire x1="411.48" y1="180.34" x2="416.56" y2="180.34" width="0.1524" layer="91"/>
@@ -11831,6 +11807,10 @@ OUTPUTS
 <wire x1="416.56" y1="185.42" x2="416.56" y2="180.34" width="0.1524" layer="91"/>
 <wire x1="411.48" y1="185.42" x2="416.56" y2="185.42" width="0.1524" layer="91"/>
 <junction x="416.56" y="180.34"/>
+<pinref part="U$1" gate="G$1" pin="41"/>
+<wire x1="411.48" y1="190.5" x2="416.56" y2="190.5" width="0.1524" layer="91"/>
+<wire x1="416.56" y1="190.5" x2="416.56" y2="185.42" width="0.1524" layer="91"/>
+<junction x="416.56" y="185.42"/>
 </segment>
 <segment>
 <pinref part="C23" gate="G$1" pin="2"/>
@@ -11944,12 +11924,6 @@ OUTPUTS
 <pinref part="C10" gate="G$1" pin="1"/>
 <pinref part="U$1" gate="G$1" pin="13"/>
 <wire x1="347.98" y1="177.8" x2="360.68" y2="177.8" width="0.1524" layer="91"/>
-</segment>
-</net>
-<net name="N$7" class="0">
-<segment>
-<pinref part="U$1" gate="G$1" pin="43"/>
-<pinref part="C11" gate="G$1" pin="1"/>
 </segment>
 </net>
 <net name="VCC_EN" class="0">
@@ -12324,7 +12298,6 @@ OUTPUTS
 <pinref part="C6" gate="G$1" pin="1"/>
 <wire x1="-144.78" y1="452.12" x2="-139.7" y2="452.12" width="0.1524" layer="91"/>
 <junction x="-132.08" y="452.12"/>
-<pinref part="IC3" gate="A1" pin="VO"/>
 <label x="-132.08" y="454.66" size="1.778" layer="95"/>
 <wire x1="-139.7" y1="452.12" x2="-132.08" y2="452.12" width="0.1524" layer="91"/>
 <wire x1="-132.08" y1="452.12" x2="-132.08" y2="454.66" width="0.1524" layer="91"/>
@@ -12334,6 +12307,7 @@ OUTPUTS
 <junction x="-139.7" y="452.12"/>
 <pinref part="D2" gate="G$1" pin="C"/>
 <wire x1="-139.7" y1="441.96" x2="-139.7" y2="452.12" width="0.1524" layer="91"/>
+<pinref part="IC2" gate="IC$1" pin="VO"/>
 </segment>
 <segment>
 <label x="40.64" y="314.96" size="1.778" layer="95"/>
@@ -12475,8 +12449,8 @@ OUTPUTS
 </segment>
 <segment>
 <pinref part="SUPPLY26" gate="G$1" pin="DGND"/>
-<pinref part="IC3" gate="A1" pin="GND"/>
 <wire x1="-154.94" y1="441.96" x2="-154.94" y2="444.5" width="0.1524" layer="91"/>
+<pinref part="IC2" gate="IC$1" pin="GND"/>
 </segment>
 <segment>
 <wire x1="-132.08" y1="429.26" x2="-132.08" y2="434.34" width="0.1524" layer="91"/>
@@ -12622,9 +12596,9 @@ OUTPUTS
 <wire x1="106.68" y1="314.96" x2="106.68" y2="304.8" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="IC4" gate="A1" pin="GND"/>
 <wire x1="25.4" y1="340.36" x2="25.4" y2="332.74" width="0.1524" layer="91"/>
 <pinref part="SUPPLY15" gate="G$1" pin="AGND"/>
+<pinref part="IC4" gate="IC$1" pin="GND"/>
 </segment>
 <segment>
 <pinref part="C13" gate="G$1" pin="1"/>
@@ -12653,20 +12627,20 @@ OUTPUTS
 <pinref part="SUPPLY54" gate="G$1" pin="AGND"/>
 </segment>
 <segment>
-<pinref part="IC1" gate="A1" pin="GND"/>
 <wire x1="25.4" y1="444.5" x2="25.4" y2="434.34" width="0.1524" layer="91"/>
 <pinref part="SUPPLY55" gate="G$1" pin="AGND"/>
+<pinref part="IC1" gate="IC$1" pin="GND"/>
 </segment>
 </net>
 <net name="N$3" class="0">
 <segment>
-<pinref part="IC1" gate="A1" pin="VI"/>
 <wire x1="15.24" y1="452.12" x2="10.16" y2="452.12" width="0.1524" layer="91"/>
 <pinref part="D1" gate="G$1" pin="C"/>
 <wire x1="22.86" y1="464.82" x2="10.16" y2="464.82" width="0.1524" layer="91"/>
 <wire x1="10.16" y1="464.82" x2="10.16" y2="452.12" width="0.1524" layer="91"/>
 <junction x="10.16" y="452.12"/>
 <wire x1="10.16" y1="452.12" x2="2.54" y2="452.12" width="0.1524" layer="91"/>
+<pinref part="IC1" gate="IC$1" pin="VI"/>
 </segment>
 </net>
 <net name="N$5" class="0">
@@ -12786,7 +12760,6 @@ OUTPUTS
 <wire x1="71.12" y1="449.58" x2="71.12" y2="452.12" width="0.1524" layer="91"/>
 <junction x="71.12" y="452.12"/>
 <pinref part="Q1" gate="G$1" pin="S"/>
-<pinref part="IC1" gate="A1" pin="VO"/>
 <wire x1="35.56" y1="452.12" x2="40.64" y2="452.12" width="0.1524" layer="91"/>
 <pinref part="C5" gate="G$1" pin="2"/>
 <wire x1="40.64" y1="452.12" x2="71.12" y2="452.12" width="0.1524" layer="91"/>
@@ -12795,17 +12768,18 @@ OUTPUTS
 <pinref part="D1" gate="G$1" pin="A"/>
 <wire x1="27.94" y1="464.82" x2="40.64" y2="464.82" width="0.1524" layer="91"/>
 <wire x1="40.64" y1="464.82" x2="40.64" y2="452.12" width="0.1524" layer="91"/>
+<pinref part="IC1" gate="IC$1" pin="VO"/>
 </segment>
 </net>
 <net name="N$20" class="0">
 <segment>
-<pinref part="IC3" gate="A1" pin="VI"/>
 <wire x1="-165.1" y1="452.12" x2="-170.18" y2="452.12" width="0.1524" layer="91"/>
 <pinref part="D3" gate="G$1" pin="C"/>
 <wire x1="-157.48" y1="464.82" x2="-170.18" y2="464.82" width="0.1524" layer="91"/>
 <wire x1="-170.18" y1="464.82" x2="-170.18" y2="452.12" width="0.1524" layer="91"/>
 <wire x1="-170.18" y1="452.12" x2="-177.8" y2="452.12" width="0.1524" layer="91"/>
 <junction x="-170.18" y="452.12"/>
+<pinref part="IC2" gate="IC$1" pin="VI"/>
 </segment>
 </net>
 <net name="N$21" class="0">
@@ -12870,13 +12844,13 @@ OUTPUTS
 </net>
 <net name="N$31" class="0">
 <segment>
-<pinref part="IC4" gate="A1" pin="VI"/>
 <wire x1="15.24" y1="347.98" x2="10.16" y2="347.98" width="0.1524" layer="91"/>
 <wire x1="10.16" y1="347.98" x2="2.54" y2="347.98" width="0.1524" layer="91"/>
 <wire x1="22.86" y1="360.68" x2="10.16" y2="360.68" width="0.1524" layer="91"/>
 <wire x1="10.16" y1="360.68" x2="10.16" y2="347.98" width="0.1524" layer="91"/>
 <junction x="10.16" y="347.98"/>
 <pinref part="D8" gate="G$1" pin="A"/>
+<pinref part="IC4" gate="IC$1" pin="VI"/>
 </segment>
 </net>
 <net name="N$32" class="0">
@@ -12921,13 +12895,13 @@ OUTPUTS
 <wire x1="71.12" y1="345.44" x2="71.12" y2="347.98" width="0.1524" layer="91"/>
 <junction x="71.12" y="347.98"/>
 <pinref part="Q2" gate="G$1" pin="S"/>
-<pinref part="IC4" gate="A1" pin="VO"/>
 <wire x1="35.56" y1="347.98" x2="40.64" y2="347.98" width="0.1524" layer="91"/>
 <junction x="40.64" y="347.98"/>
 <wire x1="40.64" y1="347.98" x2="71.12" y2="347.98" width="0.1524" layer="91"/>
 <wire x1="27.94" y1="360.68" x2="40.64" y2="360.68" width="0.1524" layer="91"/>
 <wire x1="40.64" y1="360.68" x2="40.64" y2="347.98" width="0.1524" layer="91"/>
 <pinref part="D8" gate="G$1" pin="C"/>
+<pinref part="IC4" gate="IC$1" pin="VO"/>
 </segment>
 </net>
 </nets>
