@@ -25661,7 +25661,7 @@ We've spent an enormous amount of time creating and checking these footprints an
 <part name="R34" library="rcl" deviceset="R-EU_" device="R0805W" value="47k"/>
 <part name="R31" library="rcl" deviceset="R-EU_" device="R0805W" value="47k"/>
 <part name="LED2" library="led" deviceset="LED" device="CHIPLED_0805" value="green"/>
-<part name="R33" library="rcl" deviceset="R-EU_" device="R0805W" value="100k"/>
+<part name="R33" library="rcl" deviceset="R-EU_" device="R0805W" value="47k"/>
 <part name="C57" library="rcl" deviceset="C-EU" device="C0805" value="100nF"/>
 <part name="R37" library="rcl" deviceset="R-EU_" device="R0805W" value="10K"/>
 <part name="Q1" library="Simplex-DiscreteSemi" deviceset="MOSFET-PCHANNEL" device="_SOT23-3_POWER" value="SI2305"/>
@@ -25700,48 +25700,48 @@ We've spent an enormous amount of time creating and checking these footprints an
 <part name="C77" library="rcl" deviceset="CPOL-EU" device="153CLV-0405" value="10u"/>
 <part name="C91" library="rcl" deviceset="CPOL-EU" device="153CLV-0405" value="10u"/>
 <part name="C87" library="rcl" deviceset="CPOL-EU" device="153CLV-0405" value="10u"/>
-<part name="R52" library="rcl" deviceset="R-EU_" device="R0805W" value="DNP"/>
+<part name="R52" library="rcl" deviceset="R-EU_" device="R0805W" value="100K"/>
 <part name="SUPPLY65" library="supply2" deviceset="AGND" device=""/>
-<part name="R53" library="rcl" deviceset="R-EU_" device="R0805W" value="DNP"/>
+<part name="R53" library="rcl" deviceset="R-EU_" device="R0805W" value="100K"/>
 <part name="SUPPLY66" library="supply2" deviceset="AGND" device=""/>
-<part name="R54" library="rcl" deviceset="R-EU_" device="R0805W" value="DNP"/>
+<part name="R54" library="rcl" deviceset="R-EU_" device="R0805W" value="100K"/>
 <part name="SUPPLY67" library="supply2" deviceset="AGND" device=""/>
-<part name="R55" library="rcl" deviceset="R-EU_" device="R0805W" value="DNP"/>
+<part name="R55" library="rcl" deviceset="R-EU_" device="R0805W" value="100K"/>
 <part name="SUPPLY68" library="supply2" deviceset="AGND" device=""/>
-<part name="R56" library="rcl" deviceset="R-EU_" device="R0805W" value="DNP"/>
+<part name="R56" library="rcl" deviceset="R-EU_" device="R0805W" value="100K"/>
 <part name="SUPPLY69" library="supply2" deviceset="AGND" device=""/>
-<part name="R57" library="rcl" deviceset="R-EU_" device="R0805W" value="DNP"/>
+<part name="R57" library="rcl" deviceset="R-EU_" device="R0805W" value="100K"/>
 <part name="SUPPLY70" library="supply2" deviceset="AGND" device=""/>
-<part name="R60" library="rcl" deviceset="R-EU_" device="R0805W" value="DNP"/>
+<part name="R60" library="rcl" deviceset="R-EU_" device="R0805W" value="100K"/>
 <part name="SUPPLY73" library="supply2" deviceset="AGND" device=""/>
-<part name="R61" library="rcl" deviceset="R-EU_" device="R0805W" value="DNP"/>
+<part name="R61" library="rcl" deviceset="R-EU_" device="R0805W" value="100K"/>
 <part name="SUPPLY74" library="supply2" deviceset="AGND" device=""/>
 <part name="JP1" library="SparkFun-Connectors" deviceset="M03" device="PTH" value="J1"/>
 <part name="JP2" library="SparkFun-Connectors" deviceset="M03" device="PTH" value="J2"/>
-<part name="R1" library="rcl" deviceset="R-EU_" device="R0805W" value="100K"/>
+<part name="R1" library="rcl" deviceset="R-EU_" device="R0805W" value="DNP"/>
 <part name="SUPPLY21" library="supply2" deviceset="AGND" device=""/>
-<part name="R3" library="rcl" deviceset="R-EU_" device="R0805W" value="100K"/>
+<part name="R3" library="rcl" deviceset="R-EU_" device="R0805W" value="DNP"/>
 <part name="SUPPLY22" library="supply2" deviceset="AGND" device=""/>
-<part name="R5" library="rcl" deviceset="R-EU_" device="R0805W" value="100K"/>
+<part name="R5" library="rcl" deviceset="R-EU_" device="R0805W" value="DNP"/>
 <part name="SUPPLY23" library="supply2" deviceset="AGND" device=""/>
-<part name="R7" library="rcl" deviceset="R-EU_" device="R0805W" value="100K"/>
+<part name="R7" library="rcl" deviceset="R-EU_" device="R0805W" value="DNP"/>
 <part name="SUPPLY24" library="supply2" deviceset="AGND" device=""/>
-<part name="R9" library="rcl" deviceset="R-EU_" device="R0805W" value="100K"/>
+<part name="R9" library="rcl" deviceset="R-EU_" device="R0805W" value="DNP"/>
 <part name="SUPPLY71" library="supply2" deviceset="AGND" device=""/>
-<part name="R11" library="rcl" deviceset="R-EU_" device="R0805W" value="100K"/>
+<part name="R11" library="rcl" deviceset="R-EU_" device="R0805W" value="DNP"/>
 <part name="SUPPLY72" library="supply2" deviceset="AGND" device=""/>
-<part name="R13" library="rcl" deviceset="R-EU_" device="R0805W" value="100K"/>
+<part name="R13" library="rcl" deviceset="R-EU_" device="R0805W" value="DNP"/>
 <part name="SUPPLY75" library="supply2" deviceset="AGND" device=""/>
-<part name="R14" library="rcl" deviceset="R-EU_" device="R0805W" value="100K"/>
+<part name="R14" library="rcl" deviceset="R-EU_" device="R0805W" value="DNP"/>
 <part name="SUPPLY76" library="supply2" deviceset="AGND" device=""/>
-<part name="R15" library="rcl" deviceset="R-EU_" device="R0805W" value="DNP"/>
-<part name="R16" library="rcl" deviceset="R-EU_" device="R0805W" value="DNP"/>
-<part name="R41" library="rcl" deviceset="R-EU_" device="R0805W" value="DNP"/>
-<part name="R43" library="rcl" deviceset="R-EU_" device="R0805W" value="DNP"/>
-<part name="R58" library="rcl" deviceset="R-EU_" device="R0805W" value="DNP"/>
-<part name="R59" library="rcl" deviceset="R-EU_" device="R0805W" value="DNP"/>
-<part name="R62" library="rcl" deviceset="R-EU_" device="R0805W" value="DNP"/>
-<part name="R63" library="rcl" deviceset="R-EU_" device="R0805W" value="DNP"/>
+<part name="R15" library="rcl" deviceset="R-EU_" device="R0805W" value="100K"/>
+<part name="R16" library="rcl" deviceset="R-EU_" device="R0805W" value="100K"/>
+<part name="R41" library="rcl" deviceset="R-EU_" device="R0805W" value="100K"/>
+<part name="R43" library="rcl" deviceset="R-EU_" device="R0805W" value="100K"/>
+<part name="R58" library="rcl" deviceset="R-EU_" device="R0805W" value="100K"/>
+<part name="R59" library="rcl" deviceset="R-EU_" device="R0805W" value="100K"/>
+<part name="R62" library="rcl" deviceset="R-EU_" device="R0805W" value="100K"/>
+<part name="R63" library="rcl" deviceset="R-EU_" device="R0805W" value="100K"/>
 <part name="R67" library="rcl" deviceset="R-EU_" device="R0805W" value="4K7"/>
 <part name="SUPPLY78" library="supply2" deviceset="AGND" device=""/>
 <part name="R68" library="rcl" deviceset="R-EU_" device="R0805W" value="10K"/>
@@ -25869,8 +25869,6 @@ We've spent an enormous amount of time creating and checking these footprints an
 <part name="SUPPLY122" library="supply2" deviceset="AGND" device=""/>
 <part name="SUPPLY123" library="supply2" deviceset="AGND" device=""/>
 <part name="IC14" library="Simplex-ICs" deviceset="PGA2311" device=""/>
-<part name="SUPPLY124" library="supply2" deviceset="AGND" device=""/>
-<part name="SUPPLY125" library="supply2" deviceset="AGND" device=""/>
 <part name="SUPPLY126" library="supply2" deviceset="AGND" device=""/>
 <part name="SUPPLY127" library="supply2" deviceset="DGND" device=""/>
 <part name="R92" library="rcl" deviceset="R-EU_" device="R0805W" value="47K"/>
@@ -25891,16 +25889,16 @@ We've spent an enormous amount of time creating and checking these footprints an
 <part name="SUPPLY136" library="supply2" deviceset="AGND" device=""/>
 <part name="C67" library="rcl" deviceset="C-EU" device="C0805" value="1u"/>
 <part name="C68" library="rcl" deviceset="C-EU" device="C0805" value="1u"/>
-<part name="R103" library="rcl" deviceset="R-EU_" device="R0805W" value="DNP"/>
+<part name="R103" library="rcl" deviceset="R-EU_" device="R0805W" value="100K"/>
 <part name="SUPPLY137" library="supply2" deviceset="AGND" device=""/>
-<part name="R104" library="rcl" deviceset="R-EU_" device="R0805W" value="DNP"/>
+<part name="R104" library="rcl" deviceset="R-EU_" device="R0805W" value="100K"/>
 <part name="SUPPLY138" library="supply2" deviceset="AGND" device=""/>
-<part name="R105" library="rcl" deviceset="R-EU_" device="R0805W" value="100K"/>
+<part name="R105" library="rcl" deviceset="R-EU_" device="R0805W" value="DNP"/>
 <part name="SUPPLY139" library="supply2" deviceset="AGND" device=""/>
-<part name="R106" library="rcl" deviceset="R-EU_" device="R0805W" value="100K"/>
+<part name="R106" library="rcl" deviceset="R-EU_" device="R0805W" value="DNP"/>
 <part name="SUPPLY140" library="supply2" deviceset="AGND" device=""/>
-<part name="R107" library="rcl" deviceset="R-EU_" device="R0805W" value="DNP"/>
-<part name="R108" library="rcl" deviceset="R-EU_" device="R0805W" value="DNP"/>
+<part name="R107" library="rcl" deviceset="R-EU_" device="R0805W" value="100K"/>
+<part name="R108" library="rcl" deviceset="R-EU_" device="R0805W" value="100K"/>
 <part name="U1" library="SparkFun-PowerIC" deviceset="V_REG_LDO" device="SMD"/>
 <part name="SUPPLY141" library="supply2" deviceset="DGND" device=""/>
 <part name="C71" library="rcl" deviceset="C-EU" device="C0805" value="100nF"/>
@@ -26268,8 +26266,6 @@ We've spent an enormous amount of time creating and checking these footprints an
 <instance part="SUPPLY122" gate="G$1" x="213.36" y="157.48"/>
 <instance part="SUPPLY123" gate="G$1" x="213.36" y="96.52"/>
 <instance part="IC14" gate="PGA2311" x="231.14" y="40.64"/>
-<instance part="SUPPLY124" gate="G$1" x="116.84" y="-5.08"/>
-<instance part="SUPPLY125" gate="G$1" x="124.46" y="-5.08"/>
 <instance part="SUPPLY126" gate="G$1" x="256.54" y="10.16"/>
 <instance part="SUPPLY127" gate="G$1" x="226.06" y="10.16"/>
 <instance part="R92" gate="G$1" x="200.66" y="25.4" rot="R270"/>
