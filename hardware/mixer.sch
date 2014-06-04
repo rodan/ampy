@@ -17773,92 +17773,12 @@ Source: http://www.irf.com/product-info/datasheets/data/irfr5305pbf.pdf</descrip
 <pin name="S" x="0" y="-5.08" visible="off" length="short" direction="pas" rot="R90"/>
 <wire x1="2.54" y1="0.695" x2="2.54" y2="1.8961125" width="0.1524" layer="94"/>
 </symbol>
-<symbol name="MOSFET-NCHANNEL">
-<description>N-channel mosfet</description>
-<wire x1="-3.2" y1="2.4" x2="-3.2" y2="-2.4" width="0.254" layer="94"/>
-<wire x1="0" y1="1.905" x2="-2.2966" y2="1.895" width="0.1524" layer="94"/>
-<wire x1="-2.332" y1="-1.905" x2="0" y2="-1.905" width="0.1524" layer="94"/>
-<wire x1="0" y1="2.54" x2="0" y2="1.905" width="0.1524" layer="94"/>
-<wire x1="0" y1="1.905" x2="2.56" y2="1.905" width="0.1524" layer="94"/>
-<wire x1="0" y1="-1.905" x2="0" y2="-2.54" width="0.1524" layer="94"/>
-<wire x1="2.56" y1="1.905" x2="2.56" y2="0.762" width="0.1524" layer="94"/>
-<wire x1="2.56" y1="0.762" x2="1.925" y2="-0.635" width="0.1524" layer="94"/>
-<wire x1="1.925" y1="-0.635" x2="3.195" y2="-0.635" width="0.1524" layer="94"/>
-<wire x1="3.195" y1="-0.635" x2="2.56" y2="0.762" width="0.1524" layer="94"/>
-<wire x1="1.925" y1="0.762" x2="2.56" y2="0.762" width="0.1524" layer="94"/>
-<wire x1="2.56" y1="0.762" x2="3.195" y2="0.762" width="0.1524" layer="94"/>
-<wire x1="3.195" y1="0.762" x2="3.449" y2="1.016" width="0.1524" layer="94"/>
-<wire x1="1.925" y1="0.762" x2="1.671" y2="0.508" width="0.1524" layer="94"/>
-<wire x1="-2.12" y1="0" x2="-0.85" y2="-0.508" width="0.1524" layer="94"/>
-<wire x1="-0.85" y1="-0.508" x2="-0.85" y2="0.508" width="0.1524" layer="94"/>
-<wire x1="-0.85" y1="0.508" x2="-2.12" y2="0" width="0.1524" layer="94"/>
-<wire x1="-0.977" y1="0" x2="-0.008" y2="0" width="0.1524" layer="94"/>
-<wire x1="-0.977" y1="0.254" x2="-1.866" y2="0" width="0.3048" layer="94"/>
-<wire x1="-1.866" y1="0" x2="-0.977" y2="-0.254" width="0.3048" layer="94"/>
-<wire x1="-0.977" y1="-0.254" x2="-0.977" y2="0" width="0.3048" layer="94"/>
-<wire x1="-0.977" y1="0" x2="-1.231" y2="0" width="0.3048" layer="94"/>
-<wire x1="-3.23" y1="0" x2="-5.08" y2="0" width="0.1524" layer="94"/>
-<circle x="0" y="-1.905" radius="0.127" width="0.4064" layer="94"/>
-<circle x="0" y="1.905" radius="0.127" width="0.4064" layer="94"/>
-<text x="5.08" y="2.54" size="1.778" layer="95">&gt;NAME</text>
-<text x="5.08" y="0" size="1.778" layer="96">&gt;VALUE</text>
-<text x="-1.27" y="2.54" size="0.8128" layer="93">D</text>
-<text x="-1.27" y="-3.556" size="0.8128" layer="93">S</text>
-<text x="-5.08" y="-1.27" size="0.8128" layer="93">G</text>
-<rectangle x1="-2.794" y1="-2.54" x2="-2.2" y2="-1.27" layer="94"/>
-<rectangle x1="-2.794" y1="1.27" x2="-2.2" y2="2.54" layer="94"/>
-<rectangle x1="-2.794" y1="-0.889" x2="-2.2" y2="0.889" layer="94"/>
-<pin name="G" x="-7.62" y="0" visible="off" length="short" direction="pas"/>
-<pin name="D" x="0" y="5.08" visible="off" length="short" direction="pas" rot="R270"/>
-<pin name="S" x="0" y="-5.08" visible="off" length="short" direction="pas" rot="R90"/>
-<wire x1="2.56" y1="-0.695" x2="2.56" y2="-1.905" width="0.1524" layer="94"/>
-<wire x1="0" y1="-1.897" x2="0" y2="-0.008" width="0.1524" layer="94"/>
-<wire x1="0" y1="-1.905" x2="2.56" y2="-1.905" width="0.1524" layer="94"/>
-</symbol>
 </symbols>
 <devicesets>
 <deviceset name="MOSFET-PCHANNEL" prefix="Q">
 <description>Generic P-channel mosfet</description>
 <gates>
 <gate name="G$1" symbol="MOSFET-PCHANNEL" x="0" y="0"/>
-</gates>
-<devices>
-<device name="_SOT23-3" package="SOT23-3">
-<connects>
-<connect gate="G$1" pin="D" pad="3"/>
-<connect gate="G$1" pin="G" pad="1"/>
-<connect gate="G$1" pin="S" pad="2"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-<device name="_SOT23-3_POWER" package="SOT23-3_POWER">
-<connects>
-<connect gate="G$1" pin="D" pad="3"/>
-<connect gate="G$1" pin="G" pad="1"/>
-<connect gate="G$1" pin="S" pad="2"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-<device name="_D-PAK" package="D-PAK_TO252AA">
-<connects>
-<connect gate="G$1" pin="D" pad="2"/>
-<connect gate="G$1" pin="G" pad="1"/>
-<connect gate="G$1" pin="S" pad="3"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-</devices>
-</deviceset>
-<deviceset name="MOSFET-NCHANNEL" prefix="Q">
-<description>Generic N-channel mosfet</description>
-<gates>
-<gate name="G$1" symbol="MOSFET-NCHANNEL" x="0" y="0"/>
 </gates>
 <devices>
 <device name="_SOT23-3" package="SOT23-3">
@@ -25528,6 +25448,67 @@ We've spent an enormous amount of time creating and checking these footprints an
 </deviceset>
 </devicesets>
 </library>
+<library name="transistor">
+<description>&lt;b&gt;Transistors&lt;/b&gt;&lt;p&gt;
+&lt;author&gt;Created by librarian@cadsoft.de&lt;/author&gt;</description>
+<packages>
+<package name="SOT23">
+<description>&lt;b&gt;SOT-23&lt;/b&gt;</description>
+<wire x1="1.4224" y1="0.6604" x2="1.4224" y2="-0.6604" width="0.1524" layer="51"/>
+<wire x1="1.4224" y1="-0.6604" x2="-1.4224" y2="-0.6604" width="0.1524" layer="51"/>
+<wire x1="-1.4224" y1="-0.6604" x2="-1.4224" y2="0.6604" width="0.1524" layer="51"/>
+<wire x1="-1.4224" y1="0.6604" x2="1.4224" y2="0.6604" width="0.1524" layer="51"/>
+<smd name="3" x="0" y="1.1" dx="1" dy="1.4" layer="1"/>
+<smd name="2" x="0.95" y="-1.1" dx="1" dy="1.4" layer="1"/>
+<smd name="1" x="-0.95" y="-1.1" dx="1" dy="1.4" layer="1"/>
+<text x="-1.905" y="1.905" size="1.27" layer="25">&gt;NAME</text>
+<text x="-1.905" y="-3.175" size="1.27" layer="27">&gt;VALUE</text>
+<rectangle x1="-0.2286" y1="0.7112" x2="0.2286" y2="1.2954" layer="51"/>
+<rectangle x1="0.7112" y1="-1.2954" x2="1.1684" y2="-0.7112" layer="51"/>
+<rectangle x1="-1.1684" y1="-1.2954" x2="-0.7112" y2="-0.7112" layer="51"/>
+</package>
+</packages>
+<symbols>
+<symbol name="NPN">
+<wire x1="2.54" y1="2.54" x2="0.508" y2="1.524" width="0.1524" layer="94"/>
+<wire x1="1.778" y1="-1.524" x2="2.54" y2="-2.54" width="0.1524" layer="94"/>
+<wire x1="2.54" y1="-2.54" x2="1.27" y2="-2.54" width="0.1524" layer="94"/>
+<wire x1="1.27" y1="-2.54" x2="1.778" y2="-1.524" width="0.1524" layer="94"/>
+<wire x1="1.54" y1="-2.04" x2="0.308" y2="-1.424" width="0.1524" layer="94"/>
+<wire x1="1.524" y1="-2.413" x2="2.286" y2="-2.413" width="0.254" layer="94"/>
+<wire x1="2.286" y1="-2.413" x2="1.778" y2="-1.778" width="0.254" layer="94"/>
+<wire x1="1.778" y1="-1.778" x2="1.524" y2="-2.286" width="0.254" layer="94"/>
+<wire x1="1.524" y1="-2.286" x2="1.905" y2="-2.286" width="0.254" layer="94"/>
+<wire x1="1.905" y1="-2.286" x2="1.778" y2="-2.032" width="0.254" layer="94"/>
+<text x="-10.16" y="7.62" size="1.778" layer="95">&gt;NAME</text>
+<text x="-10.16" y="5.08" size="1.778" layer="96">&gt;VALUE</text>
+<rectangle x1="-0.254" y1="-2.54" x2="0.508" y2="2.54" layer="94"/>
+<pin name="B" x="-2.54" y="0" visible="off" length="short" direction="pas" swaplevel="1"/>
+<pin name="E" x="2.54" y="-5.08" visible="off" length="short" direction="pas" swaplevel="3" rot="R90"/>
+<pin name="C" x="2.54" y="5.08" visible="off" length="short" direction="pas" swaplevel="2" rot="R270"/>
+</symbol>
+</symbols>
+<devicesets>
+<deviceset name="BC846" prefix="T">
+<description>&lt;b&gt;NPN TRANSISTOR&lt;/b&gt;</description>
+<gates>
+<gate name="G$1" symbol="NPN" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="SOT23">
+<connects>
+<connect gate="G$1" pin="B" pad="1"/>
+<connect gate="G$1" pin="C" pad="3"/>
+<connect gate="G$1" pin="E" pad="2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+</devicesets>
+</library>
 </libraries>
 <attributes>
 </attributes>
@@ -25675,7 +25656,6 @@ We've spent an enormous amount of time creating and checking these footprints an
 <part name="SUPPLY54" library="supply2" deviceset="DGND" device=""/>
 <part name="SUPPLY55" library="supply2" deviceset="DGND" device=""/>
 <part name="X1" library="Simplex-Connectors" deviceset="MOLEX_6" device="HORIZONTAL"/>
-<part name="Q2" library="Simplex-DiscreteSemi" deviceset="MOSFET-NCHANNEL" device="_SOT23-3"/>
 <part name="R38" library="rcl" deviceset="R-EU_" device="R0805W" value="10K"/>
 <part name="R46" library="rcl" deviceset="R-EU_" device="R0805W" value="10K"/>
 <part name="SUPPLY56" library="supply2" deviceset="DGND" device=""/>
@@ -25761,8 +25741,6 @@ We've spent an enormous amount of time creating and checking these footprints an
 <part name="IC13" library="burr-brown" deviceset="OPA2134" device="P"/>
 <part name="IC6" library="burr-brown" deviceset="OPA2134" device="P"/>
 <part name="IC7" library="burr-brown" deviceset="OPA2134" device="P"/>
-<part name="R66" library="rcl" deviceset="R-EU_" device="R0805W" value="0R"/>
-<part name="R79" library="rcl" deviceset="R-EU_" device="R0805W" value="0R"/>
 <part name="R85" library="rcl" deviceset="R-EU_" device="R0805W" value="DNP"/>
 <part name="SUPPLY77" library="supply2" deviceset="AGND" device=""/>
 <part name="R84" library="Simplex-Jumpers" deviceset="0R" device="_0805"/>
@@ -25965,6 +25943,9 @@ We've spent an enormous amount of time creating and checking these footprints an
 <part name="TP7" library="SparkFun-Passives" deviceset="TEST-POINT" device="3"/>
 <part name="X6" library="Simplex-Connectors" deviceset="2512-" device="5"/>
 <part name="X5" library="Simplex-Connectors" deviceset="2512-" device="5"/>
+<part name="T1" library="transistor" deviceset="BC846" device=""/>
+<part name="R114" library="Simplex-Jumpers" deviceset="0R" device="_0805"/>
+<part name="R66" library="Simplex-Jumpers" deviceset="0R" device="_0805"/>
 </parts>
 <sheets>
 <sheet>
@@ -26180,8 +26161,6 @@ We've spent an enormous amount of time creating and checking these footprints an
 <instance part="IC6" gate="B" x="96.52" y="314.96" rot="R180"/>
 <instance part="IC7" gate="A" x="96.52" y="50.8" rot="R180"/>
 <instance part="IC7" gate="B" x="96.52" y="25.4" rot="R180"/>
-<instance part="R66" gate="G$1" x="96.52" y="66.04" rot="R180"/>
-<instance part="R79" gate="G$1" x="96.52" y="38.1" rot="R180"/>
 <instance part="R85" gate="G$1" x="281.94" y="317.5" rot="R270"/>
 <instance part="SUPPLY77" gate="G$1" x="281.94" y="307.34"/>
 <instance part="R84" gate="G$1" x="281.94" y="327.66" rot="R90"/>
@@ -26363,6 +26342,8 @@ We've spent an enormous amount of time creating and checking these footprints an
 <instance part="X6" gate="-10" x="223.52" y="116.84" rot="MR0"/>
 <instance part="X6" gate="-11" x="223.52" y="109.22" rot="MR0"/>
 <instance part="X6" gate="-12" x="223.52" y="111.76" rot="MR0"/>
+<instance part="R114" gate="G$1" x="96.52" y="66.04"/>
+<instance part="R66" gate="G$1" x="96.52" y="38.1"/>
 </instances>
 <busses>
 </busses>
@@ -27149,11 +27130,11 @@ We've spent an enormous amount of time creating and checking these footprints an
 <junction x="83.82" y="50.8"/>
 <pinref part="IC2" gate="PGA2311" pin="VINL"/>
 <pinref part="IC7" gate="A" pin="OUT"/>
-<pinref part="R66" gate="G$1" pin="2"/>
 <wire x1="91.44" y1="66.04" x2="83.82" y2="66.04" width="0.1524" layer="91"/>
 <pinref part="R112" gate="G$1" pin="2"/>
 <wire x1="78.74" y1="20.32" x2="78.74" y2="50.8" width="0.1524" layer="91"/>
 <junction x="78.74" y="50.8"/>
+<pinref part="R114" gate="G$1" pin="P$1"/>
 </segment>
 </net>
 <net name="N$7" class="0">
@@ -27163,12 +27144,12 @@ We've spent an enormous amount of time creating and checking these footprints an
 <wire x1="83.82" y1="25.4" x2="88.9" y2="25.4" width="0.1524" layer="91"/>
 <pinref part="IC2" gate="PGA2311" pin="VINR"/>
 <pinref part="IC7" gate="B" pin="OUT"/>
-<pinref part="R79" gate="G$1" pin="2"/>
 <wire x1="91.44" y1="38.1" x2="83.82" y2="38.1" width="0.1524" layer="91"/>
 <junction x="83.82" y="38.1"/>
 <pinref part="R100" gate="G$1" pin="2"/>
 <wire x1="83.82" y1="20.32" x2="83.82" y2="25.4" width="0.1524" layer="91"/>
 <junction x="83.82" y="25.4"/>
+<pinref part="R66" gate="G$1" pin="P$1"/>
 </segment>
 </net>
 <net name="N$8" class="0">
@@ -28334,8 +28315,8 @@ We've spent an enormous amount of time creating and checking these footprints an
 <wire x1="109.22" y1="53.34" x2="109.22" y2="66.04" width="0.1524" layer="91"/>
 <wire x1="104.14" y1="53.34" x2="109.22" y2="53.34" width="0.1524" layer="91"/>
 <pinref part="IC7" gate="A" pin="-IN"/>
-<pinref part="R66" gate="G$1" pin="1"/>
 <wire x1="101.6" y1="66.04" x2="109.22" y2="66.04" width="0.1524" layer="91"/>
+<pinref part="R114" gate="G$1" pin="P$2"/>
 </segment>
 </net>
 <net name="N$50" class="0">
@@ -28343,8 +28324,8 @@ We've spent an enormous amount of time creating and checking these footprints an
 <wire x1="109.22" y1="38.1" x2="109.22" y2="27.94" width="0.1524" layer="91"/>
 <wire x1="109.22" y1="27.94" x2="104.14" y2="27.94" width="0.1524" layer="91"/>
 <pinref part="IC7" gate="B" pin="-IN"/>
-<pinref part="R79" gate="G$1" pin="1"/>
 <wire x1="101.6" y1="38.1" x2="109.22" y2="38.1" width="0.1524" layer="91"/>
+<pinref part="R66" gate="G$1" pin="P$2"/>
 </segment>
 </net>
 <net name="N$56" class="0">
@@ -29043,7 +29024,6 @@ We've spent an enormous amount of time creating and checking these footprints an
 <instance part="SUPPLY54" gate="G$1" x="127" y="78.74"/>
 <instance part="SUPPLY55" gate="G$1" x="132.08" y="60.96"/>
 <instance part="X1" gate="G$1" x="177.8" y="45.72"/>
-<instance part="Q2" gate="G$1" x="68.58" y="144.78"/>
 <instance part="R38" gate="G$1" x="55.88" y="137.16" rot="R90"/>
 <instance part="R46" gate="G$1" x="45.72" y="144.78" rot="R180"/>
 <instance part="SUPPLY56" gate="G$1" x="55.88" y="127"/>
@@ -29108,6 +29088,7 @@ We've spent an enormous amount of time creating and checking these footprints an
 <instance part="X5" gate="-10" x="187.96" y="121.92" rot="R180"/>
 <instance part="X5" gate="-11" x="187.96" y="124.46" rot="R180"/>
 <instance part="X5" gate="-12" x="187.96" y="127" rot="R180"/>
+<instance part="T1" gate="G$1" x="66.04" y="144.78"/>
 </instances>
 <busses>
 </busses>
@@ -29247,8 +29228,8 @@ We've spent an enormous amount of time creating and checking these footprints an
 <wire x1="58.42" y1="160.02" x2="58.42" y2="157.48" width="0.1524" layer="91"/>
 <wire x1="58.42" y1="157.48" x2="68.58" y2="157.48" width="0.1524" layer="91"/>
 <pinref part="Q1" gate="G$1" pin="G"/>
+<pinref part="T1" gate="G$1" pin="C"/>
 <wire x1="68.58" y1="149.86" x2="68.58" y2="157.48" width="0.1524" layer="91"/>
-<pinref part="Q2" gate="G$1" pin="D"/>
 </segment>
 </net>
 <net name="DGND" class="0">
@@ -29310,11 +29291,6 @@ We've spent an enormous amount of time creating and checking these footprints an
 <wire x1="111.76" y1="76.2" x2="111.76" y2="71.12" width="0.1524" layer="91"/>
 <junction x="111.76" y="71.12"/>
 <junction x="111.76" y="66.04"/>
-</segment>
-<segment>
-<pinref part="SUPPLY46" gate="G$1" pin="DGND"/>
-<pinref part="Q2" gate="G$1" pin="S"/>
-<wire x1="68.58" y1="139.7" x2="68.58" y2="129.54" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <pinref part="R38" gate="G$1" pin="1"/>
@@ -29384,16 +29360,21 @@ We've spent an enormous amount of time creating and checking these footprints an
 <pinref part="SUPPLY157" gate="G$1" pin="DGND"/>
 <wire x1="218.44" y1="106.68" x2="218.44" y2="101.6" width="0.1524" layer="91"/>
 </segment>
+<segment>
+<pinref part="T1" gate="G$1" pin="E"/>
+<pinref part="SUPPLY46" gate="G$1" pin="DGND"/>
+<wire x1="68.58" y1="139.7" x2="68.58" y2="129.54" width="0.1524" layer="91"/>
+</segment>
 </net>
 <net name="N$41" class="0">
 <segment>
 <pinref part="R46" gate="G$1" pin="1"/>
-<pinref part="Q2" gate="G$1" pin="G"/>
 <wire x1="50.8" y1="144.78" x2="55.88" y2="144.78" width="0.1524" layer="91"/>
 <pinref part="R38" gate="G$1" pin="2"/>
-<wire x1="55.88" y1="144.78" x2="60.96" y2="144.78" width="0.1524" layer="91"/>
+<wire x1="55.88" y1="144.78" x2="63.5" y2="144.78" width="0.1524" layer="91"/>
 <wire x1="55.88" y1="142.24" x2="55.88" y2="144.78" width="0.1524" layer="91"/>
 <junction x="55.88" y="144.78"/>
+<pinref part="T1" gate="G$1" pin="B"/>
 </segment>
 </net>
 <net name="PGA_EN" class="0">
