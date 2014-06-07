@@ -29,9 +29,9 @@ void display_help(void)
 
     uart1_tx_str("\r\ncommands\r\n", 12);
     uart1_tx_str("v___   set volume\r\n", 19);
-    uart1_tx_str(" |||\r\n", 6);
     uart1_tx_str(" ||+ volume - [0-255]\r\n", 23);
     uart1_tx_str(" |+- channel - {r,l,b}\r\n", 24);
+    uart1_tx_str(" |   r: right, l: left, b: both\r\n", 33);
     uart1_tx_str(" +-- pga ID - [1-6]\r\n", 21);
     uart1_tx_str("     1: front, 2: rear, 3: line-in\r\n", 36);
     uart1_tx_str("     4: spdif, 5: front-rear pan, 6: center and subwoofer\r\n", 59);

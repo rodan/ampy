@@ -1,0 +1,42 @@
+
+an audio amplifier project that contains a mixer controlled by an MSP430 microcontroller
+
+contents:
+ hardware/power_amp  - power circuit for the amplifier
+ hardware/power_pre  - power circuit used by the mixer board
+ hardware/amp        - 2x25W amplifier. for a quad setup this board is used twice, for 6 channels it's used 3 times.
+ hardware/mixer      - mixer board. 10 inputs, 6 outputs, 12 channels of mixing. a stereo-to-quad panning circuit is included
+
+ firmware_mixer      - software that runs on the MSP430F5510 that is present on the mixer board
+
+commands
+v___   set volume
+ ||+ volume - [0-255]
+ |+- channel - {r,l,b}
+ +-- pga ID - [1-6]
+     1: front, 2: rear, 3: line-in
+     4: spdif, 5: front-rear pan, 6: center and subwoofer
+m_     mute pga
+ +- pga ID - [1-6]
+u_     unmute pga
+ +- pga ID - [1-6]
+w_     write current settings to flash
+ +- location [1-3]
+r_     load saved settings from flash
+ +- location [1-3]
+s      show settings
+?      show help
+
+
+
+ homepage:        https://github.com/rodan/ampy
+ author:          Petre Rodan <petre.rodan@simplex.ro>
+ license:         GNU GPLv3
+
+ parts of the code were originally forked from the openchronos-ng project [1]. 
+
+ software requirements:
+
+   msp430 toolchain
+
+[1] http://openchronos-ng.sourceforge.net
