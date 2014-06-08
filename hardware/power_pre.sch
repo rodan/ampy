@@ -18470,7 +18470,7 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <part name="C8" library="rcl" deviceset="C-EU" device="C0805" value="10n"/>
 <part name="C9" library="rcl" deviceset="C-EU" device="C0805" value="10n"/>
 <part name="C10" library="rcl" deviceset="C-EU" device="C0805" value="10n"/>
-<part name="B3" library="rectifier" deviceset="DF*S" device="" technology="02"/>
+<part name="B3" library="rectifier" deviceset="DF*S" device="" technology="02" value="B40S2A-DIO"/>
 <part name="B4" library="rectifier" deviceset="DF*S" device="" technology="02"/>
 <part name="D5" library="diode" deviceset="MBRA340T3" device="" value="M4"/>
 <part name="D8" library="diode" deviceset="MBRA340T3" device="" value="M4"/>
