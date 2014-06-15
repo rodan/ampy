@@ -25771,10 +25771,8 @@ We've spent an enormous amount of time creating and checking these footprints an
 <part name="SUPPLY90" library="supply2" deviceset="+15V" device=""/>
 <part name="SUPPLY91" library="supply2" deviceset="+15V" device=""/>
 <part name="SUPPLY92" library="supply2" deviceset="+15V" device=""/>
-<part name="R96" library="Simplex-Jumpers" deviceset="0R" device="_0805"/>
-<part name="R97" library="Simplex-Jumpers" deviceset="0R" device="_0805"/>
-<part name="R98" library="rcl" deviceset="R-EU_" device="R0805W" value="DNP"/>
-<part name="R99" library="rcl" deviceset="R-EU_" device="R0805W" value="DNP"/>
+<part name="R98" library="rcl" deviceset="R-EU_" device="R0805W" value="4K7"/>
+<part name="R99" library="rcl" deviceset="R-EU_" device="R0805W" value="4K7"/>
 <part name="SUPPLY93" library="supply2" deviceset="AGND" device=""/>
 <part name="SUPPLY94" library="supply2" deviceset="AGND" device=""/>
 <part name="SUPPLY95" library="supply2" deviceset="+5V" device=""/>
@@ -25946,6 +25944,8 @@ We've spent an enormous amount of time creating and checking these footprints an
 <part name="T1" library="transistor" deviceset="BC846" device=""/>
 <part name="R114" library="Simplex-Jumpers" deviceset="0R" device="_0805"/>
 <part name="R66" library="Simplex-Jumpers" deviceset="0R" device="_0805"/>
+<part name="R79" library="rcl" deviceset="R-EU_" device="R0805W" value="10K"/>
+<part name="R96" library="rcl" deviceset="R-EU_" device="R0805W" value="10K"/>
 </parts>
 <sheets>
 <sheet>
@@ -26190,8 +26190,6 @@ We've spent an enormous amount of time creating and checking these footprints an
 <instance part="SUPPLY90" gate="+15V" x="261.62" y="345.44"/>
 <instance part="SUPPLY91" gate="+15V" x="414.02" y="347.98"/>
 <instance part="SUPPLY92" gate="+15V" x="414.02" y="271.78"/>
-<instance part="R96" gate="G$1" x="88.9" y="124.46"/>
-<instance part="R97" gate="G$1" x="88.9" y="111.76"/>
 <instance part="R98" gate="G$1" x="76.2" y="101.6" rot="R90"/>
 <instance part="R99" gate="G$1" x="81.28" y="101.6" rot="R90"/>
 <instance part="SUPPLY93" gate="G$1" x="76.2" y="91.44"/>
@@ -26344,6 +26342,8 @@ We've spent an enormous amount of time creating and checking these footprints an
 <instance part="X6" gate="-12" x="223.52" y="111.76" rot="MR0"/>
 <instance part="R114" gate="G$1" x="96.52" y="66.04"/>
 <instance part="R66" gate="G$1" x="96.52" y="38.1"/>
+<instance part="R79" gate="G$1" x="88.9" y="111.76" rot="R180"/>
+<instance part="R96" gate="G$1" x="88.9" y="124.46" rot="R180"/>
 </instances>
 <busses>
 </busses>
@@ -28531,37 +28531,37 @@ We've spent an enormous amount of time creating and checking these footprints an
 <net name="N$36" class="0">
 <segment>
 <pinref part="JP1" gate="G$1" pin="2"/>
-<pinref part="R96" gate="G$1" pin="P$2"/>
 <wire x1="111.76" y1="124.46" x2="93.98" y2="124.46" width="0.1524" layer="91"/>
+<pinref part="R96" gate="G$1" pin="1"/>
 </segment>
 </net>
 <net name="N$42" class="0">
 <segment>
-<pinref part="R96" gate="G$1" pin="P$1"/>
 <pinref part="IC5" gate="PGA2311" pin="VINL"/>
 <wire x1="83.82" y1="124.46" x2="76.2" y2="124.46" width="0.1524" layer="91"/>
 <pinref part="R98" gate="G$1" pin="2"/>
 <wire x1="76.2" y1="124.46" x2="66.04" y2="124.46" width="0.1524" layer="91"/>
 <wire x1="76.2" y1="106.68" x2="76.2" y2="124.46" width="0.1524" layer="91"/>
 <junction x="76.2" y="124.46"/>
+<pinref part="R96" gate="G$1" pin="2"/>
 </segment>
 </net>
 <net name="N$79" class="0">
 <segment>
-<pinref part="R97" gate="G$1" pin="P$1"/>
 <pinref part="IC5" gate="PGA2311" pin="VINR"/>
 <wire x1="83.82" y1="111.76" x2="81.28" y2="111.76" width="0.1524" layer="91"/>
 <pinref part="R99" gate="G$1" pin="2"/>
 <wire x1="81.28" y1="111.76" x2="66.04" y2="111.76" width="0.1524" layer="91"/>
 <wire x1="81.28" y1="106.68" x2="81.28" y2="111.76" width="0.1524" layer="91"/>
 <junction x="81.28" y="111.76"/>
+<pinref part="R79" gate="G$1" pin="2"/>
 </segment>
 </net>
 <net name="N$80" class="0">
 <segment>
-<pinref part="R97" gate="G$1" pin="P$2"/>
 <pinref part="JP2" gate="G$1" pin="2"/>
 <wire x1="93.98" y1="111.76" x2="111.76" y2="111.76" width="0.1524" layer="91"/>
+<pinref part="R79" gate="G$1" pin="1"/>
 </segment>
 </net>
 <net name="+5V" class="0">

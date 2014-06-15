@@ -19652,17 +19652,16 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 <part name="FRAME1" library="frames" deviceset="DOCFIELD" device="" value="ihaaa"/>
 <part name="U$7" library="SparkFun" deviceset="OSHW-LOGO" device="M"/>
 <part name="GND1" library="supply1" deviceset="GND" device=""/>
-<part name="R3" library="rcl" deviceset="R-EU_" device="0617/17" value="330"/>
+<part name="R3" library="rcl" deviceset="R-EU_" device="0613/15" value="330"/>
 <part name="GND2" library="supply1" deviceset="GND" device=""/>
-<part name="R5" library="rcl" deviceset="R-EU_" device="0617/17" value="3K3"/>
-<part name="R6" library="rcl" deviceset="R-EU_" device="0617/17" value="1K"/>
-<part name="R7" library="rcl" deviceset="R-EU_" device="0922/22" value="0R33"/>
-<part name="R8" library="rcl" deviceset="R-EU_" device="0617/17" value="33K"/>
+<part name="R5" library="rcl" deviceset="R-EU_" device="0613/15" value="3K3"/>
+<part name="R6" library="rcl" deviceset="R-EU_" device="0613/15" value="1K"/>
+<part name="R8" library="rcl" deviceset="R-EU_" device="0613/15" value="33K"/>
 <part name="C4" library="rcl" deviceset="CPOL-EU" device="G" value="100u"/>
 <part name="C5" library="rcl" deviceset="CPOL-EU" device="F" value="47u"/>
-<part name="R9" library="rcl" deviceset="R-EU_" device="0617/17" value="4R7"/>
+<part name="R9" library="rcl" deviceset="R-EU_" device="0613/15" value="4R7"/>
 <part name="GND5" library="supply1" deviceset="GND" device=""/>
-<part name="R4" library="rcl" deviceset="R-EU_" device="0617/17" value="100R"/>
+<part name="R4" library="rcl" deviceset="R-EU_" device="0613/15" value="100R"/>
 <part name="C3" library="rcl" deviceset="CPOL-EU" device="G" value="100u"/>
 <part name="GND6" library="supply1" deviceset="GND" device=""/>
 <part name="SUPPLY1" library="supply2" deviceset="+24V" device=""/>
@@ -19673,25 +19672,24 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 <part name="C2" library="rcl" deviceset="C-EU" device="C0805" value="470p"/>
 <part name="C1" library="rcl" deviceset="CPOL-EU" device="B" value="1u"/>
 <part name="GND9" library="supply1" deviceset="GND" device=""/>
-<part name="R11" library="rcl" deviceset="R-EU_" device="0922/22" value="0R33"/>
 <part name="GND11" library="supply1" deviceset="GND" device=""/>
 <part name="R16" library="rcl" deviceset="R-EU_" device="R0805W" value="33K"/>
 <part name="R17" library="rcl" deviceset="R-EU_" device="R0805W" value="1K"/>
 <part name="C12" library="rcl" deviceset="C-EU" device="C0805" value="470p"/>
 <part name="C13" library="rcl" deviceset="CPOL-EU" device="B" value="1u"/>
-<part name="R15" library="rcl" deviceset="R-EU_" device="0617/17" value="330"/>
+<part name="R15" library="rcl" deviceset="R-EU_" device="0613/15" value="330"/>
 <part name="GND10" library="supply1" deviceset="GND" device=""/>
-<part name="R13" library="rcl" deviceset="R-EU_" device="0617/17" value="3K3"/>
-<part name="R14" library="rcl" deviceset="R-EU_" device="0617/17" value="1K"/>
-<part name="R12" library="rcl" deviceset="R-EU_" device="0617/17" value="33K"/>
+<part name="R13" library="rcl" deviceset="R-EU_" device="0613/15" value="3K3"/>
+<part name="R14" library="rcl" deviceset="R-EU_" device="0613/15" value="1K"/>
+<part name="R12" library="rcl" deviceset="R-EU_" device="0613/15" value="33K"/>
 <part name="C11" library="rcl" deviceset="CPOL-EU" device="G" value="100u"/>
 <part name="C10" library="rcl" deviceset="CPOL-EU" device="F" value="47u"/>
-<part name="R10" library="rcl" deviceset="R-EU_" device="0617/17" value="4R7"/>
+<part name="R10" library="rcl" deviceset="R-EU_" device="0613/15" value="4R7"/>
 <part name="GND14" library="supply1" deviceset="GND" device=""/>
 <part name="SUPPLY3" library="supply2" deviceset="-24V" device=""/>
 <part name="SUPPLY4" library="supply2" deviceset="-24V" device=""/>
-<part name="C8" library="rcl" deviceset="CPOL-EU" device="F" value="10u"/>
-<part name="C7" library="rcl" deviceset="CPOL-EU" device="F" value="10u"/>
+<part name="C8" library="rcl" deviceset="CPOL-EU" device="D" value="10u"/>
+<part name="C7" library="rcl" deviceset="CPOL-EU" device="D" value="10u"/>
 <part name="R18" library="rcl" deviceset="R-TRIMM" device="3339P" value="20K"/>
 <part name="R19" library="rcl" deviceset="R-TRIMM" device="3339P" value="20K"/>
 <part name="SUPPLY5" library="supply2" deviceset="-24V" device=""/>
@@ -19706,11 +19704,13 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 <part name="C6" library="capacitor-wima" deviceset="C" device="10/5" value="100n"/>
 <part name="C9" library="capacitor-wima" deviceset="C" device="10/5" value="100n"/>
 <part name="JP1" library="SparkFun-Connectors" deviceset="M03" device="PTH" value="power"/>
+<part name="R7" library="rcl" deviceset="R-EU_" device="0613/15" value="0R33"/>
+<part name="R11" library="rcl" deviceset="R-EU_" device="0613/15" value="0R33"/>
 </parts>
 <sheets>
 <sheet>
 <plain>
-<text x="464.82" y="25.4" size="3.81" layer="97">01</text>
+<text x="464.82" y="25.4" size="3.81" layer="97">1.1</text>
 </plain>
 <instances>
 <instance part="FRAME1" gate="G$1" x="373.38" y="17.78"/>
@@ -19720,7 +19720,6 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 <instance part="GND2" gate="1" x="274.32" y="96.52"/>
 <instance part="R5" gate="G$1" x="284.48" y="121.92" rot="R90"/>
 <instance part="R6" gate="G$1" x="284.48" y="106.68" rot="R90"/>
-<instance part="R7" gate="G$1" x="294.64" y="154.94" rot="R90"/>
 <instance part="R8" gate="G$1" x="294.64" y="132.08" rot="R180"/>
 <instance part="C4" gate="G$1" x="274.32" y="121.92"/>
 <instance part="C5" gate="G$1" x="297.18" y="114.3" rot="R270"/>
@@ -19737,7 +19736,6 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 <instance part="C2" gate="G$1" x="241.3" y="142.24"/>
 <instance part="C1" gate="G$1" x="231.14" y="149.86" rot="R90"/>
 <instance part="GND9" gate="1" x="279.4" y="73.66"/>
-<instance part="R11" gate="G$1" x="421.64" y="154.94" rot="MR90"/>
 <instance part="GND11" gate="1" x="391.16" y="132.08" rot="MR0"/>
 <instance part="R16" gate="G$1" x="383.54" y="142.24" rot="R90"/>
 <instance part="R17" gate="G$1" x="375.92" y="149.86" rot="R180"/>
@@ -19778,6 +19776,8 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 <instance part="C6" gate="G$1" x="312.42" y="121.92"/>
 <instance part="C9" gate="G$1" x="439.42" y="121.92"/>
 <instance part="JP1" gate="G$1" x="297.18" y="40.64" rot="R180"/>
+<instance part="R7" gate="G$1" x="294.64" y="154.94" rot="R270"/>
+<instance part="R11" gate="G$1" x="421.64" y="154.94" rot="R270"/>
 </instances>
 <busses>
 </busses>
@@ -19884,15 +19884,14 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 </net>
 <net name="N$5" class="0">
 <segment>
-<pinref part="R7" gate="G$1" pin="1"/>
 <wire x1="292.1" y1="144.78" x2="294.64" y2="144.78" width="0.1524" layer="91"/>
 <wire x1="294.64" y1="144.78" x2="294.64" y2="149.86" width="0.1524" layer="91"/>
 <pinref part="U$1" gate="G$1" pin="6"/>
+<pinref part="R7" gate="G$1" pin="2"/>
 </segment>
 </net>
 <net name="OUT_L" class="0">
 <segment>
-<pinref part="R7" gate="G$1" pin="2"/>
 <wire x1="294.64" y1="160.02" x2="294.64" y2="162.56" width="0.1524" layer="91"/>
 <wire x1="294.64" y1="162.56" x2="284.48" y2="162.56" width="0.1524" layer="91"/>
 <wire x1="284.48" y1="162.56" x2="284.48" y2="149.86" width="0.1524" layer="91"/>
@@ -19912,11 +19911,12 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 <junction x="312.42" y="132.08"/>
 <pinref part="U$1" gate="G$1" pin="7"/>
 <pinref part="C6" gate="G$1" pin="1"/>
+<pinref part="R7" gate="G$1" pin="1"/>
 </segment>
 <segment>
-<pinref part="X1" gate="-5" pin="KL"/>
-<wire x1="228.6" y1="40.64" x2="223.52" y2="40.64" width="0.1524" layer="91"/>
-<label x="223.52" y="40.64" size="1.778" layer="95"/>
+<pinref part="X1" gate="-7" pin="KL"/>
+<wire x1="228.6" y1="35.56" x2="223.52" y2="35.56" width="0.1524" layer="91"/>
+<label x="223.52" y="35.56" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="N$7" class="0">
@@ -20031,9 +20031,9 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 <net name="N$12" class="0">
 <segment>
 <wire x1="421.64" y1="144.78" x2="419.1" y2="144.78" width="0.1524" layer="91"/>
-<pinref part="R11" gate="G$1" pin="1"/>
 <wire x1="421.64" y1="144.78" x2="421.64" y2="149.86" width="0.1524" layer="91"/>
 <pinref part="U$1" gate="G$2" pin="11"/>
+<pinref part="R11" gate="G$1" pin="2"/>
 </segment>
 </net>
 <net name="N$14" class="0">
@@ -20116,7 +20116,6 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 <wire x1="439.42" y1="132.08" x2="447.04" y2="132.08" width="0.1524" layer="91"/>
 <wire x1="439.42" y1="132.08" x2="439.42" y2="124.46" width="0.1524" layer="91"/>
 <junction x="439.42" y="132.08"/>
-<pinref part="R11" gate="G$1" pin="2"/>
 <wire x1="421.64" y1="160.02" x2="421.64" y2="162.56" width="0.1524" layer="91"/>
 <wire x1="421.64" y1="162.56" x2="411.48" y2="162.56" width="0.1524" layer="91"/>
 <wire x1="411.48" y1="162.56" x2="411.48" y2="149.86" width="0.1524" layer="91"/>
@@ -20125,11 +20124,12 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 <junction x="421.64" y="162.56"/>
 <pinref part="U$1" gate="G$2" pin="10"/>
 <pinref part="C9" gate="G$1" pin="1"/>
+<pinref part="R11" gate="G$1" pin="1"/>
 </segment>
 <segment>
-<pinref part="X1" gate="-7" pin="KL"/>
-<wire x1="228.6" y1="35.56" x2="223.52" y2="35.56" width="0.1524" layer="91"/>
-<label x="223.52" y="35.56" size="1.778" layer="95"/>
+<pinref part="X1" gate="-5" pin="KL"/>
+<wire x1="228.6" y1="40.64" x2="223.52" y2="40.64" width="0.1524" layer="91"/>
+<label x="223.52" y="40.64" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="IN_L" class="0">
@@ -20140,9 +20140,9 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 <label x="215.9" y="157.48" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="X1" gate="-1" pin="KL"/>
-<wire x1="228.6" y1="50.8" x2="223.52" y2="50.8" width="0.1524" layer="91"/>
-<label x="223.52" y="50.8" size="1.778" layer="95"/>
+<pinref part="X1" gate="-3" pin="KL"/>
+<wire x1="228.6" y1="45.72" x2="223.52" y2="45.72" width="0.1524" layer="91"/>
+<label x="223.52" y="45.72" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="IN_R" class="0">
@@ -20153,9 +20153,9 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 <label x="342.9" y="157.48" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="X1" gate="-3" pin="KL"/>
-<wire x1="228.6" y1="45.72" x2="223.52" y2="45.72" width="0.1524" layer="91"/>
-<label x="223.52" y="45.72" size="1.778" layer="95"/>
+<pinref part="X1" gate="-1" pin="KL"/>
+<wire x1="228.6" y1="50.8" x2="223.52" y2="50.8" width="0.1524" layer="91"/>
+<label x="223.52" y="50.8" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="N$10" class="0">
