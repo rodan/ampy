@@ -5,7 +5,7 @@
 //  license:         GNU GPLv3
 
 #include <stdint.h>
-#include "pga2311.h"
+#include "pga2311_helper.h"
 
 /// read out the volume for channel 'ch' on pga 'pga_id' from the 
 /// mixer_settings_t structure

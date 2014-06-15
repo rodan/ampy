@@ -13,12 +13,13 @@
 #include "drivers/timer_a0.h"
 #include "drivers/timer_a1.h"
 #include "drivers/uart.h"
+#include "drivers/i2c.h"
 #include "drivers/ir_remote.h"
-#include "drivers/pga2311.h"
+#include "drivers/pga2311_helper.h"
 
 char str_temp[64];
 
-uint8_t idx;
+#define MIXER_SLAVE_ADDR 0x28 // XXX
 
 int8_t ir_number, pga_id = -1;
 
@@ -36,9 +37,16 @@ void load_presets(uint8_t location)
 
 void get_mixer_status(void)
 {
-    idx = 0;
     //timer_a1_halt();
-    uart_tx_str("s\n", 3);
+
+    pkg.slave_addr = MIXER_SLAVE_ADDR;
+    pkg.addr[0] = 0;
+    pkg.addr_len = 0;
+    pkg.data = (uint8_t *) &s;
+    pkg.data_len = 4;
+    pkg.read = 1;
+
+    i2c_transfer_start(&pkg, NULL);
 }
 
 void display_mixer_status(void)
@@ -80,10 +88,11 @@ void display_mixer_status(void)
 
 static void uart_rx_irq(enum sys_message msg)
 {
-    uint16_t u16;
-    uint8_t p, i;
+    //uint16_t u16;
+    uint8_t p;
+    //uint8_t i;
     char *input;
-    uint8_t *src, *dst;
+    //uint8_t *src, *dst;
 
     input = (char *)uart_rx_buf;
 
@@ -93,6 +102,7 @@ static void uart_rx_irq(enum sys_message msg)
     }
 
     if (p == 77) {               // m - volume values
+        /*
         if (str_to_uint16(input, &u16, 1, strlen(input) - 1, 0, 255)) {
             src = (uint8_t *) & s;
             *(src+idx) = u16;
@@ -107,6 +117,7 @@ static void uart_rx_irq(enum sys_message msg)
             }
             idx++;
         }
+        */
     } else if (p == 79) {         // ok - ACK 
 
     }
@@ -124,6 +135,7 @@ int main(void)
     timer_a0_init();
     ir_init();
     uart_init();
+    i2c_init();
 
     sys_messagebus_register(&uart_rx_irq, SYS_MSG_UART_RX);
 
@@ -146,7 +158,6 @@ int main(void)
 
 void main_init(void)
 {
-    //uint16_t timeout = 5000;
 
     // watchdog triggers after 4 minutes when not cleared
 #ifdef USE_WATCHDOG
@@ -157,8 +168,15 @@ void main_init(void)
     SetVCore(3);
 
     P1SEL = 0x0;
-    P1DIR = 0xcf;
+    P1DIR = 0x43;
     P1OUT = 0x0;
+
+    // set up i2c port mapping
+    PMAPPWD = 0x02D52;
+    P1MAP2 = PM_UCB0SCL;
+    P1MAP3 = PM_UCB0SDA;
+    PMAPPWD = 0;
+    P1SEL |= BIT2 + BIT3;   
 
     P2SEL = 0x0;
     P2DIR = 0xff;
@@ -170,28 +188,9 @@ void main_init(void)
 
     P5SEL |= BIT0 + BIT1;
 
-    PJDIR = 0xFF;
+    PJDIR = 0xff;
     PJOUT = 0x00;
 
-    /*
-    // send MCLK to P1.2
-    __disable_interrupt();
-    // get write-access to port mapping registers
-    //PMAPPWD = 0x02D52;
-    PMAPPWD = PMAPKEY;
-    PMAPCTL = PMAPRECFG;
-    // MCLK set out to 1.2
-    P1MAP2 = PM_MCLK;
-    //P1MAP2 = PM_RTCCLK;
-    PMAPPWD = 0;
-    __enable_interrupt();
-    P1DIR |= BIT2;
-    P1SEL |= BIT2;
-
-    // send ACLK to P1.0
-    //P1DIR |= BIT0;
-    //P1SEL |= BIT0;
-    */
 }
 
 void sleep(void)

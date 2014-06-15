@@ -16,7 +16,7 @@
 #define IR_SEL P1SEL
 #define IR_DIR P1DIR
 #define IR_IN  P1IN
-#define IR_PIN BIT4
+#define IR_PIN BIT7
 
 void main_init(void);
 void sleep(void);

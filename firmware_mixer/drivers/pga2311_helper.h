@@ -1,5 +1,5 @@
-#ifndef __PGA2311_H__
-#define __PGA2311_H__
+#ifndef __PGA2311_HELPER_H__
+#define __PGA2311_HELPER_H__
 
 struct mixer_settings_t {
     uint8_t ver;                // firmware version
