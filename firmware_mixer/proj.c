@@ -52,11 +52,12 @@ void show_settings(void)
     uint8_t *ptr;
     uint8_t i;
 
-    ptr = &s.ver;
+    ptr = (uint8_t *) &s;
 
     for (i = 0; i < 14; i++) {
-        sprintf(str_temp, "m%d\r\n", *ptr++);
+        sprintf(str_temp, "m%d\n", *ptr++);
         uart1_tx_str(str_temp, strlen(str_temp));
+        timer_a0_delay(500000);
     }
 }
 
@@ -167,6 +168,7 @@ static void uart1_rx_irq(enum sys_message msg)
         display_help();
     } else if (p == 83) {       // [s]how settings
         show_settings();
+        uart1_tx_str("ok\r\n", 4);
     } else if (p == 87) {       // [w]rite to flash
         if (str_to_uint16(input, &u16, 1, 1, 1, 3)) {
             if (u16 == 1) {
@@ -232,7 +234,7 @@ static void uart1_rx_irq(enum sys_message msg)
             }
         }
     }
-    //sprintf(str_temp, "%d\r\n", p);
+    //sprintf(str_temp, "D%d\r\n", p);
     //uart1_tx_str(str_temp, strlen(str_temp));
 
     uart1_p = 0;

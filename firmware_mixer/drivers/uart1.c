@@ -68,9 +68,9 @@ void USCI_A1_ISR(void)
     case 2:
         rx = UCA1RXBUF;
         if (uart1_rx_enable && !uart1_rx_err && (uart1_p < UART1_RXBUF_SZ-2)) {
-            if (rx == 0x0a) {
+            if (rx == 0x0d) {
                 return;
-            } else if (rx == 0x0d) {
+            } else if (rx == 0x0a) {
                 ev = UART1_EV_RX;
                 uart1_rx_buf[uart1_p] = 0;
                 uart1_rx_enable = 0;
@@ -82,7 +82,7 @@ void USCI_A1_ISR(void)
             }
         } else {
             uart1_rx_err++;
-            if (rx == 0x0d) {
+            if (rx == 0x0a) {
                 uart1_rx_err = 0;
                 uart1_p = 0;
             }
