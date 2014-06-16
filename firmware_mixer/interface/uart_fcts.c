@@ -80,12 +80,12 @@ static void uart1_rx_irq(enum sys_message msg)
         p -= 32;
     }
 
-    if ((p == 63) || (p == 72)) {       // [h?]
+    if ((p == 63) || (p == M_CMD_HELP)) {       // [h?]
         display_help();
-    } else if (p == 83) {       // [s]how settings
+    } else if (p == M_CMD_SHOW) {        // [s]how settings
         show_settings();
         uart1_tx_str("ok\r\n", 4);
-    } else if (p == 87) {       // [w]rite to flash
+    } else if (p == M_CMD_WRITE) {       // [w]rite to flash
         if (str_to_uint16(input, &u16, 1, 1, 1, 3)) {
             if (u16 == 1) {
                 flash_addr = SEGMENT_B;
@@ -97,7 +97,7 @@ static void uart1_rx_irq(enum sys_message msg)
             flash_save(flash_addr, (void *)&s, sizeof(s));
             uart1_tx_str("ok\r\n", 4);
         }
-    } else if (p == 82) {       // [r]ead from flash
+    } else if (p == M_CMD_READ) {       // [r]ead from flash
         if (str_to_uint16(input, &u16, 1, 1, 1, 3)) {
             if (u16 == 1) {
                 flash_addr = SEGMENT_B;
@@ -109,19 +109,19 @@ static void uart1_rx_irq(enum sys_message msg)
             settings_init(flash_addr);
             uart1_tx_str("ok\r\n", 4);
         }
-    } else if (p == 77) {       // [m]ute pga
+    } else if (p == M_CMD_MUTE) {       // [m]ute pga
         if (str_to_uint16(input, &u16, 1, 1, 1, 6)) {
             pga = u16;
             pga_mute(pga, 1);
             uart1_tx_str("ok\r\n", 4);
         }
-    } else if (p == 85) {       // [u]nmute pga
+    } else if (p == M_CMD_UNMUTE) {     // [u]nmute pga
         if (str_to_uint16(input, &u16, 1, 1, 1, 6)) {
             pga = u16;
             pga_unmute(pga, 1);
             uart1_tx_str("ok\r\n", 4);
         }
-    } else if (p == 86) {       // [v]olume set
+    } else if (p == M_CMD_VOL) {       // [v]olume set
         if (str_to_uint16(input, &u16, 1, 1, 1, 6)) {
             pga = u16;
             ch = input[2];

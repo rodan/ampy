@@ -1,5 +1,5 @@
 
-SUBDIRS = drivers
+SUBDIRS = drivers interface
 PROJ = proj
 
 ### Machine flags

@@ -17,73 +17,54 @@
 #include "drivers/ir_remote.h"
 #include "drivers/pga2311_helper.h"
 
-char str_temp[64];
+#ifdef USE_UART
+#include "interface/uart_fcts.h"
+#endif
 
-#define MIXER_SLAVE_ADDR 0x28 // XXX
+#ifdef USE_I2C
+#include "interface/i2c_fcts.h"
+#endif
 
-int8_t ir_number, pga_id = -1;
+int8_t ir_number;
+uint8_t pga_id_cur = -1;
 
-void save_presets(uint8_t location)
-{
-    sprintf(str_temp, "w%d\n", location);
-    uart_tx_str(str_temp, strlen(str_temp));
-}
-
-void load_presets(uint8_t location)
-{
-    sprintf(str_temp, "r%d\n", location);
-    uart_tx_str(str_temp, strlen(str_temp));
-}
-
-void get_mixer_status(void)
-{
-    //timer_a1_halt();
-
-    pkg.slave_addr = MIXER_SLAVE_ADDR;
-    pkg.addr[0] = 0;
-    pkg.addr_len = 0;
-    pkg.data = (uint8_t *) &s;
-    pkg.data_len = 4;
-    pkg.read = 1;
-
-    i2c_transfer_start(&pkg, NULL);
-}
+#define DISPLAY_DELAY 400000
 
 void display_mixer_status(void)
 {
+
     char m[] = "muted";
-    //sprintf(str_temp, "p1dir:%x p1sel:%x\n", P1DIR, P1SEL);
-    //uart_tx_str(str_temp, strlen(str_temp));
 
-    sprintf(str_temp, "1front     %3d %3d %s\n", s.v1_r, s.v1_l, (s.mute_flag & 1)?"":m);
+    sprintf(str_temp, "1front     %3d %3d %s\n", s.v1_r, s.v1_l, mixer_get_mute_struct(1)?"":m);
     uart_tx_str(str_temp, strlen(str_temp));
-    timer_a0_delay(600000);
+    timer_a0_delay(DISPLAY_DELAY);
 
-    sprintf(str_temp, "2rear      %3d %3d %s\n", s.v2_r, s.v2_l, (s.mute_flag & (1 << 1))?"":m);
+    sprintf(str_temp, "2rear      %3d %3d %s\n", s.v2_r, s.v2_l, mixer_get_mute_struct(2)?"":m);
     uart_tx_str(str_temp, strlen(str_temp));
-    timer_a0_delay(600000);
+    timer_a0_delay(DISPLAY_DELAY);
 
-    sprintf(str_temp, "3line in   %3d %3d %s\n", s.v3_r, s.v3_l, (s.mute_flag & (1 << 2))?"":m);
+    sprintf(str_temp, "3line in   %3d %3d %s\n", s.v3_r, s.v3_l, mixer_get_mute_struct(3)?"":m);
     uart_tx_str(str_temp, strlen(str_temp));
-    timer_a0_delay(600000);
+    timer_a0_delay(DISPLAY_DELAY);
 
-    sprintf(str_temp, "4spdif     %3d %3d %s\n", s.v4_r, s.v4_l, (s.mute_flag & (1 << 3))?"":m);
+    sprintf(str_temp, "4spdif     %3d %3d %s\n", s.v4_r, s.v4_l, mixer_get_mute_struct(4)?"":m);
     uart_tx_str(str_temp, strlen(str_temp));
-    timer_a0_delay(600000);
+    timer_a0_delay(DISPLAY_DELAY);
 
-    sprintf(str_temp, "5f-r pan   %3d %3d %s\n", s.v5_r, s.v5_l, (s.mute_flag & (1 << 4))?"":m);
+    sprintf(str_temp, "5f-r pan   %3d %3d %s\n", s.v5_r, s.v5_l, mixer_get_mute_struct(5)?"":m);
     uart_tx_str(str_temp, strlen(str_temp));
-    timer_a0_delay(600000);
+    timer_a0_delay(DISPLAY_DELAY);
 
-    sprintf(str_temp, "6center    %3d     %s\n", s.v6_r, (s.mute_flag & (1 << 5))?"":m);
+    sprintf(str_temp, "6center    %3d     %s\n", s.v6_r, mixer_get_mute_struct(6)?"":m);
     uart_tx_str(str_temp, strlen(str_temp));
-    timer_a0_delay(600000);
+    timer_a0_delay(DISPLAY_DELAY);
 
-    sprintf(str_temp, "7subwoofer %3d     %s\n", s.v6_l, (s.mute_flag & (1 << 5))?"":m);
+    sprintf(str_temp, "7subwoofer %3d     %s\n", s.v6_l, mixer_get_mute_struct(6)?"":m);
     uart_tx_str(str_temp, strlen(str_temp));
-    timer_a0_delay(600000);
+    timer_a0_delay(DISPLAY_DELAY);
 
     uart_tx_str("A\n", 3);
+    timer_a0_delay(DISPLAY_DELAY);
 }
 
 static void uart_rx_irq(enum sys_message msg)
@@ -135,10 +116,22 @@ int main(void)
     timer_a0_init();
     ir_init();
     uart_init();
+
+#ifdef USE_I2C
+    // set up i2c port mapping
+    PMAPPWD = 0x02D52;
+    P1MAP2 = PM_UCB0SCL;
+    P1MAP3 = PM_UCB0SDA;
+    PMAPPWD = 0;
+    P1SEL |= BIT2 + BIT3;
+
     i2c_init();
+#endif
 
     sys_messagebus_register(&uart_rx_irq, SYS_MSG_UART_RX);
 
+    // PGAs are started up with a delay, so wait a little
+    // before querying them
     timer_a0_delay(1000000);
     timer_a0_delay(1000000);
     timer_a0_delay(1000000);
@@ -170,13 +163,6 @@ void main_init(void)
     P1SEL = 0x0;
     P1DIR = 0x43;
     P1OUT = 0x0;
-
-    // set up i2c port mapping
-    PMAPPWD = 0x02D52;
-    P1MAP2 = PM_UCB0SCL;
-    P1MAP3 = PM_UCB0SDA;
-    PMAPPWD = 0;
-    P1SEL |= BIT2 + BIT3;   
 
     P2SEL = 0x0;
     P2DIR = 0xff;
@@ -227,141 +213,6 @@ void check_events(void)
         p = p->next;
     }
 }
-
-#ifdef USE_UART_TO_MIXER
-
-void mixer_send_funct(const uint8_t pga, const uint8_t function, const uint8_t r_diff, const uint8_t l_diff) 
-{
-    uint8_t vol_r, vol_l;
-
-    switch (function) {
-
-    case FCT_T_MUTE:
-        if (!mixer_get_mute_struct(pga)) {
-            mixer_set_mute_struct(pga, UNMUTE);
-            sprintf(str_temp, "u%d\n", pga);
-        } else {
-            mixer_set_mute_struct(pga, MUTE);
-            sprintf(str_temp, "m%d\n", pga);
-        }
-        uart_tx_str(str_temp, strlen(str_temp));
-    break;
-
-    case FCT_V_INC:
-        vol_r = mixer_get_vol_struct(pga, CH_RIGHT);
-        if (vol_r < 255 - r_diff) {
-            vol_r+=r_diff;
-            mixer_set_vol_struct(pga, CH_RIGHT, vol_r);
-        }
-        vol_l = mixer_get_vol_struct(pga, CH_LEFT);
-        if (vol_l < 255 - l_diff) {
-            vol_l+=l_diff;
-            mixer_set_vol_struct(pga, CH_LEFT, vol_l);
-        }
-        if (vol_r == vol_l) {
-            sprintf(str_temp, "v%db%d\n", pga, vol_r);
-            uart_tx_str(str_temp, strlen(str_temp));
-        } else {
-            sprintf(str_temp, "v%dr%d\n", pga, vol_r);
-            uart_tx_str(str_temp, strlen(str_temp));
-
-            sprintf(str_temp, "v%dl%d\n", pga, vol_l);
-            uart_tx_str(str_temp, strlen(str_temp));
-        }
-    break;
-
-    case FCT_V_DEC:
-        vol_r = mixer_get_vol_struct(pga, CH_RIGHT);
-        if (vol_r > r_diff) {
-            vol_r-=r_diff;
-            mixer_set_vol_struct(pga, CH_RIGHT, vol_r);
-        }
-        vol_l = mixer_get_vol_struct(pga, CH_LEFT);
-        if (vol_l > l_diff) {
-            vol_l-=l_diff;
-            mixer_set_vol_struct(pga, CH_LEFT, vol_l);
-        }
-        if (vol_r == vol_l) {
-            sprintf(str_temp, "v%db%d\n", pga, vol_r);
-            uart_tx_str(str_temp, strlen(str_temp));
-        } else {
-            sprintf(str_temp, "v%dr%d\n", pga, vol_r);
-            uart_tx_str(str_temp, strlen(str_temp));
-
-            sprintf(str_temp, "v%dl%d\n", pga, vol_l);
-            uart_tx_str(str_temp, strlen(str_temp));
-        }
-    break;
-    }
-}
-#else
-
-void mixer_send_funct(const uint8_t pga, const uint8_t function, const uint8_t r_diff, const uint8_t l_diff) 
-{
-    uint8_t vol_r, vol_l;
-
-    switch (function) {
-
-    case FCT_T_MUTE:
-        if (!mixer_get_mute_struct(pga)) {
-            mixer_set_mute_struct(pga, UNMUTE);
-            //sprintf(str_temp, "u%d\n", pga);
-        } else {
-            mixer_set_mute_struct(pga, MUTE);
-            //sprintf(str_temp, "m%d\n", pga);
-        }
-        //uart_tx_str(str_temp, strlen(str_temp));
-    break;
-
-    case FCT_V_INC:
-        vol_r = mixer_get_vol_struct(pga, CH_RIGHT);
-        if (vol_r < 255 - r_diff) {
-            vol_r+=r_diff;
-            mixer_set_vol_struct(pga, CH_RIGHT, vol_r);
-        }
-        vol_l = mixer_get_vol_struct(pga, CH_LEFT);
-        if (vol_l < 255 - l_diff) {
-            vol_l+=l_diff;
-            mixer_set_vol_struct(pga, CH_LEFT, vol_l);
-        }
-        if (vol_r == vol_l) {
-            //sprintf(str_temp, "v%db%d\n", pga, vol_r);
-            //uart_tx_str(str_temp, strlen(str_temp));
-        } else {
-            //sprintf(str_temp, "v%dr%d\n", pga, vol_r);
-            //uart_tx_str(str_temp, strlen(str_temp));
-
-            //sprintf(str_temp, "v%dl%d\n", pga, vol_l);
-            //uart_tx_str(str_temp, strlen(str_temp));
-        }
-    break;
-
-    case FCT_V_DEC:
-        vol_r = mixer_get_vol_struct(pga, CH_RIGHT);
-        if (vol_r > r_diff) {
-            vol_r-=r_diff;
-            mixer_set_vol_struct(pga, CH_RIGHT, vol_r);
-        }
-        vol_l = mixer_get_vol_struct(pga, CH_LEFT);
-        if (vol_l > l_diff) {
-            vol_l-=l_diff;
-            mixer_set_vol_struct(pga, CH_LEFT, vol_l);
-        }
-        if (vol_r == vol_l) {
-            //sprintf(str_temp, "v%db%d\n", pga, vol_r);
-            //uart_tx_str(str_temp, strlen(str_temp));
-        } else {
-            //sprintf(str_temp, "v%dr%d\n", pga, vol_r);
-            //uart_tx_str(str_temp, strlen(str_temp));
-
-            //sprintf(str_temp, "v%dl%d\n", pga, vol_l);
-            //uart_tx_str(str_temp, strlen(str_temp));
-        }
-    break;
-    }
-}
-
-#endif
 
 void check_ir(void)
 {
@@ -454,26 +305,26 @@ void check_ir(void)
 */
         case 13:
         case 0x290:            // mute
-            mixer_send_funct(pga_id, FCT_T_MUTE, 0, 0);
+            mixer_send_funct(pga_id_cur, FCT_T_MUTE, 0, 0);
             break;
         case 16:
         case 0x490:            // vol+
-            mixer_send_funct(pga_id, FCT_V_INC, VOL_STEP, VOL_STEP);
+            mixer_send_funct(pga_id_cur, FCT_V_INC, VOL_STEP, VOL_STEP);
             break;
         case 17:
         case 0xc90:            // vol-
-            mixer_send_funct(pga_id, FCT_V_DEC, VOL_STEP, VOL_STEP);
+            mixer_send_funct(pga_id_cur, FCT_V_DEC, VOL_STEP, VOL_STEP);
             break;
         case 28:
-/*
         case 0x90:             // ch+
+            mixer_send_funct(pga_id_cur, FCT_V_INC, VOL_BIG_STEP, VOL_BIG_STEP);
             break;
         case 29:
         case 0x890:            // ch-
+            mixer_send_funct(pga_id_cur, FCT_V_DEC, VOL_BIG_STEP, VOL_BIG_STEP);
             break;
-*/
         case 36:               // record
-            save_presets(1); 
+            save_presets(pga_id_cur); 
             break;
 /*
         case 54:
@@ -481,7 +332,7 @@ void check_ir(void)
             break;
 */
         case 14:               // play
-            load_presets(1);
+            load_presets(pga_id_cur);
             break;
 /*
         case 31:               // pause
@@ -496,8 +347,8 @@ void check_ir(void)
             break;
         }                       // switch
 
-        if (ir_number > -1) {
-            pga_id = ir_number;
+        if (ir_number > 0) {
+            pga_id_cur = ir_number;
         }
 
         //sprintf(str_temp, "%ld\r\n", results.value);

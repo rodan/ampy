@@ -1,9 +1,18 @@
 #ifndef _CONFIG_H_
 #define _CONFIG_H_
 
-//#define CONFIG_DEBUG
+//#define USE_UART
 //#define USE_WATCHDOG
+//#define CONFIG_DEBUG
 
-//#define USE_UART_TO_MIXER
+
+////////////////////////////////////////
+//
+// stop changing anything beyond this point
+//
+
+#ifndef USE_UART
+    #define USE_I2C
+#endif
 
 #endif

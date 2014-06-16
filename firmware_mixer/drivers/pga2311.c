@@ -65,9 +65,13 @@ void pga_set_volume(const uint8_t pga_id, const uint8_t vol_right,
     uint8_t data[2];
     uint8_t *ptr;
 
-    if ((vol_left == 0) && (vol_right == 0)) {
-        pga_mute(pga_id, save);
-    } else {
+    if ((pga_id < 1) || (pga_id > 6)) {
+        return;
+    }
+
+    //if ((vol_left == 0) && (vol_right == 0)) {
+    //    pga_mute(pga_id, save);
+    //} else {
         data[0] = vol_right;
         data[1] = vol_left;
 
@@ -88,6 +92,6 @@ void pga_set_volume(const uint8_t pga_id, const uint8_t vol_right,
 
         // deselect slave
         *ptr |= CS_PORT[pga_id - 1];
-    }
+    //}
 }
 

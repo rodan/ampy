@@ -87,7 +87,6 @@ void main_init(void)
     P3DIR = 0x1f;
     P3OUT = 0;
 
-    //P4SEL = 0x0a;
     P4DIR = 0xcf;
     P4OUT = 0;
 
@@ -167,7 +166,7 @@ void check_events(void)
     }
 
 #ifdef USE_UART
-    // uart RX
+    // drivers/uart
     if (uart1_last_event == UART1_EV_RX) {
         msg |= BIT2;
         uart1_last_event = 0;
