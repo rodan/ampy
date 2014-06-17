@@ -35,31 +35,31 @@ void display_mixer_status(void)
 
     char m[] = "muted";
 
-    sprintf(str_temp, "1front     %3d %3d %s\n", s.v1_r, s.v1_l, mixer_get_mute_struct(1)?"":m);
+    snprintf(str_temp, TEMP_LEN, "1front     %3d %3d %s\n", s.v1_r, s.v1_l, mixer_get_mute_struct(1)?"":m);
     uart_tx_str(str_temp, strlen(str_temp));
     timer_a0_delay(DISPLAY_DELAY);
 
-    sprintf(str_temp, "2rear      %3d %3d %s\n", s.v2_r, s.v2_l, mixer_get_mute_struct(2)?"":m);
+    snprintf(str_temp, TEMP_LEN, "2rear      %3d %3d %s\n", s.v2_r, s.v2_l, mixer_get_mute_struct(2)?"":m);
     uart_tx_str(str_temp, strlen(str_temp));
     timer_a0_delay(DISPLAY_DELAY);
 
-    sprintf(str_temp, "3line in   %3d %3d %s\n", s.v3_r, s.v3_l, mixer_get_mute_struct(3)?"":m);
+    snprintf(str_temp, TEMP_LEN, "3line in   %3d %3d %s\n", s.v3_r, s.v3_l, mixer_get_mute_struct(3)?"":m);
     uart_tx_str(str_temp, strlen(str_temp));
     timer_a0_delay(DISPLAY_DELAY);
 
-    sprintf(str_temp, "4spdif     %3d %3d %s\n", s.v4_r, s.v4_l, mixer_get_mute_struct(4)?"":m);
+    snprintf(str_temp, TEMP_LEN, "4spdif     %3d %3d %s\n", s.v4_r, s.v4_l, mixer_get_mute_struct(4)?"":m);
     uart_tx_str(str_temp, strlen(str_temp));
     timer_a0_delay(DISPLAY_DELAY);
 
-    sprintf(str_temp, "5f-r pan   %3d %3d %s\n", s.v5_r, s.v5_l, mixer_get_mute_struct(5)?"":m);
+    snprintf(str_temp, TEMP_LEN, "5f-r pan   %3d %3d %s\n", s.v5_r, s.v5_l, mixer_get_mute_struct(5)?"":m);
     uart_tx_str(str_temp, strlen(str_temp));
     timer_a0_delay(DISPLAY_DELAY);
 
-    sprintf(str_temp, "6center    %3d     %s\n", s.v6_r, mixer_get_mute_struct(6)?"":m);
+    snprintf(str_temp, TEMP_LEN, "6center    %3d     %s\n", s.v6_r, mixer_get_mute_struct(6)?"":m);
     uart_tx_str(str_temp, strlen(str_temp));
     timer_a0_delay(DISPLAY_DELAY);
 
-    sprintf(str_temp, "7subwoofer %3d     %s\n", s.v6_l, mixer_get_mute_struct(6)?"":m);
+    snprintf(str_temp, TEMP_LEN, "7subwoofer %3d     %s\n", s.v6_l, mixer_get_mute_struct(6)?"":m);
     uart_tx_str(str_temp, strlen(str_temp));
     timer_a0_delay(DISPLAY_DELAY);
 
@@ -103,7 +103,7 @@ static void uart_rx_irq(enum sys_message msg)
 
     }
 
-    //sprintf(str_temp, "\r\n%d\r\n", p);
+    //snprintf(str_temp, TEMP_LEN, "\r\n%d\r\n", p);
     //uart_tx_str(str_temp, strlen(str_temp));
 
     uart_p = 0;
@@ -351,7 +351,7 @@ void check_ir(void)
             pga_id_cur = ir_number;
         }
 
-        //sprintf(str_temp, "%ld\r\n", results.value);
+        //snprintf(str_temp, TEMP_LEN, "%ld\r\n", results.value);
         //uart_tx_str(str_temp, strlen(str_temp));
         ir_resume();            // Receive the next value
     }
@@ -376,7 +376,7 @@ uint8_t str_to_uint16(char *str, uint16_t * out, const uint8_t seek,
     if ((val >= min) && (val <= max)) {
         *out = val;
     } else {
-        sprintf(str_temp, "\e[31;1merr\e[0m specify an int between %u-%u\r\n",
+        snprintf(str_temp, TEMP_LEN, "\e[31;1merr\e[0m specify an int between %u-%u\r\n",
                 min, max);
         uart_tx_str(str_temp, strlen(str_temp));
         return 0;

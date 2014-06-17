@@ -19,12 +19,12 @@
 #include "drivers/pga2311.h"
 #include "uart_fcts.h"
 
-char str_temp[120];
-
+#define TEMP_LEN 120
+char str_temp[TEMP_LEN];
 
 void display_help(void)
 {
-    sprintf(str_temp,
+    snprintf(str_temp, TEMP_LEN
             "\r\n --- mixer controller ver %d \r\n",
             VERSION);
     uart1_tx_str(str_temp, strlen(str_temp));
@@ -57,7 +57,7 @@ void show_settings(void)
     ptr = (uint8_t *) &s;
 
     for (i = 0; i < 14; i++) {
-        sprintf(str_temp, "m%d\n", *ptr++);
+        snprintf(str_temp, TEMP_LEN, "m%d\n", *ptr++);
         uart1_tx_str(str_temp, strlen(str_temp));
         timer_a0_delay(10000);
     }
@@ -150,7 +150,7 @@ static void uart1_rx_irq(enum sys_message msg)
             }
         }
     }
-    //sprintf(str_temp, "D 0x%x 0x%x 0x%x\r\n", input[0], input[1], input[2]);
+    //snprintf(str_temp, TEMP_LEN, "D 0x%x 0x%x 0x%x\r\n", input[0], input[1], input[2]);
     //uart1_tx_str(str_temp, strlen(str_temp));
 
     uart1_p = 0;

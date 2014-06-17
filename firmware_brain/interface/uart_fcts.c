@@ -17,13 +17,13 @@
 
 void save_presets(uint8_t location)
 {
-    sprintf(str_temp, "w%d\n", location);
+    snprintf(str_temp, TEMP_LEN, "w%d\n", location);
     uart_tx_str(str_temp, strlen(str_temp));
 }
 
 void load_presets(uint8_t location)
 {
-    sprintf(str_temp, "r%d\n", location);
+    snprintf(str_temp, TEMP_LEN, "r%d\n", location);
     uart_tx_str(str_temp, strlen(str_temp));
 }
 
@@ -41,10 +41,10 @@ void mixer_send_funct(const uint8_t pga, const uint8_t function, const uint8_t r
     case FCT_T_MUTE:
         if (!mixer_get_mute_struct(pga)) {
             mixer_set_mute_struct(pga, UNMUTE);
-            sprintf(str_temp, "u%d\n", pga);
+            snprintf(str_temp, TEMP_LEN, "u%d\n", pga);
         } else {
             mixer_set_mute_struct(pga, MUTE);
-            sprintf(str_temp, "m%d\n", pga);
+            snprintf(str_temp, TEMP_LEN, "m%d\n", pga);
         }
         uart_tx_str(str_temp, strlen(str_temp));
     break;
@@ -61,13 +61,13 @@ void mixer_send_funct(const uint8_t pga, const uint8_t function, const uint8_t r
             mixer_set_vol_struct(pga, CH_LEFT, vol_l);
         }
         if (vol_r == vol_l) {
-            sprintf(str_temp, "v%db%d\n", pga, vol_r);
+            snprintf(str_temp, TEMP_LEN, "v%db%d\n", pga, vol_r);
             uart_tx_str(str_temp, strlen(str_temp));
         } else {
-            sprintf(str_temp, "v%dr%d\n", pga, vol_r);
+            snprintf(str_temp, TEMP_LEN, "v%dr%d\n", pga, vol_r);
             uart_tx_str(str_temp, strlen(str_temp));
 
-            sprintf(str_temp, "v%dl%d\n", pga, vol_l);
+            snprintf(str_temp, TEMP_LEN, "v%dl%d\n", pga, vol_l);
             uart_tx_str(str_temp, strlen(str_temp));
         }
     break;
@@ -84,13 +84,13 @@ void mixer_send_funct(const uint8_t pga, const uint8_t function, const uint8_t r
             mixer_set_vol_struct(pga, CH_LEFT, vol_l);
         }
         if (vol_r == vol_l) {
-            sprintf(str_temp, "v%db%d\n", pga, vol_r);
+            snprintf(str_temp, TEMP_LEN, "v%db%d\n", pga, vol_r);
             uart_tx_str(str_temp, strlen(str_temp));
         } else {
-            sprintf(str_temp, "v%dr%d\n", pga, vol_r);
+            snprintf(str_temp, TEMP_LEN, "v%dr%d\n", pga, vol_r);
             uart_tx_str(str_temp, strlen(str_temp));
 
-            sprintf(str_temp, "v%dl%d\n", pga, vol_l);
+            snprintf(str_temp, TEMP_LEN, "v%dl%d\n", pga, vol_l);
             uart_tx_str(str_temp, strlen(str_temp));
         }
     break;

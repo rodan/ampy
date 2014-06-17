@@ -18,7 +18,8 @@
 #define IR_IN  P1IN
 #define IR_PIN BIT7
 
-char str_temp[64];
+#define TEMP_LEN 64
+char str_temp[TEMP_LEN];
 
 void main_init(void);
 void sleep(void);
