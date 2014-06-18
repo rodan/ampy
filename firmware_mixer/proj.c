@@ -56,6 +56,7 @@ int main(void)
     led_off;
 
     while (1) {
+        // go into low power mode until an IRQ wakes us up
         _BIS_SR(LPM0_bits + GIE);
         __no_operation();
         //wake_up();
@@ -159,11 +160,13 @@ void check_events(void)
     struct sys_messagebus *p = messagebus;
     enum sys_message msg = 0;
 
+    /*
     // drivers/timer_a0
     if (timer_a0_last_event == TIMER_A0_EVENT_IFG) {
         msg |= BIT0;
         timer_a0_last_event = 0;
     }
+    */
 
 #ifdef USE_UART
     // drivers/uart

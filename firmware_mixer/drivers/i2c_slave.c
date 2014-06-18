@@ -31,11 +31,9 @@ void USCI_BX_ISR(void)
     case 8:                    // Vector  8: STPIFG
         I2C_IFG &= ~UCSTPIFG;   // Clear stop condition int flag
         if ( i2c_rx_rdy && i2c_rx_ctr) {
-        //if ( i2c_rx_ctr) {
+            i2c_rx_rdy = 0;
             ev |= I2C_EV_RX;
         }
-        //i2c_rx_rdy = 0;
-        //__bic_SR_register_on_exit(LPM0_bits);   // Exit LPM0
         _BIC_SR_IRQ(LPM3_bits);
         break;
     case 10:                   // Vector 10: RXIFG
@@ -43,6 +41,7 @@ void USCI_BX_ISR(void)
             *i2c_slave_rx_data++ = I2C_RXBUF;
             i2c_rx_ctr++;
         } else {
+            // RXBUF needs to be read or i2c will get stuck
             devnull = I2C_RXBUF;
             devnull++; // silence compilation err
         }

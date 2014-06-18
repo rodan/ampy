@@ -12,7 +12,7 @@ volatile uint8_t *i2c_slave_rx_data;
 #define I2C_RX_BUFF_LEN     8
 volatile uint8_t i2c_rx_buff[I2C_RX_BUFF_LEN];
 volatile uint8_t i2c_rx_rdy;
-volatile uint8_t i2c_rx_ctr;
+uint8_t i2c_rx_ctr;
 
 void i2c_slave_init(void);
 void i2c_slave_uninit(void);

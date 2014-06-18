@@ -8,8 +8,19 @@ contents:
  hardware/mixer      - mixer board. 10 inputs, 6 outputs, 12 channels of mixing. a stereo-to-quad panning circuit is included
 
  firmware_mixer      - software that runs on the MSP430F5510 that is present on the mixer board
+ firmware_brain      - software for the main uC that interfaces the user with the mixer board. currently user input comes via remote control presses.
 
-commands
+--------------------------------------------
+
+Mixer board input
+
+two different input methods are available, either via UART or I2C. since they use the exact same 2 pins the switch between them is a compile time option - see config.h. the i2c interface is highly recommended.
+
+I2C implementation
+
+the communication protocol consists of either a direct 14 byte read in which case the current settings are being shared, 2 byte writes for sending commands or 4 byte writes for sending new volume values. the slave address is 0x28.
+
+UART commands
 v___   set volume
  ||+ volume - [0-255]
  |+- channel - {r,l,b}
