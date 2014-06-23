@@ -25,7 +25,7 @@ static void i2c_rx_irq(enum sys_message msg)
 
     uint8_t cmd = i2c_rx_buff[0];
     uint8_t arg = i2c_rx_buff[1];
-    uint8_t mute = i2c_rx_buff[2];
+    uint8_t mute_st = i2c_rx_buff[2];
     uint8_t vol_r = i2c_rx_buff[3];
     uint8_t vol_l = i2c_rx_buff[4];
 
@@ -54,13 +54,13 @@ static void i2c_rx_irq(enum sys_message msg)
             break;
 
         case M_CMD_VOL:
-            if ((0 < arg) && (arg < 7) && ((mute == MUTE) || (mute == UNMUTE))) {
+            if ((0 < arg) && (arg < 7) && ((mute_st == MUTE) || (mute_st == UNMUTE))) {
                 pga_set_volume(arg, vol_r, vol_l, 1, 1);
-                if (mute != mixer_get_mute_struct(arg)) {
-                    if (mute == MUTE) {
-                        pga_mute(arg,1);
+                if (mute_st != mixer_get_mute_struct(arg)) {
+                    if (mute_st == MUTE) {
+                        pga_set_mute_st(arg, MUTE, 1);
                     } else { 
-                        pga_unmute(arg,1);
+                        pga_set_mute_st(arg, UNMUTE, 1);
                     }
                 }
             }

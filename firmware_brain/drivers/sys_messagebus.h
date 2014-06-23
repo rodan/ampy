@@ -10,6 +10,13 @@
 /* WARNING: the enum values are optimized to work with some drivers.
 	If you need to add a new entry, append it to the end! */
 enum sys_message {
+    // TIMER0
+    SYS_MSG_TIMER0_CCR0 = BIT0,
+    SYS_MSG_TIMER0_CCR1 = BIT1,
+    SYS_MSG_TIMER0_CCR2 = BIT2, // timer_a0_delay_noblk
+    SYS_MSG_TIMER0_CCR3 = BIT3,
+    SYS_MSG_TIMER0_CCR4 = BIT4,
+    SYS_MSG_TIMER0_IFG = BIT5,  // timer0 overflow
     // TIMER1A
     SYS_MSG_TIMER1_CRR0 = BIT7, // infrared remote sequence decoding
     SYS_MSG_TIMER1_CRR1 = BIT8, // PWM for intertechno OOK module

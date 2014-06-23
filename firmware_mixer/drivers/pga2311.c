@@ -10,39 +10,31 @@
 #include "pga2311_helper.h"
 #include "drivers/spi.h"
 
-/// mute out the pga chip identified by 'pga_id'
+/// mute/unmute the pga chip identified by 'pga_id'
 /// 'save' defines if the new status is saved to the 
 ///    mixer_settings_t struct
 /// inputs:
 ///   pga_id: [1-6]
+///   mute_st: MUTE or UNMUTE
 ///   save: 0 - dont save, 1 - save
-void pga_mute(const uint8_t pga_id, const uint8_t save)
+void pga_set_mute_st(const uint8_t pga_id, const uint8_t mute_st, const uint8_t save)
 {
     uint8_t *ptr;
 
-    // set the proper PxOUT port to low in order to mute the PGA out
-    ptr = (uint8_t *) MUTE_OUT[pga_id - 1];
-    *ptr &= ~MUTE_PORT[pga_id - 1];
-    if (save) {
-        mixer_set_mute_struct(pga_id, MUTE);
-    }
-}
-
-/// unmute the pga chip identified by 'pga_id'
-/// 'save' defines if the new status is saved to the 
-///    mixer_settings_t struct
-/// inputs:
-///   pga_id: [1-6]
-///   save: 0 - dont save, 1 - save
-void pga_unmute(const uint8_t pga_id, const uint8_t save)
-{
-    uint8_t *ptr;
-
-    // unmute port
-    ptr = (uint8_t *) MUTE_OUT[pga_id - 1];
-    *ptr |= MUTE_PORT[pga_id - 1];
-    if (save) {
-        mixer_set_mute_struct(pga_id, UNMUTE);
+    if (mute_st == MUTE) {
+        // set the proper PxOUT port to low in order to mute the PGA out
+        ptr = (uint8_t *) MUTE_OUT[pga_id - 1];
+        *ptr &= ~MUTE_PORT[pga_id - 1];
+        if (save) {
+            mixer_set_mute_struct(pga_id, MUTE);
+        }
+    } else if (mute_st == UNMUTE) {
+        // unmute port
+        ptr = (uint8_t *) MUTE_OUT[pga_id - 1];
+        *ptr |= MUTE_PORT[pga_id - 1];
+        if (save) {
+            mixer_set_mute_struct(pga_id, UNMUTE);
+        }
     }
 }
 
@@ -76,7 +68,7 @@ void pga_set_volume(const uint8_t pga_id, const uint8_t vol_right,
         data[1] = vol_left;
 
         if (autounmute) {
-            pga_unmute(pga_id, save);
+            pga_set_mute_st(pga_id, UNMUTE, save);
         }
 
         if (save) {

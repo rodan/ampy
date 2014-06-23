@@ -28,86 +28,67 @@
 int8_t ir_number;
 uint8_t pga_id_cur = -1;
 
-#define DISPLAY_DELAY 400000
+uint16_t tfr = 2; // time for display refresh
+
+#define SLOW_REFRESH_DELAY 3600
+
+#define DISPLAY_DELAY 600000
+uint8_t d;
+char m[] = "muted";
 
 void display_mixer_status(void)
 {
-
-    char m[] = "muted";
-
-    snprintf(str_temp, TEMP_LEN, "1front     %3d %3d %s\n", s.v1_r, s.v1_l, mixer_get_mute_struct(1)?"":m);
-    uart_tx_str(str_temp, strlen(str_temp));
-    timer_a0_delay(DISPLAY_DELAY);
-
-    snprintf(str_temp, TEMP_LEN, "2rear      %3d %3d %s\n", s.v2_r, s.v2_l, mixer_get_mute_struct(2)?"":m);
-    uart_tx_str(str_temp, strlen(str_temp));
-    timer_a0_delay(DISPLAY_DELAY);
-
-    snprintf(str_temp, TEMP_LEN, "3line in   %3d %3d %s\n", s.v3_r, s.v3_l, mixer_get_mute_struct(3)?"":m);
-    uart_tx_str(str_temp, strlen(str_temp));
-    timer_a0_delay(DISPLAY_DELAY);
-
-    snprintf(str_temp, TEMP_LEN, "4spdif     %3d %3d %s\n", s.v4_r, s.v4_l, mixer_get_mute_struct(4)?"":m);
-    uart_tx_str(str_temp, strlen(str_temp));
-    timer_a0_delay(DISPLAY_DELAY);
-
-    snprintf(str_temp, TEMP_LEN, "5f-r pan   %3d %3d %s\n", s.v5_r, s.v5_l, mixer_get_mute_struct(5)?"":m);
-    uart_tx_str(str_temp, strlen(str_temp));
-    timer_a0_delay(DISPLAY_DELAY);
-
-    snprintf(str_temp, TEMP_LEN, "6center    %3d     %s\n", s.v6_r, mixer_get_mute_struct(6)?"":m);
-    uart_tx_str(str_temp, strlen(str_temp));
-    timer_a0_delay(DISPLAY_DELAY);
-
-    snprintf(str_temp, TEMP_LEN, "7subwoofer %3d     %s\n", s.v6_l, mixer_get_mute_struct(6)?"":m);
-    uart_tx_str(str_temp, strlen(str_temp));
-    timer_a0_delay(DISPLAY_DELAY);
-
-    uart_tx_str("A\n", 3);
-    timer_a0_delay(DISPLAY_DELAY);
+    d = 0;
+    timer_a0_delay_noblk(100000);
 }
 
-static void uart_rx_irq(enum sys_message msg)
+static void timer_a0_ovf_irq(enum sys_message msg)
 {
-    //uint16_t u16;
-    uint8_t p;
-    //uint8_t i;
-    char *input;
-    //uint8_t *src, *dst;
-
-    input = (char *)uart_rx_buf;
-
-    p = input[0];
-    if (p >= 97) {
-        p -= 32;
-    }
-
-    if (p == 77) {               // m - volume values
-        /*
-        if (str_to_uint16(input, &u16, 1, strlen(input) - 1, 0, 255)) {
-            src = (uint8_t *) & s;
-            *(src+idx) = u16;
-            if (idx > 12) {
-                idx = 0;
-                for (i=0;i<14;i++) {
-                    dst = (uint8_t *) & s;
-                    *(dst + i) = *(src + i);
-                }
-                //timer_a1_init();
-                display_mixer_status();
-            }
-            idx++;
+    if (timer_a0_ovf >= tfr) {
+        if (timer_a0_ovf > 65535 - SLOW_REFRESH_DELAY) {
+            return;
         }
-        */
-    } else if (p == 79) {         // ok - ACK 
+        tfr = timer_a0_ovf + SLOW_REFRESH_DELAY; // refresh once an hour
+        get_mixer_status();
+        display_mixer_status();
+    }
+}
 
+static void timer_a0_ccr2_irq(enum sys_message msg)
+{
+
+    switch (d) {
+        case 0:
+            snprintf(str_temp, TEMP_LEN, "1front     %3d %3d %s\n", s.v1_r, s.v1_l, mixer_get_mute_struct(1)?"":m);
+            break;
+        case 1:
+            snprintf(str_temp, TEMP_LEN, "2rear      %3d %3d %s\n", s.v2_r, s.v2_l, mixer_get_mute_struct(2)?"":m);
+            break;
+        case 2:
+            snprintf(str_temp, TEMP_LEN, "3line in   %3d %3d %s\n", s.v3_r, s.v3_l, mixer_get_mute_struct(3)?"":m);
+            break;
+        case 3:
+            snprintf(str_temp, TEMP_LEN, "4spdif     %3d %3d %s\n", s.v4_r, s.v4_l, mixer_get_mute_struct(4)?"":m);
+            break;
+        case 4:
+            snprintf(str_temp, TEMP_LEN, "5f-r pan   %3d %3d %s\n", s.v5_r, s.v5_l, mixer_get_mute_struct(5)?"":m);
+            break;
+        case 5:
+            snprintf(str_temp, TEMP_LEN, "6center    %3d     %s\n", s.v6_r, mixer_get_mute_struct(6)?"":m);
+            break;
+        case 6:
+            snprintf(str_temp, TEMP_LEN, "7subwoofer %3d     %s\n", s.v6_l, mixer_get_mute_struct(6)?"":m);
+            break;
+        case 7:
+            uart_tx_str("A\n", 3);
+            break;
+        default:
+            return;
     }
 
-    //snprintf(str_temp, TEMP_LEN, "\r\n%d\r\n", p);
-    //uart_tx_str(str_temp, strlen(str_temp));
-
-    uart_p = 0;
-    uart_rx_enable = 1;
+    d++;
+    uart_tx_str(str_temp, strlen(str_temp));
+    timer_a0_delay_noblk(DISPLAY_DELAY);
 }
 
 int main(void)
@@ -128,17 +109,11 @@ int main(void)
     i2c_init();
 #endif
 
-    sys_messagebus_register(&uart_rx_irq, SYS_MSG_UART_RX);
-
-    // PGAs are started up with a delay, so wait a little
-    // before querying them
-    timer_a0_delay(1000000);
-    timer_a0_delay(1000000);
-    timer_a0_delay(1000000);
-    get_mixer_status();
+    sys_messagebus_register(&timer_a0_ovf_irq, SYS_MSG_TIMER0_IFG);
+    sys_messagebus_register(&timer_a0_ccr2_irq, SYS_MSG_TIMER0_CCR2);
 
     while (1) {
-        //sleep();
+        sleep();
         //__no_operation();
         //wake_up();
 #ifdef USE_WATCHDOG
@@ -195,6 +170,11 @@ void check_events(void)
     struct sys_messagebus *p = messagebus;
     enum sys_message msg = 0;
 
+    // drivers/timer_a0
+    if (timer_a0_last_event) {
+        msg |= timer_a0_last_event;
+        timer_a0_last_event = 0;
+    }
     // drivers/timer1a
     if (timer_a1_last_event) {
         msg |= timer_a1_last_event << 7;
@@ -306,22 +286,27 @@ void check_ir(void)
         case 13:
         case 0x290:            // mute
             mixer_send_funct(pga_id_cur, FCT_T_MUTE, 0, 0);
+            tfr = timer_a0_ovf + 2;
             break;
         case 16:
         case 0x490:            // vol+
             mixer_send_funct(pga_id_cur, FCT_V_INC, VOL_STEP, VOL_STEP);
+            tfr = timer_a0_ovf + 2;
             break;
         case 17:
         case 0xc90:            // vol-
             mixer_send_funct(pga_id_cur, FCT_V_DEC, VOL_STEP, VOL_STEP);
+            tfr = timer_a0_ovf + 2;
             break;
         case 28:
         case 0x90:             // ch+
             mixer_send_funct(pga_id_cur, FCT_V_INC, VOL_BIG_STEP, VOL_BIG_STEP);
+            tfr = timer_a0_ovf + 2;
             break;
         case 29:
         case 0x890:            // ch-
             mixer_send_funct(pga_id_cur, FCT_V_DEC, VOL_BIG_STEP, VOL_BIG_STEP);
+            tfr = timer_a0_ovf + 2;
             break;
         case 36:               // record
             save_presets(pga_id_cur); 
@@ -333,6 +318,7 @@ void check_ir(void)
 */
         case 14:               // play
             load_presets(pga_id_cur);
+            tfr = timer_a0_ovf + 2;
             break;
 /*
         case 31:               // pause

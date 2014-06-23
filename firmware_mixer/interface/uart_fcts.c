@@ -112,13 +112,13 @@ static void uart1_rx_irq(enum sys_message msg)
     } else if (p == M_CMD_MUTE) {       // [m]ute pga
         if (str_to_uint16(input, &u16, 1, 1, 1, 6)) {
             pga = u16;
-            pga_mute(pga, 1);
+            pga_set_mute_st(pga, MUTE, 1);
             uart1_tx_str("ok\r\n", 4);
         }
     } else if (p == M_CMD_UNMUTE) {     // [u]nmute pga
         if (str_to_uint16(input, &u16, 1, 1, 1, 6)) {
             pga = u16;
-            pga_unmute(pga, 1);
+            pga_set_mute_st(pga, UNMUTE, 1);
             uart1_tx_str("ok\r\n", 4);
         }
     } else if (p == M_CMD_VOL) {       // [v]olume set

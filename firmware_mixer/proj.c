@@ -145,7 +145,9 @@ void settings_init(uint8_t * addr)
             pga_set_volume(i, right, left, 0, 0);
         }
         if (s.mute_flag & (1 << (i - 1))) {
-            pga_unmute(i, 0);
+            pga_set_mute_st(i, UNMUTE, 0);
+        } else {
+            pga_set_mute_st(i, MUTE, 0);
         }
     }
 

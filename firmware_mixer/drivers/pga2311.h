@@ -2,21 +2,14 @@
 #ifndef __PGA2311_H__
 #define __PGA2311_H__
 
-/// mute out the pga chip identified by 'pga_id'
+/// mute/unmute the pga chip identified by 'pga_id'
 /// 'save' defines if the new status is saved to the 
 ///    mixer_settings_t struct
 /// inputs:
 ///   pga_id: [1-6]
+///   mute: MUTE or UNMUTE
 ///   save: 0 - dont save, 1 - save
-void pga_mute(const uint8_t pga_id, const uint8_t save);
-
-/// unmute the pga chip identified by 'pga_id'
-/// 'save' defines if the new status is saved to the 
-///    mixer_settings_t struct
-/// inputs:
-///   pga_id: [1-6]
-///   save: 0 - dont save, 1 - save
-void pga_unmute(const uint8_t pga_id, const uint8_t save);
+void pga_set_mute_st(const uint8_t pga_id, const uint8_t mute, const uint8_t save);
 
 /// set the volume for both channels of the pga 
 /// identified by 'pga_id'
