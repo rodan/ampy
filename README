@@ -9,6 +9,7 @@ contents:
 
  firmware_mixer      - software that runs on the MSP430F5510 that is present on the mixer board
  firmware_brain      - software for the main uC (CC430F5137) that interfaces the user with the mixer board. currently user input comes via remote control presses.
+ firmware_display    - software that runs on the atmega present on the BADGEr. this is a simple adaptation on Jeremy Blum's "Pi BADGEr ePaper Weather Station".
 
 --------------------------------------------
 
