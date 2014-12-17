@@ -22,7 +22,9 @@ enum sys_message {
     SYS_MSG_TIMER1_CRR1 = BIT8, // PWM for intertechno OOK module
     SYS_MSG_TIMER1_CRR2 = BIT9, // unused
     // UART
-    SYS_MSG_UART_RX = BITA
+    SYS_MSG_UART0_RX = BITA,
+    // sound presence detection
+    SYS_MSG_PORT_TRIG = BITB
 };
 
 /*!

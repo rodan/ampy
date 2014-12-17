@@ -3,7 +3,7 @@ UEXT
 1   vcc         3v3
 2   gnd         gnd
 3   txd         1.6
-4   snd_f       1.5
+4   rxd         1.5
 5   mute_f      2.0
 6   mute_r      2.1
 7   scl         1.2

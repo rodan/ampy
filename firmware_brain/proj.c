@@ -12,10 +12,12 @@
 #include "drivers/pmm.h"
 #include "drivers/timer_a0.h"
 #include "drivers/timer_a1.h"
-#include "drivers/uart.h"
+#include "drivers/uart0.h"
 #include "drivers/i2c.h"
 #include "drivers/ir_remote.h"
 #include "drivers/pga2311_helper.h"
+#include "drivers/port.h"
+#include "ui.h"
 
 #ifdef USE_UART
 #include "interface/uart_fcts.h"
@@ -80,15 +82,32 @@ static void timer_a0_ccr2_irq(enum sys_message msg)
             snprintf(str_temp, TEMP_LEN, "7subwoofer %3d     %s\n", s.v6_l, mixer_get_mute_struct(6)?"":m);
             break;
         case 7:
-            uart_tx_str("A\n", 3);
+            snprintf(str_temp, TEMP_LEN, "A\n");
             break;
         default:
             return;
     }
 
     d++;
-    uart_tx_str(str_temp, strlen(str_temp));
+    uart0_tx_str(str_temp, strlen(str_temp));
     timer_a0_delay_noblk(DISPLAY_DELAY);
+}
+
+static void parse_UI(enum sys_message msg)
+{
+    parse_user_input();
+
+    uart0_p = 0;
+    uart0_rx_enable = 1;
+    LED_OFF;
+}
+
+static void parse_port(enum sys_message msg)
+{
+    stat.snd_f = 1;
+    UNMUTE_FRONT;
+    stat.snd_r = 1;
+    UNMUTE_REAR;
 }
 
 int main(void)
@@ -96,21 +115,14 @@ int main(void)
     main_init();
     timer_a0_init();
     ir_init();
-    uart_init();
-
-#ifdef USE_I2C
-    // set up i2c port mapping
-    PMAPPWD = 0x02D52;
-    P1MAP2 = PM_UCB0SCL;
-    P1MAP3 = PM_UCB0SDA;
-    PMAPPWD = 0;
-    P1SEL |= BIT2 + BIT3;
-
+    uart0_init();
     i2c_init();
-#endif
+    port_init();
 
     sys_messagebus_register(&timer_a0_ovf_irq, SYS_MSG_TIMER0_IFG);
     sys_messagebus_register(&timer_a0_ccr2_irq, SYS_MSG_TIMER0_CCR2);
+    sys_messagebus_register(&parse_UI, SYS_MSG_UART0_RX);
+    sys_messagebus_register(&parse_port, SYS_MSG_PORT_TRIG);
 
     while (1) {
         sleep();
@@ -136,7 +148,7 @@ void main_init(void)
     SetVCore(3);
 
     P1SEL = 0x0;
-    P1DIR = 0x43;
+    P1DIR = 0x1;
     P1OUT = 0x0;
 
     P2SEL = 0x0;
@@ -151,6 +163,21 @@ void main_init(void)
 
     PJDIR = 0xff;
     PJOUT = 0x00;
+
+    // port mappings
+    PMAPPWD = 0x02D52;
+    // hardware UART
+    P1MAP5 = PM_UCA0RXD;
+    P1MAP6 = PM_UCA0TXD;
+#ifdef USE_I2C
+    // set up i2c port mapping
+    P1MAP2 = PM_UCB0SCL;
+    P1MAP3 = PM_UCB0SDA;
+    P1SEL |= BIT2 + BIT3;
+#endif
+    PMAPPWD = 0;
+
+    P1SEL |= BIT5 + BIT6;
 
 }
 
@@ -180,11 +207,18 @@ void check_events(void)
         msg |= timer_a1_last_event << 7;
         timer_a1_last_event = 0;
     }
-    // drivers/uart
-    if (uart_last_event == UART_EV_RX) {
+    // drivers/uart0
+    if (uart0_last_event == UART0_EV_RX) {
         msg |= BITA;
-        uart_last_event = 0;
+        uart0_last_event = 0;
     }
+    // drivers/port
+    if (port_last_event) {
+        msg |= BITB;
+        port_last_event = 0;
+    }
+
+
     while (p) {
         // notify listener if he registered for any of these messages
         if (msg & p->listens) {
@@ -338,7 +372,7 @@ void check_ir(void)
         }
 
         //snprintf(str_temp, TEMP_LEN, "%ld\r\n", results.value);
-        //uart_tx_str(str_temp, strlen(str_temp));
+        //uart0_tx_str(str_temp, strlen(str_temp));
         ir_resume();            // Receive the next value
     }
 }
@@ -364,7 +398,7 @@ uint8_t str_to_uint16(char *str, uint16_t * out, const uint8_t seek,
     } else {
         snprintf(str_temp, TEMP_LEN, "\e[31;1merr\e[0m specify an int between %u-%u\r\n",
                 min, max);
-        uart_tx_str(str_temp, strlen(str_temp));
+        uart0_tx_str(str_temp, strlen(str_temp));
         return 0;
     }
     return 1;
