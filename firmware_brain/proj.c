@@ -30,18 +30,17 @@
 int8_t ir_number;
 uint8_t pga_id_cur = -1;
 
-uint16_t tfr = 2; // time for display refresh
+#define SLOW_REFRESH_DELAY 56   // 56 ta0 overflows are 56*128s ~= 2hours
+uint16_t tfr = SLOW_REFRESH_DELAY;   // time for display refresh
 
-#define SLOW_REFRESH_DELAY 3600
-
-#define DISPLAY_DELAY 600000
 uint8_t d;
 char m[] = "muted";
 
 void display_mixer_status(void)
 {
     d = 0;
-    timer_a0_delay_noblk(100000);
+    tfr = timer_a0_ovf + SLOW_REFRESH_DELAY; // refresh once an hour
+    timer_a0_delay_noblk_ccr1(_100ms);
 }
 
 static void timer_a0_ovf_irq(enum sys_message msg)
@@ -50,15 +49,13 @@ static void timer_a0_ovf_irq(enum sys_message msg)
         if (timer_a0_ovf > 65535 - SLOW_REFRESH_DELAY) {
             return;
         }
-        tfr = timer_a0_ovf + SLOW_REFRESH_DELAY; // refresh once an hour
         get_mixer_status();
         display_mixer_status();
     }
 }
 
-static void timer_a0_ccr2_irq(enum sys_message msg)
+static void timer_a0_ccr1_irq(enum sys_message msg)
 {
-
     switch (d) {
         case 0:
             snprintf(str_temp, TEMP_LEN, "1front     %3d %3d %s\n", s.v1_r, s.v1_l, mixer_get_mute_struct(1)?"":m);
@@ -90,7 +87,7 @@ static void timer_a0_ccr2_irq(enum sys_message msg)
 
     d++;
     uart0_tx_str(str_temp, strlen(str_temp));
-    timer_a0_delay_noblk(DISPLAY_DELAY);
+    timer_a0_delay_noblk_ccr1(_500ms);
 }
 
 static void parse_UI(enum sys_message msg)
@@ -99,19 +96,91 @@ static void parse_UI(enum sys_message msg)
 
     uart0_p = 0;
     uart0_rx_enable = 1;
-    LED_OFF;
 }
 
-static void parse_port(enum sys_message msg)
+// edge detect based interrupt handler
+static void port_trigger(enum sys_message msg)
 {
-    stat.snd_f = 1;
-    UNMUTE_FRONT;
-    stat.snd_r = 1;
-    UNMUTE_REAR;
+    uint8_t in_now[DETECT_CHANNELS] = {0,0};
+    uint8_t i;
+
+    if (input_ed & SND_DETECT_FRONT) {
+        in_now[0] = 1;
+    }
+
+    if (input_ed & SND_DETECT_REAR) {
+        in_now[1] = 1;
+    }
+
+    for (i=0;i<DETECT_CHANNELS;i++) {
+        if (in_now[i]!=stat.in_orig[i]) {
+            stat.count[i]=0;
+        }
+    }
+
+    timer_a0_delay_noblk_ccr2(_50ms);
+}
+
+// time based interrupt request handler
+static void port_parser(enum sys_message msg)
+{
+    uint8_t input_tb = P1IN & ALL_INPUTS;
+    uint8_t in_now[DETECT_CHANNELS] = {0,0};
+    uint8_t i;
+    uint8_t smth_changed = 0;
+
+    if (input_tb & SND_DETECT_FRONT) {
+        in_now[0] = 1;
+    }
+
+    if (input_tb & SND_DETECT_REAR) {
+        in_now[1] = 1;
+    }
+           
+    /*
+    snprintf(str_temp, TEMP_LEN, "%x%d%d%d%d ", input_tb, in_now[0], in_now[1], stat.in_orig[0], stat.in_orig[1]);
+    uart0_tx_str(str_temp, strlen(str_temp));
+    */
+
+    for (i=0;i<DETECT_CHANNELS;i++) {
+        if (in_now[i]!=stat.in_orig[i]) {
+            smth_changed = 1;
+            stat.count[i]++;
+            if ((stat.in_orig[i] == 1) && (stat.count[i] > ON_DEBOUNCE)) {
+                stat.count[i] = 0;
+                stat.mute[i] = 0;
+                stat.in_orig[i] = 0;
+                LED_ON;
+                if (i == 0) {
+                    UNMUTE_FRONT;
+                } else if (i == 1) {
+                    UNMUTE_REAR;
+                }
+            } else if ((stat.in_orig[i] == 0) && (stat.count[i] > OFF_DEBOUNCE)) {
+                stat.count[i] = 0;
+                stat.mute[i] = 1;
+                stat.in_orig[i] = 1;
+                LED_OFF;
+                if (i == 0) {
+                    MUTE_FRONT;
+                } else if (i == 1) {
+                    MUTE_REAR;
+                }
+            }
+        }
+    }
+
+    if (smth_changed) {
+        timer_a0_delay_noblk_ccr2(_50ms);
+    } else {
+        timer_a0_delay_noblk_ccr2(_1s);
+    }
 }
 
 int main(void)
 {
+    uint8_t i;
+
     main_init();
     timer_a0_init();
     ir_init();
@@ -119,10 +188,18 @@ int main(void)
     i2c_init();
     port_init();
 
+    for (i=0;i<DETECT_CHANNELS;i++) {
+        stat.mute[i] = 1;
+        stat.in_orig[i] = 1;
+    }
+
     sys_messagebus_register(&timer_a0_ovf_irq, SYS_MSG_TIMER0_IFG);
-    sys_messagebus_register(&timer_a0_ccr2_irq, SYS_MSG_TIMER0_CCR2);
+    sys_messagebus_register(&timer_a0_ccr1_irq, SYS_MSG_TIMER0_CCR1);
     sys_messagebus_register(&parse_UI, SYS_MSG_UART0_RX);
-    sys_messagebus_register(&parse_port, SYS_MSG_PORT_TRIG);
+    sys_messagebus_register(&port_trigger, SYS_MSG_PORT_TRIG);
+    sys_messagebus_register(&port_parser, SYS_MSG_TIMER0_CCR2);
+
+    display_mixer_status();
 
     while (1) {
         sleep();
@@ -320,27 +397,27 @@ void check_ir(void)
         case 13:
         case 0x290:            // mute
             mixer_send_funct(pga_id_cur, FCT_T_MUTE, 0, 0);
-            tfr = timer_a0_ovf + 2;
+            tfr = timer_a0_ovf + 1;
             break;
         case 16:
         case 0x490:            // vol+
             mixer_send_funct(pga_id_cur, FCT_V_INC, VOL_STEP, VOL_STEP);
-            tfr = timer_a0_ovf + 2;
+            tfr = timer_a0_ovf + 1;
             break;
         case 17:
         case 0xc90:            // vol-
             mixer_send_funct(pga_id_cur, FCT_V_DEC, VOL_STEP, VOL_STEP);
-            tfr = timer_a0_ovf + 2;
+            tfr = timer_a0_ovf + 1;
             break;
         case 28:
         case 0x90:             // ch+
             mixer_send_funct(pga_id_cur, FCT_V_INC, VOL_BIG_STEP, VOL_BIG_STEP);
-            tfr = timer_a0_ovf + 2;
+            tfr = timer_a0_ovf + 1;
             break;
         case 29:
         case 0x890:            // ch-
             mixer_send_funct(pga_id_cur, FCT_V_DEC, VOL_BIG_STEP, VOL_BIG_STEP);
-            tfr = timer_a0_ovf + 2;
+            tfr = timer_a0_ovf + 1;
             break;
         case 36:               // record
             save_presets(pga_id_cur); 
@@ -352,7 +429,7 @@ void check_ir(void)
 */
         case 14:               // play
             load_presets(pga_id_cur);
-            tfr = timer_a0_ovf + 2;
+            tfr = timer_a0_ovf + 1;
             break;
 /*
         case 31:               // pause

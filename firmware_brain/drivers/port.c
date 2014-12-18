@@ -3,7 +3,7 @@
 #include "port.h"
 #include "proj.h"
 
-#define ALL_INPUTS  0x82
+//#define ALL_INPUTS  0x82
 
 void port_init(void)
 {
@@ -16,21 +16,14 @@ void port_init(void)
 __attribute__((interrupt(PORT1_VECTOR)))
 void PORT1_ISR(void)
 {
-	uint8_t detect = P1IFG & ALL_INPUTS;
+	input_ed = P1IFG & ALL_INPUTS;
 
-    if (detect & SND_DETECT_FRONT) {
-        port_last_event |= PORT_EVENT_IN0;
-        _BIC_SR_IRQ(LPM3_bits);
-    }
-
-    if (detect & SND_DETECT_REAR) {
-        port_last_event |= PORT_EVENT_IN1;
+    if (input_ed) {
+        port_last_event |= PORT_EVENT_TRIG;
         _BIC_SR_IRQ(LPM3_bits);
     }
 
     // clear latest interrupt
 	P1IV = 0x00;
 }
-
-
 
