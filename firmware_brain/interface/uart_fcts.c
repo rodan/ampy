@@ -1,5 +1,7 @@
 
 //  audio mixer based on an MSP430F5510
+//  deprecated functions that used UART to talk to the mixer board.
+//  i2c_fcts should be used instead
 //
 //  author:          Petre Rodan <petre.rodan@simplex.ro>
 //  available from:  https://github.com/rodan/ampy

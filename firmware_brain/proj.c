@@ -12,10 +12,12 @@
 #include "drivers/pmm.h"
 #include "drivers/timer_a0.h"
 #include "drivers/timer_a1.h"
-#include "drivers/uart.h"
+#include "drivers/uart0.h"
 #include "drivers/i2c.h"
 #include "drivers/ir_remote.h"
 #include "drivers/pga2311_helper.h"
+#include "drivers/port.h"
+#include "ui.h"
 
 #ifdef USE_UART
 #include "interface/uart_fcts.h"
@@ -28,18 +30,17 @@
 int8_t ir_number;
 uint8_t pga_id_cur = -1;
 
-uint16_t tfr = 2; // time for display refresh
+#define SLOW_REFRESH_DELAY 56   // 56 ta0 overflows are 56*128s ~= 2hours
+uint16_t tfr = SLOW_REFRESH_DELAY;   // time for display refresh
 
-#define SLOW_REFRESH_DELAY 3600
-
-#define DISPLAY_DELAY 600000
 uint8_t d;
 char m[] = "muted";
 
 void display_mixer_status(void)
 {
     d = 0;
-    timer_a0_delay_noblk(100000);
+    tfr = timer_a0_ovf + SLOW_REFRESH_DELAY; // refresh once an hour
+    timer_a0_delay_noblk_ccr1(_100ms);
 }
 
 static void timer_a0_ovf_irq(enum sys_message msg)
@@ -48,15 +49,13 @@ static void timer_a0_ovf_irq(enum sys_message msg)
         if (timer_a0_ovf > 65535 - SLOW_REFRESH_DELAY) {
             return;
         }
-        tfr = timer_a0_ovf + SLOW_REFRESH_DELAY; // refresh once an hour
         get_mixer_status();
         display_mixer_status();
     }
 }
 
-static void timer_a0_ccr2_irq(enum sys_message msg)
+static void timer_a0_ccr1_irq(enum sys_message msg)
 {
-
     switch (d) {
         case 0:
             snprintf(str_temp, TEMP_LEN, "1front     %3d %3d %s\n", s.v1_r, s.v1_l, mixer_get_mute_struct(1)?"":m);
@@ -80,37 +79,122 @@ static void timer_a0_ccr2_irq(enum sys_message msg)
             snprintf(str_temp, TEMP_LEN, "7subwoofer %3d     %s\n", s.v6_l, mixer_get_mute_struct(6)?"":m);
             break;
         case 7:
-            uart_tx_str("A\n", 3);
+            snprintf(str_temp, TEMP_LEN, "A\n");
             break;
         default:
             return;
     }
 
     d++;
-    uart_tx_str(str_temp, strlen(str_temp));
-    timer_a0_delay_noblk(DISPLAY_DELAY);
+    uart0_tx_str(str_temp, strlen(str_temp));
+    //timer_a0_delay_noblk_ccr1(_500ms);
+    timer_a0_delay_noblk_ccr1(_10ms);
+}
+
+static void parse_UI(enum sys_message msg)
+{
+    parse_user_input();
+
+    uart0_p = 0;
+    uart0_rx_enable = 1;
+}
+
+// edge detect based interrupt handler
+static void port_trigger(enum sys_message msg)
+{
+    uint8_t in_now[DETECT_CHANNELS] = {0,0};
+    uint8_t i;
+
+    if (input_ed & SND_DETECT_FRONT) {
+        in_now[0] = 1;
+    }
+    if (input_ed & SND_DETECT_REAR) {
+        in_now[1] = 1;
+    }
+
+    for (i=0;i<DETECT_CHANNELS;i++) {
+        if (in_now[i]!=stat.in_orig[i]) {
+            stat.count[i]=0;
+        }
+    }
+
+    timer_a0_delay_noblk_ccr2(_50ms);
+}
+
+// time based interrupt request handler
+static void port_parser(enum sys_message msg)
+{
+    uint8_t in_now[DETECT_CHANNELS] = {0,0};
+    uint8_t i;
+    uint8_t smth_changed = 0;
+
+    if (P1IN & SND_DETECT_FRONT) {
+        in_now[0] = 1;
+    }
+    if (P1IN & SND_DETECT_REAR) {
+        in_now[1] = 1;
+    }
+           
+    for (i=0;i<DETECT_CHANNELS;i++) {
+        if (in_now[i]!=stat.in_orig[i]) {
+            smth_changed = 1;
+            stat.count[i]++;
+            if ((stat.in_orig[i] == 1) && (stat.count[i] > ON_DEBOUNCE)) {
+                stat.count[i] = 0;
+                stat.mute[i] = 0;
+                stat.in_orig[i] = 0;
+                LED_ON;
+                if (i == 0) {
+                    UNMUTE_FRONT;
+                } else if (i == 1) {
+                    UNMUTE_REAR;
+                }
+            } else if ((stat.in_orig[i] == 0) && (stat.count[i] > OFF_DEBOUNCE)) {
+                stat.count[i] = 0;
+                stat.mute[i] = 1;
+                stat.in_orig[i] = 1;
+                if ((stat.mute[0] == 1) && (stat.mute[1] == 1)) {
+                    LED_OFF;
+                }
+                if (i == 0) {
+                    MUTE_FRONT;
+                } else if (i == 1) {
+                    MUTE_REAR;
+                }
+            }
+        }
+    }
+
+    if (smth_changed) {
+        timer_a0_delay_noblk_ccr2(_50ms);
+    } else {
+        timer_a0_delay_noblk_ccr2(_1s);
+    }
 }
 
 int main(void)
 {
+    uint8_t i;
+
     main_init();
     timer_a0_init();
     ir_init();
-    uart_init();
-
-#ifdef USE_I2C
-    // set up i2c port mapping
-    PMAPPWD = 0x02D52;
-    P1MAP2 = PM_UCB0SCL;
-    P1MAP3 = PM_UCB0SDA;
-    PMAPPWD = 0;
-    P1SEL |= BIT2 + BIT3;
-
+    uart0_init();
     i2c_init();
-#endif
+    port_init();
+
+    for (i=0;i<DETECT_CHANNELS;i++) {
+        stat.mute[i] = 1;
+        stat.in_orig[i] = 1;
+    }
 
     sys_messagebus_register(&timer_a0_ovf_irq, SYS_MSG_TIMER0_IFG);
-    sys_messagebus_register(&timer_a0_ccr2_irq, SYS_MSG_TIMER0_CCR2);
+    sys_messagebus_register(&timer_a0_ccr1_irq, SYS_MSG_TIMER0_CCR1);
+    sys_messagebus_register(&port_parser, SYS_MSG_TIMER0_CCR2);
+    sys_messagebus_register(&port_trigger, SYS_MSG_PORT_TRIG);
+    sys_messagebus_register(&parse_UI, SYS_MSG_UART0_RX);
+
+    display_mixer_status();
 
     while (1) {
         sleep();
@@ -136,7 +220,7 @@ void main_init(void)
     SetVCore(3);
 
     P1SEL = 0x0;
-    P1DIR = 0x43;
+    P1DIR = 0x1;
     P1OUT = 0x0;
 
     P2SEL = 0x0;
@@ -151,6 +235,21 @@ void main_init(void)
 
     PJDIR = 0xff;
     PJOUT = 0x00;
+
+    // port mappings
+    PMAPPWD = 0x02D52;
+    // hardware UART
+    P1MAP5 = PM_UCA0RXD;
+    P1MAP6 = PM_UCA0TXD;
+#ifdef USE_I2C
+    // set up i2c port mapping
+    P1MAP2 = PM_UCB0SCL;
+    P1MAP3 = PM_UCB0SDA;
+    P1SEL |= BIT2 + BIT3;
+#endif
+    PMAPPWD = 0;
+
+    P1SEL |= BIT5 + BIT6;
 
 }
 
@@ -180,11 +279,17 @@ void check_events(void)
         msg |= timer_a1_last_event << 7;
         timer_a1_last_event = 0;
     }
-    // drivers/uart
-    if (uart_last_event == UART_EV_RX) {
-        msg |= BITA;
-        uart_last_event = 0;
+    // drivers/uart0
+    if (uart0_last_event == UART0_EV_RX) {
+        msg |= SYS_MSG_UART0_RX;
+        uart0_last_event = 0;
     }
+    // drivers/port
+    if (port_last_event) {
+        msg |= SYS_MSG_PORT_TRIG;
+        port_last_event = 0;
+    }
+
     while (p) {
         // notify listener if he registered for any of these messages
         if (msg & p->listens) {
@@ -286,27 +391,27 @@ void check_ir(void)
         case 13:
         case 0x290:            // mute
             mixer_send_funct(pga_id_cur, FCT_T_MUTE, 0, 0);
-            tfr = timer_a0_ovf + 2;
+            tfr = timer_a0_ovf + 1;
             break;
         case 16:
         case 0x490:            // vol+
             mixer_send_funct(pga_id_cur, FCT_V_INC, VOL_STEP, VOL_STEP);
-            tfr = timer_a0_ovf + 2;
+            tfr = timer_a0_ovf + 1;
             break;
         case 17:
         case 0xc90:            // vol-
             mixer_send_funct(pga_id_cur, FCT_V_DEC, VOL_STEP, VOL_STEP);
-            tfr = timer_a0_ovf + 2;
+            tfr = timer_a0_ovf + 1;
             break;
         case 28:
         case 0x90:             // ch+
             mixer_send_funct(pga_id_cur, FCT_V_INC, VOL_BIG_STEP, VOL_BIG_STEP);
-            tfr = timer_a0_ovf + 2;
+            tfr = timer_a0_ovf + 1;
             break;
         case 29:
         case 0x890:            // ch-
             mixer_send_funct(pga_id_cur, FCT_V_DEC, VOL_BIG_STEP, VOL_BIG_STEP);
-            tfr = timer_a0_ovf + 2;
+            tfr = timer_a0_ovf + 1;
             break;
         case 36:               // record
             save_presets(pga_id_cur); 
@@ -318,7 +423,7 @@ void check_ir(void)
 */
         case 14:               // play
             load_presets(pga_id_cur);
-            tfr = timer_a0_ovf + 2;
+            tfr = timer_a0_ovf + 1;
             break;
 /*
         case 31:               // pause
@@ -338,7 +443,8 @@ void check_ir(void)
         }
 
         //snprintf(str_temp, TEMP_LEN, "%ld\r\n", results.value);
-        //uart_tx_str(str_temp, strlen(str_temp));
+        //uart0_tx_str(str_temp, strlen(str_temp));
+
         ir_resume();            // Receive the next value
     }
 }
@@ -364,7 +470,7 @@ uint8_t str_to_uint16(char *str, uint16_t * out, const uint8_t seek,
     } else {
         snprintf(str_temp, TEMP_LEN, "\e[31;1merr\e[0m specify an int between %u-%u\r\n",
                 min, max);
-        uart_tx_str(str_temp, strlen(str_temp));
+        uart0_tx_str(str_temp, strlen(str_temp));
         return 0;
     }
     return 1;

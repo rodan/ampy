@@ -177,7 +177,8 @@ uint8_t MATCH(const uint16_t measured, const uint16_t desired)
     return measured >= TICKS_LOW(desired) && measured <= TICKS_HIGH(desired);
 }
 
-static void ir_isr(enum sys_message msg)
+//static void ir_isr(enum sys_message msg)
+void ir_isr()
 {
     uint8_t irdata = IR_IN & IR_PIN;
     if (irdata) {
@@ -241,6 +242,6 @@ void ir_init(void)
     IR_DIR &= ~IR_PIN;
     timer_a1_init();
     __enable_interrupt();
-    sys_messagebus_register(&ir_isr, SYS_MSG_TIMER1_CRR0);
+    //sys_messagebus_register(&ir_isr, SYS_MSG_TIMER1_CRR0);
     ir_resume();
 }

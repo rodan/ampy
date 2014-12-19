@@ -80,6 +80,7 @@ extern decode_results results;
 void ir_init(void);
 void ir_halt(void);
 void ir_resume(void);
+void ir_isr(void);
 uint8_t ir_decode(decode_results * results);
 uint8_t decode_rc5(decode_results * results);
 uint8_t decode_hash(decode_results * results);

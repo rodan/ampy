@@ -36,13 +36,9 @@ void timer1_A0_ISR(void)
 {
     if (TA1CCR0 == IR_CCR) {
         timer_a1_last_event |= TIMER1_EVENT_CCR0;
-        goto exit_lpm3;
+        ir_isr();
+        _BIC_SR_IRQ(LPM3_bits);
     }
-    return;
-
- exit_lpm3:
-    // exit from LPM3, give execution back to mainloop
-    _BIC_SR_IRQ(LPM3_bits);
 }
 
 /*
