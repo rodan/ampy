@@ -107,7 +107,6 @@ static void port_trigger(enum sys_message msg)
     if (input_ed & SND_DETECT_FRONT) {
         in_now[0] = 1;
     }
-
     if (input_ed & SND_DETECT_REAR) {
         in_now[1] = 1;
     }
@@ -124,24 +123,17 @@ static void port_trigger(enum sys_message msg)
 // time based interrupt request handler
 static void port_parser(enum sys_message msg)
 {
-    uint8_t input_tb = P1IN & ALL_INPUTS;
     uint8_t in_now[DETECT_CHANNELS] = {0,0};
     uint8_t i;
     uint8_t smth_changed = 0;
 
-    if (input_tb & SND_DETECT_FRONT) {
+    if (P1IN & SND_DETECT_FRONT) {
         in_now[0] = 1;
     }
-
-    if (input_tb & SND_DETECT_REAR) {
+    if (P1IN & SND_DETECT_REAR) {
         in_now[1] = 1;
     }
            
-    /*
-    snprintf(str_temp, TEMP_LEN, "%x%d%d%d%d ", input_tb, in_now[0], in_now[1], stat.in_orig[0], stat.in_orig[1]);
-    uart0_tx_str(str_temp, strlen(str_temp));
-    */
-
     for (i=0;i<DETECT_CHANNELS;i++) {
         if (in_now[i]!=stat.in_orig[i]) {
             smth_changed = 1;
@@ -195,9 +187,9 @@ int main(void)
 
     sys_messagebus_register(&timer_a0_ovf_irq, SYS_MSG_TIMER0_IFG);
     sys_messagebus_register(&timer_a0_ccr1_irq, SYS_MSG_TIMER0_CCR1);
-    sys_messagebus_register(&parse_UI, SYS_MSG_UART0_RX);
-    sys_messagebus_register(&port_trigger, SYS_MSG_PORT_TRIG);
     sys_messagebus_register(&port_parser, SYS_MSG_TIMER0_CCR2);
+    sys_messagebus_register(&port_trigger, SYS_MSG_PORT_TRIG);
+    sys_messagebus_register(&parse_UI, SYS_MSG_UART0_RX);
 
     display_mixer_status();
 
@@ -286,15 +278,14 @@ void check_events(void)
     }
     // drivers/uart0
     if (uart0_last_event == UART0_EV_RX) {
-        msg |= BITA;
+        msg |= SYS_MSG_UART0_RX;
         uart0_last_event = 0;
     }
     // drivers/port
     if (port_last_event) {
-        msg |= BITB;
+        msg |= SYS_MSG_PORT_TRIG;
         port_last_event = 0;
     }
-
 
     while (p) {
         // notify listener if he registered for any of these messages
@@ -448,8 +439,9 @@ void check_ir(void)
             pga_id_cur = ir_number;
         }
 
-        //snprintf(str_temp, TEMP_LEN, "%ld\r\n", results.value);
-        //uart0_tx_str(str_temp, strlen(str_temp));
+        snprintf(str_temp, TEMP_LEN, "%ld\r\n", results.value);
+        uart0_tx_str(str_temp, strlen(str_temp));
+
         ir_resume();            // Receive the next value
     }
 }

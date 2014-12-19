@@ -1,25 +1,25 @@
 
-port    use     DIR     SEL     OUT     REN
-1.0     led     1       0       0       0
-1.1     snd_r   0       0       0       0   (has hw 33k pullup)
-1.2     SCL     0       1       0       0
-1.3     SDA     0       1       0       0
-1.4     IR      0       0       0       0
-1.5     RXD     0       1       0       0
-1.6     TXD     0       1       0       0
-1.7     snd_f   0       0       0       0   (has hw 33k pullup)
-                0x1     0x6c    0x0    0x0
+port    use         DIR     SEL     OUT     REN
+1.0     led         1       0       0       0
+1.1     snd_det_r   0       0       0       0   (has hw 33k pullup)
+1.2     SCL         0       1       0       0
+1.3     SDA         0       1       0       0
+1.4     IR          0       0       0       0
+1.5     RXD         0       1       0       0
+1.6     TXD         0       1       0       0
+1.7     snd_det_f   0       0       0       0   (has hw 33k pullup)
+                    0x1     0x6c    0x0    0x0
 
-port    use     DIR     SEL     OUT     REN
-2.0     mute_f  1       0       0       0
-2.1     mute_r  1       0       0       0
-2.2     -       1       0       0       0
-2.3     -       1       0       0       0
-2.4     -       1       0       0       0
-2.5     -       1       0       0       0
-2.6     -       1       0       0       0
-2.7     -       1       0       0       0
-                0xff    0x0     0x0     0x0
+port    use         DIR     SEL     OUT     REN
+2.0     mute_ctrl_f 1       0       0       0
+2.1     mute_ctrl_r 1       0       0       0
+2.2     -           1       0       0       0
+2.3     -           1       0       0       0
+2.4     -           1       0       0       0
+2.5     -           1       0       0       0
+2.6     -           1       0       0       0
+2.7     -           1       0       0       0
+                    0xff    0x0     0x0     0x0
 
 port    use     DIR     SEL     OUT     REN
 3.0     -       1       0       0       0
