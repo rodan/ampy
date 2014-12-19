@@ -87,7 +87,8 @@ static void timer_a0_ccr1_irq(enum sys_message msg)
 
     d++;
     uart0_tx_str(str_temp, strlen(str_temp));
-    timer_a0_delay_noblk_ccr1(_500ms);
+    //timer_a0_delay_noblk_ccr1(_500ms);
+    timer_a0_delay_noblk_ccr1(_10ms);
 }
 
 static void parse_UI(enum sys_message msg)
@@ -152,7 +153,9 @@ static void port_parser(enum sys_message msg)
                 stat.count[i] = 0;
                 stat.mute[i] = 1;
                 stat.in_orig[i] = 1;
-                LED_OFF;
+                if ((stat.mute[0] == 1) && (stat.mute[1] == 1)) {
+                    LED_OFF;
+                }
                 if (i == 0) {
                     MUTE_FRONT;
                 } else if (i == 1) {
@@ -439,8 +442,8 @@ void check_ir(void)
             pga_id_cur = ir_number;
         }
 
-        snprintf(str_temp, TEMP_LEN, "%ld\r\n", results.value);
-        uart0_tx_str(str_temp, strlen(str_temp));
+        //snprintf(str_temp, TEMP_LEN, "%ld\r\n", results.value);
+        //uart0_tx_str(str_temp, strlen(str_temp));
 
         ir_resume();            // Receive the next value
     }
