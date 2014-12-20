@@ -1,6 +1,7 @@
 
 an audio amplifier project that contains a mixer controlled by an MSP430 microcontroller
 
+
 contents:
  hardware/power_amp  - power circuit for the amplifier
  hardware/power_pre  - power circuit used by the mixer board
@@ -10,6 +11,8 @@ contents:
  firmware_mixer      - software that runs on the MSP430F5510 that is present on the mixer board
  firmware_brain      - software for the main uC (CC430F5137) that interfaces the user with the mixer board. currently user input comes via remote control presses.
  firmware_display    - software that runs on the atmega present on the BADGEr. this is a simple adaptation on Jeremy Blum's "Pi BADGEr ePaper Weather Station".
+
+pictures now available: https://plus.google.com/photos/106706955427383613204/albums/6020010464235749729?banner=pwa
 
 --------------------------------------------
 
