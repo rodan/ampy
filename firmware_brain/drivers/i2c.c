@@ -209,9 +209,8 @@ void i2c_transfer_start(const i2c_package_t * pkg,
             I2C_CTL1 |= UCTXSTT;        // start condition
             if (transfer.pkg->data_len == 1) {
                 // wait for STT bit to drop
-                while (I2C_CTL1 & UCTXSTT) ; {
-                    I2C_CTL1 |= UCTXSTP;        // schedule stop condition
-                }
+                while (I2C_CTL1 & UCTXSTT);
+                I2C_CTL1 |= UCTXSTP;        // schedule stop condition
             }
             // update next state
             transfer.next_state = SM_READ_DATA;

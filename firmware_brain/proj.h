@@ -7,10 +7,15 @@
 
 #define MCLK_FREQ           1048576
 
-// hardware i2c config
-#define I2C_USE_DEV         0
-#define I2C_CLK_SRC         2
-#define I2C_CLK_DIV         12
+// software i2c config
+#define I2C_MASTER_DIR P1DIR
+#define I2C_MASTER_OUT P1OUT
+#define I2C_MASTER_IN  P1IN
+#define I2C_MASTER_SCL BIT2
+#define I2C_MASTER_SDA BIT3
+
+#define I2C_TX_BUFF_LEN     8
+uint8_t i2c_tx_buff[I2C_TX_BUFF_LEN];
 
 // infrared config
 #define IR_SEL P1SEL

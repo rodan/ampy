@@ -245,3 +245,4 @@ void ir_init(void)
     //sys_messagebus_register(&ir_isr, SYS_MSG_TIMER1_CRR0);
     ir_resume();
 }
+

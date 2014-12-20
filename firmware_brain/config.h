@@ -5,6 +5,7 @@
 //#define USE_WATCHDOG
 //#define CONFIG_DEBUG
 
+//#define HARDWARE_I2C
 
 ////////////////////////////////////////
 //

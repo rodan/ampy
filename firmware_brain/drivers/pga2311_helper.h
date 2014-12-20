@@ -16,6 +16,7 @@ struct mixer_settings_t {
     uint8_t v5_l;
     uint8_t v6_r;
     uint8_t v6_l;               // pga #6, left channel volume
+    uint8_t padding;
 };
 
 struct mixer_settings_t s;

@@ -13,7 +13,6 @@
 #include "drivers/timer_a0.h"
 #include "drivers/timer_a1.h"
 #include "drivers/uart0.h"
-#include "drivers/i2c.h"
 #include "drivers/ir_remote.h"
 #include "drivers/pga2311_helper.h"
 #include "drivers/port.h"
@@ -25,6 +24,11 @@
 
 #ifdef USE_I2C
 #include "interface/i2c_fcts.h"
+  #ifdef HARDWARE_I2C
+    #include "drivers/i2c.h"
+  #else
+    #include "serial_bitbang.h"
+  #endif
 #endif
 
 int8_t ir_number;
@@ -56,27 +60,28 @@ static void timer_a0_ovf_irq(enum sys_message msg)
 
 static void timer_a0_ccr1_irq(enum sys_message msg)
 {
+    /*
     switch (d) {
         case 0:
-            snprintf(str_temp, TEMP_LEN, "1front     %3d %3d %s\n", s.v1_r, s.v1_l, mixer_get_mute_struct(1)?"":m);
+            snprintf(str_temp, TEMP_LEN, "1front     %3d %3d %s\n", s.v[0], s.v[1], mixer_get_mute_struct(1)?"":m);
             break;
         case 1:
-            snprintf(str_temp, TEMP_LEN, "2rear      %3d %3d %s\n", s.v2_r, s.v2_l, mixer_get_mute_struct(2)?"":m);
+            snprintf(str_temp, TEMP_LEN, "2rear      %3d %3d %s\n", s.v[2], s.v[3], mixer_get_mute_struct(2)?"":m);
             break;
         case 2:
-            snprintf(str_temp, TEMP_LEN, "3line in   %3d %3d %s\n", s.v3_r, s.v3_l, mixer_get_mute_struct(3)?"":m);
+            snprintf(str_temp, TEMP_LEN, "3line in   %3d %3d %s\n", s.v[4], s.v[5], mixer_get_mute_struct(3)?"":m);
             break;
         case 3:
-            snprintf(str_temp, TEMP_LEN, "4spdif     %3d %3d %s\n", s.v4_r, s.v4_l, mixer_get_mute_struct(4)?"":m);
+            snprintf(str_temp, TEMP_LEN, "4spdif     %3d %3d %s\n", s.v[6], s.v[7], mixer_get_mute_struct(4)?"":m);
             break;
         case 4:
-            snprintf(str_temp, TEMP_LEN, "5f-r pan   %3d %3d %s\n", s.v5_r, s.v5_l, mixer_get_mute_struct(5)?"":m);
+            snprintf(str_temp, TEMP_LEN, "5f-r pan   %3d %3d %s\n", s.v[8], s.v[9], mixer_get_mute_struct(5)?"":m);
             break;
         case 5:
-            snprintf(str_temp, TEMP_LEN, "6center    %3d     %s\n", s.v6_r, mixer_get_mute_struct(6)?"":m);
+            snprintf(str_temp, TEMP_LEN, "6center    %3d     %s\n", s.v[10], mixer_get_mute_struct(6)?"":m);
             break;
         case 6:
-            snprintf(str_temp, TEMP_LEN, "7subwoofer %3d     %s\n", s.v6_l, mixer_get_mute_struct(6)?"":m);
+            snprintf(str_temp, TEMP_LEN, "7subwoofer %3d     %s\n", s.v[11], mixer_get_mute_struct(6)?"":m);
             break;
         case 7:
             snprintf(str_temp, TEMP_LEN, "A\n");
@@ -89,6 +94,7 @@ static void timer_a0_ccr1_irq(enum sys_message msg)
     uart0_tx_str(str_temp, strlen(str_temp));
     //timer_a0_delay_noblk_ccr1(_500ms);
     timer_a0_delay_noblk_ccr1(_10ms);
+    */
 }
 
 static void parse_UI(enum sys_message msg)
@@ -180,7 +186,10 @@ int main(void)
     timer_a0_init();
     ir_init();
     uart0_init();
+
+  #ifdef HARDWARE_I2C
     i2c_init();
+  #endif
     port_init();
 
     for (i=0;i<DETECT_CHANNELS;i++) {
@@ -188,18 +197,16 @@ int main(void)
         stat.in_orig[i] = 1;
     }
 
-    sys_messagebus_register(&timer_a0_ovf_irq, SYS_MSG_TIMER0_IFG);
-    sys_messagebus_register(&timer_a0_ccr1_irq, SYS_MSG_TIMER0_CCR1);
-    sys_messagebus_register(&port_parser, SYS_MSG_TIMER0_CCR2);
-    sys_messagebus_register(&port_trigger, SYS_MSG_PORT_TRIG);
+    //sys_messagebus_register(&timer_a0_ovf_irq, SYS_MSG_TIMER0_IFG);
+    //sys_messagebus_register(&timer_a0_ccr1_irq, SYS_MSG_TIMER0_CCR1);
+    //sys_messagebus_register(&port_parser, SYS_MSG_TIMER0_CCR2);
+    //sys_messagebus_register(&port_trigger, SYS_MSG_PORT_TRIG);
     sys_messagebus_register(&parse_UI, SYS_MSG_UART0_RX);
 
-    display_mixer_status();
+    //display_mixer_status();
 
     while (1) {
-        sleep();
-        //__no_operation();
-        //wake_up();
+        _BIS_SR(LPM3_bits + GIE);
 #ifdef USE_WATCHDOG
         WDTCTL = (WDTCTL & 0xff) | WDTPW | WDTCNTCL;
 #endif
@@ -239,28 +246,19 @@ void main_init(void)
     // port mappings
     PMAPPWD = 0x02D52;
     // hardware UART
-    P1MAP5 = PM_UCA0RXD;
-    P1MAP6 = PM_UCA0TXD;
+    P1MAP5 = PM_UCA0TXD;
+    P1MAP6 = PM_UCA0RXD;
 #ifdef USE_I2C
+  #ifdef HARDWARE_I2C
     // set up i2c port mapping
     P1MAP2 = PM_UCB0SCL;
     P1MAP3 = PM_UCB0SDA;
     P1SEL |= BIT2 + BIT3;
+  #endif
 #endif
     PMAPPWD = 0;
 
     P1SEL |= BIT5 + BIT6;
-
-}
-
-void sleep(void)
-{
-    _BIS_SR(LPM3_bits + GIE);
-    __no_operation();
-}
-
-void wake_up(void)
-{
 
 }
 
@@ -449,6 +447,7 @@ void check_ir(void)
     }
 }
 
+/*
 uint8_t str_to_uint16(char *str, uint16_t * out, const uint8_t seek,
                       const uint8_t len, const uint16_t min, const uint16_t max)
 {
@@ -475,6 +474,6 @@ uint8_t str_to_uint16(char *str, uint16_t * out, const uint8_t seek,
     }
     return 1;
 }
-
+*/
 
 
