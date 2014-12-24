@@ -10,9 +10,11 @@
 #include <signal.h>
 #include <inttypes.h>
 #include <string.h>
-
+#include <panel.h>
 #include "pga2311_helper.h"
 #include "proj.h"
+
+#include "widget.h"
 
 #define STR_LEN 256
 
@@ -106,26 +108,28 @@ uint8_t extract_hex(char *str, uint8_t * rv)
     return i;
 }
 
-int get_mixer_values(int dev)
+int get_mixer_values(int *dev)
 {
     char buff;
     char input[STR_LEN];
     uint8_t i;
 
-    if (dev < 0) {
-        if (stty_init(stty_device, &dev) == EXIT_FAILURE) {
+    if (*dev < 0) {
+        if (stty_init(stty_device, dev) == EXIT_FAILURE) {
             printf("err\n");
             return EXIT_FAILURE;
         }
     }
 
     signal(SIGALRM, catch_alarm);
-    i = write(dev, "st\r\n", 4);
+    i = write(*dev, "st\r\n", 4);
     alarm(1);
 
     i = 0;
+    keep_going = 1;
+
     while (keep_going) {
-        if (read(dev, &buff, 1) == 1) {
+        if (read(*dev, &buff, 1) == 1) {
             if ((buff == '\n') || i > (STR_LEN - 2)) {
                 keep_going = 0;
             } else {
@@ -136,8 +140,10 @@ int get_mixer_values(int dev)
             alarm(1);
         }
     }
+    alarm(0);
     input[i] = 0;
-    //printf("i %d %s\n", i, input);
+    
+    //printf("i %d %d %s\n", i, *dev, input);
 
     extract_hex(input, &famp_mute[0]);
     extract_hex(input + 2, &famp_mute[1]);
@@ -171,13 +177,92 @@ int set_mixer_volume(int dev, const uint8_t pga_id, const uint8_t mute,
     return EXIT_SUCCESS;
 }
 
+/*
 int main_loop()
 {
     //char *ttydevice;
 
     //ttydevice = getenv("dev");
     // if pipe is used, I need more than an empty output
-    setvbuf(stdout, NULL, _IONBF, 0);
+    //setvbuf(stdout, NULL, _IONBF, 0);
 
+    //ncurses_init();
+
+	struct pollfd *pollfds = NULL;
+	int nfds = 0, n;
+	struct widget *active_widget;
+	unsigned short revents;
+	int key;
+	int err;
+
+	for (;;) {
+		update_panels();
+		doupdate();
+
+		active_widget = get_active_widget();
+		if (!active_widget)
+			break;
+
+		n = 1 + snd_mixer_poll_descriptors_count(mixer);
+		if (n != nfds) {
+			free(pollfds);
+			nfds = n;
+			pollfds = ccalloc(nfds, sizeof *pollfds);
+			pollfds[0].fd = fileno(stdin);
+			pollfds[0].events = POLLIN;
+		}
+		err = snd_mixer_poll_descriptors(mixer, &pollfds[1], nfds - 1);
+		if (err < 0)
+			fatal_alsa_error("cannot get poll descriptors", err);
+		n = poll(pollfds, nfds, -1);
+		if (n < 0) {
+			if (errno == EINTR) {
+				pollfds[0].revents = 0;
+				doupdate(); // handle SIGWINCH
+			} else {
+				fatal_error("poll error");
+			}
+		}
+		if (pollfds[0].revents & (POLLERR | POLLHUP | POLLNVAL))
+			break;
+		if (pollfds[0].revents & POLLIN)
+			--n;
+		if (n > 0) {
+			err = snd_mixer_poll_descriptors_revents(mixer, &pollfds[1], nfds - 1, &revents);
+			if (err < 0)
+				fatal_alsa_error("cannot get poll events", err);
+			if (revents & (POLLERR | POLLNVAL))
+				close_mixer_device();
+			else if (revents & POLLIN)
+				snd_mixer_handle_events(mixer);
+		}
+		key = wgetch(active_widget->window);
+		while (key != ERR) {
+#ifdef KEY_RESIZE
+			if (key == KEY_RESIZE)
+				window_size_changed();
+			else
+#endif
+				active_widget->handle_key(key);
+			active_widget = get_active_widget();
+			if (!active_widget)
+				break;
+			key = wgetch(active_widget->window);
+		}
+		if (!active_widget)
+			break;
+		if (controls_changed) {
+			controls_changed = FALSE;
+			create_controls();
+			control_values_changed = FALSE;
+			display_controls();
+		} else if (control_values_changed) {
+			control_values_changed = FALSE;
+			display_controls();
+		}
+	}
+	free(pollfds);
+    
     return EXIT_SUCCESS;
 }
+*/
