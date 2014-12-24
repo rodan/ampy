@@ -60,7 +60,6 @@ static void timer_a0_ovf_irq(enum sys_message msg)
 
 static void timer_a0_ccr1_irq(enum sys_message msg)
 {
-    /*
     switch (d) {
         case 0:
             snprintf(str_temp, TEMP_LEN, "1front     %3d %3d %s\n", s.v[0], s.v[1], mixer_get_mute_struct(1)?"":m);
@@ -94,7 +93,6 @@ static void timer_a0_ccr1_irq(enum sys_message msg)
     uart0_tx_str(str_temp, strlen(str_temp));
     //timer_a0_delay_noblk_ccr1(_500ms);
     timer_a0_delay_noblk_ccr1(_10ms);
-    */
 }
 
 static void parse_UI(enum sys_message msg)
@@ -187,9 +185,9 @@ int main(void)
     ir_init();
     uart0_init();
 
-  #ifdef HARDWARE_I2C
+#ifdef HARDWARE_I2C
     i2c_init();
-  #endif
+#endif
     port_init();
 
     for (i=0;i<DETECT_CHANNELS;i++) {
@@ -197,13 +195,13 @@ int main(void)
         stat.in_orig[i] = 1;
     }
 
-    //sys_messagebus_register(&timer_a0_ovf_irq, SYS_MSG_TIMER0_IFG);
-    //sys_messagebus_register(&timer_a0_ccr1_irq, SYS_MSG_TIMER0_CCR1);
-    //sys_messagebus_register(&port_parser, SYS_MSG_TIMER0_CCR2);
-    //sys_messagebus_register(&port_trigger, SYS_MSG_PORT_TRIG);
+    sys_messagebus_register(&timer_a0_ovf_irq, SYS_MSG_TIMER0_IFG);
+    sys_messagebus_register(&timer_a0_ccr1_irq, SYS_MSG_TIMER0_CCR1);
+    sys_messagebus_register(&port_parser, SYS_MSG_TIMER0_CCR2);
+    sys_messagebus_register(&port_trigger, SYS_MSG_PORT_TRIG);
     sys_messagebus_register(&parse_UI, SYS_MSG_UART0_RX);
 
-    //display_mixer_status();
+    get_mixer_status();
 
     while (1) {
         _BIS_SR(LPM3_bits + GIE);
@@ -475,5 +473,3 @@ uint8_t str_to_uint16(char *str, uint16_t * out, const uint8_t seek,
     return 1;
 }
 */
-
-

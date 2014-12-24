@@ -32,7 +32,6 @@ void i2c_tx_cmd(uint8_t cmd, uint8_t arg)
     pkg.slave_addr = I2C_MIXER_SLAVE_ADDR;
     pkg.addr[0] = 0;
     pkg.addr_len = 0;
-
     pkg.data = i2c_tx_buff;
     pkg.data_len = 2;
     pkg.read = 0;
@@ -58,13 +57,6 @@ void i2c_tx_vol(uint8_t pga_id, uint8_t unmute, uint8_t vol_r, uint8_t vol_l)
     pkg.slave_addr = I2C_MIXER_SLAVE_ADDR;
     pkg.addr[0] = 0;
     pkg.addr_len = 0;
-
-    i2c_tx_buff[0] = M_CMD_VOL;
-    i2c_tx_buff[1] = pga_id;
-    i2c_tx_buff[2] = unmute;
-    i2c_tx_buff[3] = vol_r;
-    i2c_tx_buff[4] = vol_l;
-
     pkg.data = i2c_tx_buff;
     pkg.data_len = 5;
     pkg.read = 0;
