@@ -12,6 +12,8 @@ contents:
  firmware_brain      - software for the main uC (CC430F5137) that interfaces the user with the mixer board. currently user input comes via remote control presses.
  firmware_display    - software that runs on the atmega present on the BADGEr. this is a simple adaptation on Jeremy Blum's "Pi BADGEr ePaper Weather Station".
 
+ linux               - linux client that talks over a serial link to firmware_brain and controls the mixer and the power amp
+
 pictures now available: https://plus.google.com/photos/106706955427383613204/albums/6020010464235749729?banner=pwa
 
 --------------------------------------------
@@ -49,9 +51,12 @@ s      show settings
  license:         GNU GPLv3
 
  parts of the code were originally forked from the openchronos-ng project [1]. 
+ linux mixer control code based on alsamixer [2]
 
  software requirements:
 
    msp430 toolchain
 
 [1] http://openchronos-ng.sourceforge.net
+[2] http://www.alsa-project.org
+

@@ -1,0 +1,13 @@
+
+linux mixer control software for the ampy ecosystem.
+a serial connection is used to connect to firmare_brain in order to control the mixer and the power amp boards.
+
+ncurses code based on alsamixer ver 1.0.28
+
+original ALSA authors:
+ * Copyright (c) 1874 Lewis Carroll
+ * Copyright (c) 1998,1999 Tim Janik
+                           Jaroslav Kysela <perex@perex.cz>
+ * Copyright (c) 2009 Clemens Ladisch <clemens@ladisch.de>
+
+
