@@ -1,5 +1,5 @@
-#ifndef __WIDGET_H__
-#define __WIDGET_H__
+#ifndef WIDGET_H_INCLUDED
+#define WIDGET_H_INCLUDED
 
 #include <panel.h>
 
@@ -8,9 +8,6 @@
 #define WIDGET_CURSOR_VISIBLE	0x4
 
 #define SCREEN_CENTER	-1
-
-int ncurses_init(void);
-void ncurses_mainloop(void);
 
 struct widget {
 	WINDOW *window;
@@ -23,13 +20,14 @@ struct widget {
 	void (*close)(void);
 };
 
-extern struct widget mixer_widget;
 extern int screen_lines;
 extern int screen_cols;
-extern int focus_control_index;
 
-void change_control_to_percent(int ctrl, int value, unsigned int channels);
-void change_control_relative(int ctrl, int delta, unsigned int channels);
-void toggle_mute(int ctrl);
+void widget_init(struct widget *widget,
+		 int lines_, int cols, int y, int x,
+		 chtype bkgd, unsigned int flags);
+void widget_free(struct widget *widget);
+struct widget *get_active_widget(void);
+void window_size_changed(void);
 
 #endif

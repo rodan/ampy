@@ -31,6 +31,7 @@
 #include "widget.h"
 #include "mixer_display.h"
 #include "mixer_controls.h"
+#include "mixer_widget.h"
 #include "pga2311_helper.h"
 #include "amp_mixer.h"
 
@@ -95,41 +96,43 @@ static void display_string_in_field(int y, int x, const char *s, int width,
 void display_card_info(void)
 {
 
-	wattrset(mixer_widget.window, attr_mixer_active);
-	display_string_in_field(1, info_items_left, card_name[view_mode], info_items_width, ALIGN_LEFT);
+    wattrset(mixer_widget.window, attr_mixer_active);
+    display_string_in_field(1, info_items_left, card_name[view_mode],
+                            info_items_width, ALIGN_LEFT);
 
-	wattrset(mixer_widget.window, attr_mixer_active);
-	display_string_in_field(2, info_items_left, chip_name[view_mode], info_items_width, ALIGN_LEFT);
+    wattrset(mixer_widget.window, attr_mixer_active);
+    display_string_in_field(2, info_items_left, chip_name[view_mode],
+                            info_items_width, ALIGN_LEFT);
 }
 
 void display_view_mode(void)
 {
-	unsigned int widths[3];
-	int i;
+    unsigned int widths[3];
+    int i;
 
-	for (i = 0; i < 3; ++i)
-		widths[i] = get_mbs_width(view_mode_name[i]);
-	if (4 + widths[0] + 6 + widths[1] + 6 + widths[2] + 1 <= info_items_width) {
-		wmove(mixer_widget.window, 3, info_items_left);
-		wattrset(mixer_widget.window, attr_mixer_text);
-		for (i = 0; i < 2; ++i) {
-			wprintw(mixer_widget.window, "F%c:", '3' + i);
-			if (view_mode == i) {
-				wattrset(mixer_widget.window, attr_mixer_active);
-				wprintw(mixer_widget.window, "[%s]", view_mode_name[i]);
-				wattrset(mixer_widget.window, attr_mixer_text);
-			} else {
-				wprintw(mixer_widget.window, " %s ", view_mode_name[i]);
-			}
-			if (i < 2)
-				waddch(mixer_widget.window, ' ');
-		}
-	} else {
-		wattrset(mixer_widget.window, attr_mixer_active);
-		display_string_in_field(3, info_items_left,
-					view_mode_name[view_mode],
-					info_items_width, ALIGN_LEFT);
-	}
+    for (i = 0; i < 3; ++i)
+        widths[i] = get_mbs_width(view_mode_name[i]);
+    if (4 + widths[0] + 6 + widths[1] + 6 + widths[2] + 1 <= info_items_width) {
+        wmove(mixer_widget.window, 3, info_items_left);
+        wattrset(mixer_widget.window, attr_mixer_text);
+        for (i = 0; i < 2; ++i) {
+            wprintw(mixer_widget.window, "F%c:", '3' + i);
+            if (view_mode == i) {
+                wattrset(mixer_widget.window, attr_mixer_active);
+                wprintw(mixer_widget.window, "[%s]", view_mode_name[i]);
+                wattrset(mixer_widget.window, attr_mixer_text);
+            } else {
+                wprintw(mixer_widget.window, " %s ", view_mode_name[i]);
+            }
+            if (i < 2)
+                waddch(mixer_widget.window, ' ');
+        }
+    } else {
+        wattrset(mixer_widget.window, attr_mixer_active);
+        display_string_in_field(3, info_items_left,
+                                view_mode_name[view_mode],
+                                info_items_width, ALIGN_LEFT);
+    }
 }
 
 void init_mixer_layout(void)
@@ -178,101 +181,48 @@ void init_mixer_layout(void)
                                     label_width_right, ALIGN_LEFT);
 }
 
-/*
-static char *format_gain(long db)
+static char *format_gain(uint8_t val)
 {
-	if (db != SND_CTL_TLV_DB_GAIN_MUTE)
-		return casprintf("%.2f", db / 100.0);
-	else
-		return cstrdup(_("mute"));
+    if (val) {
+        return casprintf("%.2f", 31.5 - (0.5 * (255 - val)));
+    } else {
+        return cstrdup("mute");
+    }
 }
-*/
 
-/*
 static void display_focus_item_info(void)
 {
-	struct control *control;
-	unsigned int index;
-	char buf[64];
-	long db, db2;
-	int sw, sw2;
-	char *dbs, *dbs2;
-	char *value_info;
-	char *item_info;
-	int err;
+    struct control *control;
+    char *dbs, *dbs2;
+    char *value_info;
+    char *item_info;
 
-	if (!has_info_items)
-		return;
-	wattrset(mixer_widget.window, attr_mixer_active);
-	if (!controls_count || screen_too_small) {
-		display_string_in_field(4, info_items_left, "", info_items_width, ALIGN_LEFT);
-		return;
-	}
-	control = &controls[focus_control_index];
-	value_info = NULL;
-	if (control->flags & TYPE_ENUM) {
-		err = snd_mixer_selem_get_enum_item(control->elem, ffs(control->enum_channel_bits) - 1, &index);
-		if (err >= 0)
-			err = snd_mixer_selem_get_enum_item_name(control->elem, index, sizeof buf - 1, buf);
-		if (err >= 0)
-			value_info = casprintf(" [%s]", buf);
-	} else if (control->flags & (TYPE_PVOLUME | TYPE_CVOLUME)) {
-		int (*get_vol_func)(snd_mixer_elem_t *, snd_mixer_selem_channel_id_t, long *);
-
-		if (control->flags & TYPE_PVOLUME)
-			get_vol_func = snd_mixer_selem_get_playback_dB;
-		else
-			get_vol_func = snd_mixer_selem_get_capture_dB;
-		if (!(control->flags & HAS_VOLUME_1)) {
-			err = get_vol_func(control->elem, control->volume_channels[0], &db);
-			if (err >= 0) {
-				dbs = format_gain(db);
-				value_info = casprintf(" [%s %s]", _("dB gain:"), dbs);
-				free(dbs);
-			}
-		} else {
-			err = get_vol_func(control->elem, control->volume_channels[0], &db);
-			if (err >= 0)
-				err = get_vol_func(control->elem, control->volume_channels[1], &db2);
-			if (err >= 0) {
-				dbs = format_gain(db);
-				dbs2 = format_gain(db2);
-				value_info = casprintf(_(" [%s %s, %s]"), _("dB gain:"), dbs, dbs2);
-				free(dbs);
-				free(dbs2);
-			}
-		}
-	} else if (control->flags & TYPE_PSWITCH) {
-		if (!(control->flags & HAS_PSWITCH_1)) {
-			err = snd_mixer_selem_get_playback_switch(control->elem, control->pswitch_channels[0], &sw);
-			if (err >= 0 && !sw)
-				value_info = casprintf(" [%s]", _("Off"));
-		} else {
-			err = snd_mixer_selem_get_playback_switch(control->elem, control->pswitch_channels[0], &sw);
-			if (err >= 0)
-				err = snd_mixer_selem_get_playback_switch(control->elem, control->pswitch_channels[1], &sw2);
-			if (err >= 0 && (!sw || !sw2))
-				value_info = casprintf(" [%s, %s]", sw ? _("On") : _("Off"), sw2 ? _("On") : _("Off"));
-		}
-	} else if (control->flags & TYPE_CSWITCH) {
-		if (!(control->flags & HAS_CSWITCH_1)) {
-			err = snd_mixer_selem_get_capture_switch(control->elem, control->cswitch_channels[0], &sw);
-			if (err >= 0 && !sw)
-				value_info = casprintf(" [%s]", _("Off"));
-		} else {
-			err = snd_mixer_selem_get_capture_switch(control->elem, control->cswitch_channels[0], &sw);
-			if (err >= 0)
-				err = snd_mixer_selem_get_capture_switch(control->elem, control->cswitch_channels[1], &sw2);
-			if (err >= 0 && (!sw || !sw2))
-				value_info = casprintf(" [%s, %s]", sw ? _("On") : _("Off"), sw2 ? _("On") : _("Off"));
-		}
-	}
-	item_info = casprintf("%s%s", control->name, value_info ? value_info : "");
-	free(value_info);
-	display_string_in_field(4, info_items_left, item_info, info_items_width, ALIGN_LEFT);
-	free(item_info);
+    if (!has_info_items)
+        return;
+    wattrset(mixer_widget.window, attr_mixer_active);
+    if (!controls_count || screen_too_small) {
+        display_string_in_field(4, info_items_left, "", info_items_width,
+                                ALIGN_LEFT);
+        return;
+    }
+    control = &controls[view_mode][focus_control_index];
+    value_info = NULL;
+    if (control->flags & TYPE_PVOLUME) {
+        dbs = format_gain(*control->volume_left);
+        dbs2 = format_gain(*control->volume_right);
+        value_info = casprintf(" [dB gain: %s, %s]", dbs, dbs2);
+        free(dbs);
+        free(dbs2);
+    } else if (control->flags & TYPE_PSWITCH) {
+        value_info = casprintf(" [%s]", *control->pswitch ? "on" : "off");
+    }
+    item_info =
+        casprintf("%s%s", control->full_name, value_info ? value_info : "");
+    free(value_info);
+    display_string_in_field(4, info_items_left, item_info, info_items_width,
+                            ALIGN_LEFT);
+    free(item_info);
 }
-*/
 
 static void clear_controls_display(void)
 {
@@ -315,106 +265,111 @@ static void display_control(unsigned int control_index)
     col = control_index - first_visible_control_index;
     left = first_control_x + col * (control_width + 1);
     frame_left = left + (control_width - 4) / 2;
-	if (control->flags & IS_ACTIVE)
-		wattrset(mixer_widget.window, attr_ctl_frame);
-	else
+    if (control->flags & IS_ACTIVE)
+        wattrset(mixer_widget.window, attr_ctl_frame);
+    else
         wattrset(mixer_widget.window, attr_ctl_inactive);
     if (control->flags & TYPE_PVOLUME) {
 
-    // if volume control
-    mvwaddch(mixer_widget.window, base_y - volume_height - 1, frame_left,
-             ACS_ULCORNER);
-    waddch(mixer_widget.window, ACS_HLINE);
-    waddch(mixer_widget.window, ACS_HLINE);
-    waddch(mixer_widget.window, ACS_URCORNER);
-    for (i = 0; i < volume_height; ++i) {
-        mvwaddch(mixer_widget.window, base_y - i - 1, frame_left, ACS_VLINE);
-        mvwaddch(mixer_widget.window, base_y - i - 1, frame_left + 3,
-                 ACS_VLINE);
-    }
-		mvwaddch(mixer_widget.window, base_y, frame_left,
-			 control->flags & TYPE_PSWITCH ? ACS_LTEE : ACS_LLCORNER);
-    
-    waddch(mixer_widget.window, ACS_HLINE);
-    waddch(mixer_widget.window, ACS_HLINE);
-    		waddch(mixer_widget.window,
-		       control->flags & TYPE_PSWITCH ? ACS_RTEE : ACS_LRCORNER);
-} else if (control->flags & TYPE_PSWITCH) {
-		mvwaddch(mixer_widget.window, base_y, frame_left, ACS_ULCORNER);
-		waddch(mixer_widget.window, ACS_HLINE);
-		waddch(mixer_widget.window, ACS_HLINE);
-		waddch(mixer_widget.window, ACS_URCORNER);
-	}
-if (control->flags & TYPE_PSWITCH) {
-    mvwaddch(mixer_widget.window, base_y + 1, frame_left, ACS_VLINE);
-    mvwaddch(mixer_widget.window, base_y + 1, frame_left + 3, ACS_VLINE);
-    mvwaddch(mixer_widget.window, base_y + 2, frame_left, ACS_LLCORNER);
-    waddch(mixer_widget.window, ACS_HLINE);
-    waddch(mixer_widget.window, ACS_HLINE);
-    waddch(mixer_widget.window, ACS_LRCORNER);
-}
-
-if (control->flags & TYPE_PVOLUME) {
-    // volume bar
-    //volumes[0] = mixer_get_vol_struct(control_index + 1, CH_LEFT) / 255.0;
-    //volumes[1] = mixer_get_vol_struct(control_index + 1, CH_RIGHT) / 255.0;
-    volumes[0] = (*control->volume_left)/255.0;
-    volumes[1] = (*control->volume_right)/255.0;
-
-    for (c = 0; c < 2; c++) {
-        bar_height = lrint(volumes[c] * volume_height);
+        // if volume control
+        mvwaddch(mixer_widget.window, base_y - volume_height - 1, frame_left,
+                 ACS_ULCORNER);
+        waddch(mixer_widget.window, ACS_HLINE);
+        waddch(mixer_widget.window, ACS_HLINE);
+        waddch(mixer_widget.window, ACS_URCORNER);
         for (i = 0; i < volume_height; ++i) {
-            chtype ch;
-            if (i + 1 > bar_height)
-                ch = ' ' | attr_ctl_frame;
-            else {
-                ch = ACS_CKBOARD;
-                if (i > volume_height * 8 / 10)
-                    ch |= attr_ctl_bar_hi;
-                else if (i > volume_height * 4 / 10)
-                    ch |= attr_ctl_bar_mi;
-                else
-                    ch |= attr_ctl_bar_lo;
-            }
-            mvwaddch(mixer_widget.window, base_y - i - 1,
-                     frame_left + c + 1, ch);
+            mvwaddch(mixer_widget.window, base_y - i - 1, frame_left,
+                     ACS_VLINE);
+            mvwaddch(mixer_widget.window, base_y - i - 1, frame_left + 3,
+                     ACS_VLINE);
         }
+        mvwaddch(mixer_widget.window, base_y, frame_left,
+                 control->flags & TYPE_PSWITCH ? ACS_LTEE : ACS_LLCORNER);
+
+        waddch(mixer_widget.window, ACS_HLINE);
+        waddch(mixer_widget.window, ACS_HLINE);
+        waddch(mixer_widget.window,
+               control->flags & TYPE_PSWITCH ? ACS_RTEE : ACS_LRCORNER);
+    } else if (control->flags & TYPE_PSWITCH) {
+        mvwaddch(mixer_widget.window, base_y, frame_left, ACS_ULCORNER);
+        waddch(mixer_widget.window, ACS_HLINE);
+        waddch(mixer_widget.window, ACS_HLINE);
+        waddch(mixer_widget.window, ACS_URCORNER);
+    }
+    if (control->flags & TYPE_PSWITCH) {
+        mvwaddch(mixer_widget.window, base_y + 1, frame_left, ACS_VLINE);
+        mvwaddch(mixer_widget.window, base_y + 1, frame_left + 3, ACS_VLINE);
+        mvwaddch(mixer_widget.window, base_y + 2, frame_left, ACS_LLCORNER);
+        waddch(mixer_widget.window, ACS_HLINE);
+        waddch(mixer_widget.window, ACS_HLINE);
+        waddch(mixer_widget.window, ACS_LRCORNER);
     }
 
+    if (control->flags & TYPE_PVOLUME) {
+        // volume bar
+        volumes[0] = (*control->volume_left) / 255.0;
+        volumes[1] = (*control->volume_right) / 255.0;
 
-    wattrset(mixer_widget.window, attr_mixer_active);
+        for (c = 0; c < 2; c++) {
+            bar_height = lrint(volumes[c] * volume_height);
+            for (i = 0; i < volume_height; ++i) {
+                chtype ch;
+                if (i + 1 > bar_height)
+                    ch = ' ' | attr_ctl_frame;
+                else {
+                    ch = ACS_CKBOARD;
+                    if (i > volume_height * 8 / 10)
+                        ch |= attr_ctl_bar_hi;
+                    else if (i > volume_height * 4 / 10)
+                        ch |= attr_ctl_bar_mi;
+                    else
+                        ch |= attr_ctl_bar_lo;
+                }
+                mvwaddch(mixer_widget.window, base_y - i - 1,
+                         frame_left + c + 1, ch);
+            }
+        }
 
-    // print volume value
-    mvwprintw(mixer_widget.window, values_y, frame_left - 2,
-              "%3d", (int)lrint(volumes[0] * 100));
-    wattrset(mixer_widget.window, attr_ctl_frame);
-    waddstr(mixer_widget.window, "<>");
-    wattrset(mixer_widget.window, attr_mixer_active);
-    wprintw(mixer_widget.window, "%-3d", (int)lrint(volumes[1] * 100));
-}
+        wattrset(mixer_widget.window, attr_mixer_active);
 
-if (control->flags & TYPE_PSWITCH) {
-    // mute status
-    wattrset(mixer_widget.window, 0);
-    mvwaddch(mixer_widget.window, base_y + 1, frame_left + 1, *control->pswitch ? "O"[0] | attr_ctl_nomute : "M"[0] | attr_ctl_mute);
-    waddch(mixer_widget.window, *control->pswitch ? "O"[0] | attr_ctl_nomute : "MM"[0] | attr_ctl_mute);
-}
+        // print volume value
+        mvwprintw(mixer_widget.window, values_y, frame_left - 2,
+                  "%3d", (int)lrint(volumes[0] * 100));
+        wattrset(mixer_widget.window, attr_ctl_frame);
+        waddstr(mixer_widget.window, "<>");
+        wattrset(mixer_widget.window, attr_mixer_active);
+        wprintw(mixer_widget.window, "%-3d", (int)lrint(volumes[1] * 100));
+    }
 
+    if (control->flags & TYPE_PSWITCH) {
+        // mute status
+        wattrset(mixer_widget.window, 0);
+        mvwaddch(mixer_widget.window, base_y + 1, frame_left + 1,
+                 *control->
+                 pswitch ? "O"[0] | attr_ctl_nomute : "M"[0] | attr_ctl_mute);
+        waddch(mixer_widget.window,
+               *control->
+               pswitch ? "O"[0] | attr_ctl_nomute : "MM"[0] | attr_ctl_mute);
+    }
     // channel names
     //wattrset(mixer_widget.window, attr_mixer_active);
     //display_string_centered_in_control(base_y + 4, col, ch_name[control_index], control_width);
 
     if (control_index == focus_control_index) {
-       i = first_control_x + col * (control_width + 1) + (control_width - control_name_width) / 2;
-       wattrset(mixer_widget.window, attr_ctl_mark_focus);
-       mvwaddch(mixer_widget.window, name_y, i - 1, '<');
-       mvwaddch(mixer_widget.window, name_y, i + control_name_width, '>');
-       wattrset(mixer_widget.window, attr_ctl_label_focus);
+        i = first_control_x + col * (control_width + 1) + (control_width -
+                                                           control_name_width) /
+            2;
+        wattrset(mixer_widget.window, attr_ctl_mark_focus);
+        mvwaddch(mixer_widget.window, name_y, i - 1, '<');
+        mvwaddch(mixer_widget.window, name_y, i + control_name_width, '>');
+        wattrset(mixer_widget.window, attr_ctl_label_focus);
     } else {
-       wattrset(mixer_widget.window, attr_ctl_label);
+        wattrset(mixer_widget.window, attr_ctl_label);
     }
-       
-    display_string_centered_in_control(name_y, col, controls[view_mode][control_index].name, control_name_width);
+
+    display_string_centered_in_control(name_y, col,
+                                       controls[view_mode][control_index].name,
+                                       control_name_width);
 
     //wattrset(mixer_widget.window, attr_mixer_frame);
     //display_string_centered_in_control(channel_name_y, col, ch_name[control_index], control_name_width);
@@ -456,15 +411,16 @@ void display_controls(void)
 
     clear_controls_display();
 
-    //display_focus_item_info();
+    display_focus_item_info();
 
-    //if (controls_count > 0) {
-    if (!screen_too_small) {
-        for (i = 0; i < visible_controls; ++i) {
-            display_control(i);
+    if (controls_count > 0) {
+        if (!screen_too_small) {
+            for (i = 0; i < visible_controls; ++i) {
+                display_control(i);
+            }
         }
+        display_scroll_indicators();
     }
-    display_scroll_indicators();
 }
 
 void compute_controls_layout(void)
@@ -539,4 +495,3 @@ void compute_controls_layout(void)
     cswitch_y = values_y - any_cswitch;
     base_y = cswitch_y - 1 - 2 * any_pswitch;
 }
-

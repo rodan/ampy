@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include "mixer_controls.h"
 #include "mixer_display.h"
+#include "mixer_widget.h"
 #include "amp_mixer.h"
 #include "pga2311_helper.h"
 

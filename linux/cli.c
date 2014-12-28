@@ -9,12 +9,12 @@
 #include "proj.h"
 #include "pga2311_helper.h"
 #include "mixer_controls.h"
-
-#include "widget.h"
+#include "mixer_widget.h"
+#include "mainloop.h"
 
 uint8_t show_interface;
 
-static void show_help(void)
+void show_cli_help(void)
 {
     fprintf(stdout, "Usage: amp_mixer [OPTION]\n\n");
     fprintf(stdout,
@@ -63,7 +63,7 @@ static void parse_options(int argc, char *argv[])
         switch (option) {
         case '?':
         case 'h':
-            show_help();
+            show_cli_help();
             exit(EXIT_SUCCESS);
             break;
         case 's':
@@ -101,10 +101,12 @@ int main(int argc, char *argv[])
     parse_options(argc, argv);
 
     if (show_interface) {
-        if (ncurses_init() == EXIT_SUCCESS) {
-            ncurses_mainloop();
-        }
+        initialize_curses(1);
+	    create_mixer_widget();
+	    mainloop();
+        app_shutdown();
     }
+
 
     return 0;
 }
