@@ -1,13 +1,14 @@
 
 CC      = gcc
-CFLAGS  = -g -Wall -O2
-LDFLAGS = -lncurses -lpanel 
+#CFLAGS  = -g -Wall -O2
+CFLAGS  = -g -Wall -ggdb
+LDFLAGS = -lncurses -lpanel -lm 
 PROGS   = amp_mixer
 
-amp_mixer_OBJS    = cli.o amp_mixer.o pga2311_helper.o colors.o widget.o
+amp_mixer_OBJS    = cli.o amp_mixer.o pga2311_helper.o colors.o widget.o mem.o utils.o mixer_display.o mixer_controls.o
 amp_mixer_EXTRA   = amp_mixer.h
 
-SRCS   = amp_mixer.c cli.c pga2311_helper.c colors.c widget.c
+SRCS   = amp_mixer.c cli.c pga2311_helper.c colors.c widget.c mem.c utils.c mixer_display.c mixer_controls.c
 EXTRA  = ../AUTHORS ../COPYING ../ChangeLog \
 			../INSTALL ../NEWS ../README \
 			Makefile

@@ -8,6 +8,7 @@
 #include "cli.h"
 #include "proj.h"
 #include "pga2311_helper.h"
+#include "mixer_controls.h"
 
 #include "widget.h"
 
@@ -31,22 +32,13 @@ void display_mixer_values(void)
     uint8_t i;
     fprintf(stdout, "Current mixer values:\n");
 
-    for (i = 1; i < 6; i++) {
-        fprintf(stdout, " %s  %d %d %s\n",
-                ch_name[i - 1],
+    for (i = 1; i < 7; i++) {
+        fprintf(stdout, " %s\t\t%3d %3d %s\n",
+                controls[0][i - 1].name,
                 mixer_get_vol_struct(i, CH_RIGHT),
                 mixer_get_vol_struct(i, CH_LEFT),
                 mixer_get_mute_struct(i) ? "live" : "mute");
     }
-    fprintf(stdout, " %s  %d   %s\n",
-            ch_name[5],
-            mixer_get_vol_struct(i, CH_RIGHT),
-            mixer_get_mute_struct(6) ? "live" : "mute");
-    fprintf(stdout, " %s  %d   %s\n",
-            ch_name[6],
-            mixer_get_vol_struct(i, CH_LEFT),
-            mixer_get_mute_struct(6) ? "live" : "mute");
-
 }
 
 static void parse_options(int argc, char *argv[])
@@ -83,6 +75,7 @@ static void parse_options(int argc, char *argv[])
             stty_device = optarg;
             break;
         case 'i':
+            get_mixer_values(&fd_device);
             show_interface = 1;
             break;
         case 'v':
@@ -90,7 +83,7 @@ static void parse_options(int argc, char *argv[])
                 extract_hex(optarg, &t_int[i]);
                 optarg += 2;
             }
-            set_mixer_volume(fd_device, t_int[0], t_int[1], t_int[2], t_int[3]);
+            set_mixer_volume(&fd_device, t_int[0], t_int[1], t_int[2], t_int[3]);
             break;
         default:
             fprintf(stderr, "unknown option: %c\n", option);
@@ -109,7 +102,7 @@ int main(int argc, char *argv[])
 
     if (show_interface) {
         if (ncurses_init() == EXIT_SUCCESS) {
-            ncurses_main_w();
+            ncurses_mainloop();
         }
     }
 

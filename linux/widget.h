@@ -10,7 +10,7 @@
 #define SCREEN_CENTER	-1
 
 int ncurses_init(void);
-void ncurses_main_w(void);
+void ncurses_mainloop(void);
 
 struct widget {
 	WINDOW *window;
@@ -22,5 +22,14 @@ struct widget {
 	void (*window_size_changed)(void);
 	void (*close)(void);
 };
+
+extern struct widget mixer_widget;
+extern int screen_lines;
+extern int screen_cols;
+extern int focus_control_index;
+
+void change_control_to_percent(int ctrl, int value, unsigned int channels);
+void change_control_relative(int ctrl, int delta, unsigned int channels);
+void toggle_mute(int ctrl);
 
 #endif

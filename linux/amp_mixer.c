@@ -1,7 +1,4 @@
 
-// tool that outputs the contents of the fm24* F-RAM chip
-// it works in conjunction with the DEBUG_GPRS compilation option
-
 #include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -11,29 +8,25 @@
 #include <inttypes.h>
 #include <string.h>
 #include <panel.h>
+
+#include "amp_mixer.h"
 #include "pga2311_helper.h"
 #include "proj.h"
-
 #include "widget.h"
 
 #define STR_LEN 256
 
 volatile sig_atomic_t keep_going = 1;
 
-const char ch_name[7][11] = { "front     ",
-    "rear      ",
-    "line-in   ",
-    "spdif     ",
-    "f-r pan   ",
-    "center    ",
-    "subwoofer "
-};
+int view_mode = VIEW_MIXER;
+const char view_mode_name[2][10] = { "mixer", "power amp" };
+const char card_name[2][22] = { "Ampy audio mixer REV1", "Ampy power amp REV2" };
+const char chip_name[2][26] = { "Texas Instruments PGA2311", "Texas Instruments LM4780" };
 
 void catch_alarm(int sig)
 {
     keep_going = 0;
     exit(EXIT_SUCCESS);
-    //signal (sig, catch_alarm);
 }
 
 int stty_init(char *stty_device, int *fd_dev)
@@ -116,8 +109,8 @@ int get_mixer_values(int *dev)
 
     if (*dev < 0) {
         if (stty_init(stty_device, dev) == EXIT_FAILURE) {
-            printf("err\n");
-            return EXIT_FAILURE;
+            printf("error: ampy hardware not connected\n");
+            exit(EXIT_FAILURE);
         }
     }
 
@@ -154,13 +147,13 @@ int get_mixer_values(int *dev)
     return EXIT_SUCCESS;
 }
 
-int set_mixer_volume(int dev, const uint8_t pga_id, const uint8_t mute,
+int set_mixer_volume(int *dev, const uint8_t pga_id, const uint8_t mute,
                      const uint8_t right, const uint8_t left)
 {
     char str_temp[STR_LEN];
 
-    if (dev < 0) {
-        if (stty_init(stty_device, &dev) == EXIT_FAILURE) {
+    if (*dev < 0) {
+        if (stty_init(stty_device, dev) == EXIT_FAILURE) {
             printf("err\n");
             return EXIT_FAILURE;
         }
@@ -169,7 +162,7 @@ int set_mixer_volume(int dev, const uint8_t pga_id, const uint8_t mute,
     snprintf(str_temp, STR_LEN, "v%02x%02x%02x%02x\r\n", pga_id, mute, right,
              left);
 
-    if (write(dev, str_temp, strlen(str_temp)) < 1) {
+    if (write(*dev, str_temp, strlen(str_temp)) < 1) {
         return EXIT_FAILURE;
     }
     usleep(100);
@@ -177,92 +170,3 @@ int set_mixer_volume(int dev, const uint8_t pga_id, const uint8_t mute,
     return EXIT_SUCCESS;
 }
 
-/*
-int main_loop()
-{
-    //char *ttydevice;
-
-    //ttydevice = getenv("dev");
-    // if pipe is used, I need more than an empty output
-    //setvbuf(stdout, NULL, _IONBF, 0);
-
-    //ncurses_init();
-
-	struct pollfd *pollfds = NULL;
-	int nfds = 0, n;
-	struct widget *active_widget;
-	unsigned short revents;
-	int key;
-	int err;
-
-	for (;;) {
-		update_panels();
-		doupdate();
-
-		active_widget = get_active_widget();
-		if (!active_widget)
-			break;
-
-		n = 1 + snd_mixer_poll_descriptors_count(mixer);
-		if (n != nfds) {
-			free(pollfds);
-			nfds = n;
-			pollfds = ccalloc(nfds, sizeof *pollfds);
-			pollfds[0].fd = fileno(stdin);
-			pollfds[0].events = POLLIN;
-		}
-		err = snd_mixer_poll_descriptors(mixer, &pollfds[1], nfds - 1);
-		if (err < 0)
-			fatal_alsa_error("cannot get poll descriptors", err);
-		n = poll(pollfds, nfds, -1);
-		if (n < 0) {
-			if (errno == EINTR) {
-				pollfds[0].revents = 0;
-				doupdate(); // handle SIGWINCH
-			} else {
-				fatal_error("poll error");
-			}
-		}
-		if (pollfds[0].revents & (POLLERR | POLLHUP | POLLNVAL))
-			break;
-		if (pollfds[0].revents & POLLIN)
-			--n;
-		if (n > 0) {
-			err = snd_mixer_poll_descriptors_revents(mixer, &pollfds[1], nfds - 1, &revents);
-			if (err < 0)
-				fatal_alsa_error("cannot get poll events", err);
-			if (revents & (POLLERR | POLLNVAL))
-				close_mixer_device();
-			else if (revents & POLLIN)
-				snd_mixer_handle_events(mixer);
-		}
-		key = wgetch(active_widget->window);
-		while (key != ERR) {
-#ifdef KEY_RESIZE
-			if (key == KEY_RESIZE)
-				window_size_changed();
-			else
-#endif
-				active_widget->handle_key(key);
-			active_widget = get_active_widget();
-			if (!active_widget)
-				break;
-			key = wgetch(active_widget->window);
-		}
-		if (!active_widget)
-			break;
-		if (controls_changed) {
-			controls_changed = FALSE;
-			create_controls();
-			control_values_changed = FALSE;
-			display_controls();
-		} else if (control_values_changed) {
-			control_values_changed = FALSE;
-			display_controls();
-		}
-	}
-	free(pollfds);
-    
-    return EXIT_SUCCESS;
-}
-*/

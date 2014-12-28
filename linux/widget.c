@@ -5,6 +5,9 @@
 #include <panel.h>
 #include <inttypes.h>
 #include <signal.h>
+#include <poll.h>
+#include <errno.h>
+#include <unistd.h>
 
 #include "widget.h"
 #include "pga2311_helper.h"
@@ -12,11 +15,13 @@
 #include "proj.h"
 #include "version.h"
 #include "colors.h"
+#include "mem.h"
+#include "mixer_display.h"
+#include "mixer_controls.h"
 
 WINDOW *curses_initialized;
 
 static void finish(int sig);
-static void resize(int sig);
 
 volatile uint8_t first_run = 1;
 
@@ -24,11 +29,15 @@ int screen_lines;
 int screen_cols;
 
 static int cursor_visibility = -1;
+int focus_control_index;
 
 static void on_handle_key(int key);
 static void on_window_size_changed(void);
 static void on_close(void);
 static void create_mixer_widget(void);
+
+bool control_values_changed;
+bool controls_changed;
 
 struct widget mixer_widget = {
 	.handle_key = on_handle_key,
@@ -147,10 +156,16 @@ void widget_free(struct widget *widget)
 	update_cursor_visibility();
 }
 
-void ncurses_main_w(void)
+void ncurses_mainloop(void)
 {
     struct widget *active_widget;
     int key;
+
+    struct pollfd *pollfds = NULL;
+    int nfds = 0, n;
+
+    create_controls();
+    display_controls();
 
     for (;;) {
 		update_panels();
@@ -159,6 +174,30 @@ void ncurses_main_w(void)
 		active_widget = get_active_widget();
 		if (!active_widget)
 			break;
+
+        n = 1;
+		if (n != nfds) {
+			free(pollfds);
+			nfds = n;
+			pollfds = ccalloc(nfds, sizeof *pollfds);
+			pollfds[0].fd = fileno(stdin);
+			pollfds[0].events = POLLIN;
+		}
+
+		n = poll(pollfds, nfds, -1);
+		if (n < 0) {
+			if (errno == EINTR) {
+				pollfds[0].revents = 0;
+                controls_changed = TRUE;
+				doupdate(); /* handle SIGWINCH */
+			} else {
+				//fatal_error("poll error");
+			}
+		}
+		if (pollfds[0].revents & (POLLERR | POLLHUP | POLLNVAL))
+			break;
+		if (pollfds[0].revents & POLLIN)
+			--n;
 
         key = wgetch(active_widget->window);
 		while (key != ERR) {
@@ -175,53 +214,16 @@ void ncurses_main_w(void)
 		}
 		if (!active_widget)
 			break;
-        /*
 		if (controls_changed) {
 			controls_changed = FALSE;
-			create_controls();
+            create_controls();
 			control_values_changed = FALSE;
 			display_controls();
 		} else if (control_values_changed) {
 			control_values_changed = FALSE;
 			display_controls();
 		}
-        */
-
     }
-
-
-    /*
-    uint8_t i;
-    int ch;
-
-    while ((first_run) || ((ch = getch()) != 27)) {
-
-        first_run = 0;
-
-        get_mixer_values(&fd_device);
-        attrset(COLOR_PAIR(5));
-        mvprintw(5, 10, "ampy mixer build #%d", BUILD);
-
-        for (i = 1; i < 6; i++) {
-            mvprintw(2 * i + 7, 10, " %s  %3d %3d %s\n",
-                     ch_name[i - 1],
-                     mixer_get_vol_struct(i, CH_RIGHT),
-                     mixer_get_vol_struct(i, CH_LEFT),
-                     mixer_get_mute_struct(i) ? "live" : "mute");
-        }
-
-        mvprintw(19, 10, " %s  %3d   %s\n",
-                 ch_name[5],
-                 mixer_get_vol_struct(i, CH_RIGHT),
-                 mixer_get_mute_struct(6) ? "live" : "mute");
-        mvprintw(20, 10, " %s  %3d   %s\n",
-                 ch_name[6],
-                 mixer_get_vol_struct(i, CH_LEFT),
-                 mixer_get_mute_struct(6) ? "live" : "mute");
-
-        refresh();
-    }
-    */
 
     finish(0);
 }
@@ -235,18 +237,12 @@ int ncurses_init(void)
     }
 
     signal(SIGINT, finish);
-    signal(SIGWINCH, resize);
-
     noecho();
     cbreak();
     set_escdelay(100);
-    //keypad(mainwin, TRUE);
-
     window_size_changed();
 	init_colors(1);
-
     create_mixer_widget();
-
     first_run = 1;
 
     return EXIT_SUCCESS;
@@ -255,40 +251,23 @@ int ncurses_init(void)
 static void on_handle_key(int key)
 {
 	switch (key) {
+	case KEY_F(3):
+        view_mode = VIEW_MIXER;
+        create_controls();
+        display_card_info();
+		display_controls();
+        break;
+	case KEY_F(4):
+        view_mode = VIEW_AMP;
+        create_controls();
+        display_card_info();
+		display_controls();
+        break;
 	case 27:
 	case KEY_CANCEL:
 	case KEY_F(10):
 		mixer_widget.close();
         finish(0);
-		break;
-	case KEY_F(1):
-	case KEY_HELP:
-	case 'H':
-	case 'h':
-	case '?':
-        exit(1);
-		break;
-        /*
-	case KEY_F(2):
-	case '/':
-		create_proc_files_list();
-		break;
-	case KEY_F(3):
-		set_view_mode(VIEW_MODE_PLAYBACK);
-		break;
-	case KEY_F(4):
-		set_view_mode(VIEW_MODE_CAPTURE);
-		break;
-	case KEY_F(5):
-		set_view_mode(VIEW_MODE_ALL);
-		break;
-	case '\t':
-		set_view_mode((enum view_mode)((view_mode + 1) % VIEW_MODE_COUNT));
-		break;
-	case KEY_F(6):
-	case 'S':
-	case 's':
-		create_card_select_list();
 		break;
 	case KEY_REFRESH:
 	case 12:
@@ -302,7 +281,7 @@ static void on_handle_key(int key)
 	case 'p':
 		if (focus_control_index > 0) {
 			--focus_control_index;
-			refocus_control();
+            display_controls();
 		}
 		break;
 	case KEY_RIGHT:
@@ -310,24 +289,18 @@ static void on_handle_key(int key)
 	case 'n':
 		if (focus_control_index < controls_count - 1) {
 			++focus_control_index;
-			refocus_control();
+            display_controls();
 		}
 		break;
 	case KEY_PPAGE:
-		change_control_relative(5, LEFT | RIGHT);
+		change_control_relative(focus_control_index, 5, CH_LEFT | CH_RIGHT);
 		break;
 	case KEY_NPAGE:
-		change_control_relative(-5, LEFT | RIGHT);
+		change_control_relative(focus_control_index, -5, CH_LEFT | CH_RIGHT);
 		break;
-#if 0
-	case KEY_BEG:
-	case KEY_HOME:
-		change_control_to_percent(100, LEFT | RIGHT);
-		break;
-#endif
 	case KEY_LL:
 	case KEY_END:
-		change_control_to_percent(0, LEFT | RIGHT);
+		change_control_to_percent(focus_control_index, 0, CH_LEFT | CH_RIGHT);
 		break;
 	case KEY_UP:
 	case '+':
@@ -335,7 +308,7 @@ static void on_handle_key(int key)
 	case 'k':
 	case 'W':
 	case 'w':
-		change_control_relative(1, LEFT | RIGHT);
+		change_control_relative(focus_control_index, 2, CH_LEFT | CH_RIGHT);
 		break;
 	case KEY_DOWN:
 	case '-':
@@ -343,59 +316,52 @@ static void on_handle_key(int key)
 	case 'j':
 	case 'X':
 	case 'x':
-		change_control_relative(-1, LEFT | RIGHT);
+		change_control_relative(focus_control_index, -2, CH_LEFT | CH_RIGHT);
 		break;
 	case '0': case '1': case '2': case '3': case '4':
 	case '5': case '6': case '7': case '8': case '9':
-		change_control_to_percent((key - '0') * 10, LEFT | RIGHT);
+		change_control_to_percent(focus_control_index, (key - '0') * 10, CH_LEFT | CH_RIGHT);
 		break;
 	case 'Q':
 	case 'q':
-		change_control_relative(1, LEFT);
+		change_control_relative(focus_control_index, 2, CH_LEFT);
 		break;
 	case 'Y':
 	case 'y':
 	case 'Z':
 	case 'z':
-		change_control_relative(-1, LEFT);
+		change_control_relative(focus_control_index, -2, CH_LEFT);
 		break;
 	case 'E':
 	case 'e':
-		change_control_relative(1, RIGHT);
+		change_control_relative(focus_control_index, 2, CH_RIGHT);
 		break;
 	case 'C':
 	case 'c':
-		change_control_relative(-1, RIGHT);
+		change_control_relative(focus_control_index, -2, CH_RIGHT);
 		break;
 	case 'M':
 	case 'm':
-		toggle_mute(LEFT | RIGHT);
+        toggle_mute(focus_control_index);
 		break;
 	case 'B':
 	case 'b':
 	case '=':
-		balance_volumes();
+		//balance_volumes();
 		break;
 	case '<':
 	case ',':
-		toggle_mute(LEFT);
+        change_control_relative(focus_control_index, -255, CH_LEFT);
 		break;
 	case '>':
 	case '.':
-		toggle_mute(RIGHT);
+        change_control_relative(focus_control_index, -255, CH_RIGHT);
 		break;
-	case ' ':
-		toggle_capture(LEFT | RIGHT);
-		break;
-	case KEY_IC:
-	case ';':
-		toggle_capture(LEFT);
-		break;
-	case KEY_DC:
-	case '\'':
-		toggle_capture(RIGHT);
-		break;
-    */
+    case 'r':
+    case 'R':
+        get_mixer_values(&fd_device);
+        display_controls();
+        break;
 	}
 }
 
@@ -419,11 +385,11 @@ static void create_mixer_widget(void)
 		wattrset(mixer_widget.window, attr_mixer_active);
 		mvwaddstr(mixer_widget.window, 0, (screen_cols - (sizeof(title) - 1)) / 2, title);
 	}
-	//init_mixer_layout();
-	//display_card_info();
-	//set_view_mode(view_mode);
-}
 
+	init_mixer_layout();
+	display_card_info();
+    display_view_mode();
+}
 
 static void finish(int sig)
 {
@@ -437,18 +403,63 @@ static void finish(int sig)
     exit(0);
 }
 
-static void resize(int sig)
+void change_control_to_percent(int ctrl, int value, unsigned int channels)
 {
-    /*
-    int nh, nw;
+    float v_right = 2.55 * value;
+    float v_left = 2.55 * value;
 
-    // new screen size
-    getmaxyx(stdscr, nh, nw);
+    mixer_set_vol_struct(ctrl+1, CH_RIGHT, (uint8_t) v_right);
+    mixer_set_vol_struct(ctrl+1, CH_LEFT, (uint8_t) v_left);
+    set_mixer_volume(&fd_device, ctrl+1, mixer_get_mute_struct(ctrl + 1), (uint8_t) v_right, (uint8_t) v_left);
 
-    first_run = 1;
-    */
-    window_size_changed();
-    //create_mixer_widget();
-    doupdate();
-    //refresh();
+	display_controls();
+}
+
+void change_control_relative(int ctrl, int delta, unsigned int channels)
+{
+    int v_left = mixer_get_vol_struct(ctrl + 1, CH_LEFT);
+    int v_right = mixer_get_vol_struct(ctrl + 1, CH_RIGHT);
+    int mute = mixer_get_mute_struct(ctrl + 1);
+
+    if (channels & CH_LEFT) {
+        if ((v_left < delta * -1) && (delta < 0)) {
+            v_left = delta * -1;
+        }
+        if ((v_left > 255 - delta) && (delta > 0)) {
+            v_left = 255 - delta;
+        }
+        v_left += delta;
+    }
+
+    if (channels & CH_RIGHT) {
+        if ((v_right < delta * -1) && (delta < 0)) {
+            v_right = delta * -1;
+        }
+        if ((v_right > 255 - delta) && (delta > 0)) {
+            v_right = 255 - delta;
+        }
+        v_right += delta;
+    }
+
+    mixer_set_vol_struct(ctrl+1, CH_RIGHT, v_right);
+    mixer_set_vol_struct(ctrl+1, CH_LEFT, v_left);
+    set_mixer_volume(&fd_device, ctrl+1, mute, v_right, v_left);
+	display_controls();
+}
+
+void toggle_mute(int ctrl)
+{
+    int v_left = mixer_get_vol_struct(ctrl + 1, CH_LEFT);
+    int v_right = mixer_get_vol_struct(ctrl + 1, CH_RIGHT);
+    int mute = mixer_get_mute_struct(ctrl + 1);
+
+    if (mute) {
+        mute = MUTE;
+    } else {
+        mute = UNMUTE;
+    }
+
+    mixer_set_mute_struct(ctrl + 1, mute);
+    set_mixer_volume(&fd_device, ctrl+1, mute, v_right, v_left);
+	display_controls();
 }

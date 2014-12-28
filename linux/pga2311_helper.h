@@ -1,6 +1,8 @@
 #ifndef __PGA2311_HELPER_H__
 #define __PGA2311_HELPER_H__
 
+#include <inttypes.h>
+
 struct mixer_settings_t {
     uint8_t ver;                // firmware version
     uint8_t mute_flag;
@@ -31,9 +33,9 @@ struct mixer_settings_t s;
 #define FCT_V_INC       0x2
 #define FCT_V_DEC       0x3
 
-#define CH_RIGHT        0x0
-#define CH_LEFT         0x1
-#define CH_BOTH         0x2
+#define CH_RIGHT        0x1
+#define CH_LEFT         0x2
+#define CH_BOTH         0x3
 
 #define MUTE            0x0
 #define UNMUTE          0x1
