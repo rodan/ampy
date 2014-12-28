@@ -416,7 +416,7 @@ void display_controls(void)
     if (controls_count > 0) {
         if (!screen_too_small) {
             for (i = 0; i < visible_controls; ++i) {
-                display_control(i);
+                display_control(first_visible_control_index + i);
             }
         }
         display_scroll_indicators();
@@ -425,7 +425,7 @@ void display_controls(void)
 
 void compute_controls_layout(void)
 {
-    bool any_volume, any_pswitch, any_cswitch, any_multich;
+    bool any_volume, any_pswitch;
     int max_width, name_len;
     int height, space;
     unsigned int i;
@@ -437,8 +437,6 @@ void compute_controls_layout(void)
 
     any_volume = TRUE;
     any_pswitch = TRUE;
-    any_cswitch = FALSE;
-    any_multich = FALSE;
 
     max_width = 8;
     for (i = 0; i < controls_count; ++i) {
@@ -473,10 +471,6 @@ void compute_controls_layout(void)
         height += 2;
     if (any_pswitch)
         height += 2;
-    if (any_cswitch)
-        height += 1;
-    if (any_multich)
-        height += 1;
     if (any_volume) {
         space = screen_lines - 6 - height;
         if (space <= 1)
@@ -490,8 +484,9 @@ void compute_controls_layout(void)
 
     space = screen_lines - 6 - height;
     channel_name_y = screen_lines - 2 - space / 2;
-    name_y = channel_name_y - any_multich;
+    name_y = channel_name_y;
     values_y = name_y - any_volume;
-    cswitch_y = values_y - any_cswitch;
+    cswitch_y = values_y;
     base_y = cswitch_y - 1 - 2 * any_pswitch;
 }
+

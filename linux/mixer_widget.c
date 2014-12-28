@@ -38,131 +38,6 @@ struct widget mixer_widget = {
 	.close = on_close,
 };
 
-static void on_handle_key(int key)
-{
-	switch (key) {
-    case KEY_F(1):
-    case 'H':
-    case 'h':
-    case '?':
-        show_help();
-        break;
-	case KEY_F(3):
-        view_mode = VIEW_MIXER;
-        focus_control_index = 0;
-        create_controls();
-        display_card_info();
-		display_controls();
-        break;
-	case KEY_F(4):
-        view_mode = VIEW_AMP;
-        focus_control_index = 0;
-        create_controls();
-        display_card_info();
-		display_controls();
-        break;
-	case 27:
-	case KEY_CANCEL:
-	case KEY_F(10):
-		mixer_widget.close();
-        //app_shutdown();
-		break;
-	case KEY_REFRESH:
-	case 12:
-	case 'L':
-	case 'l':
-	case 'R':
-	case 'r':
-        get_mixer_values(&fd_device);
-		clearok(mixer_widget.window, TRUE);
-		display_controls();
-		break;
-	case KEY_LEFT:
-	case 'P':
-	case 'p':
-		if (focus_control_index > 0) {
-			--focus_control_index;
-            display_controls();
-		}
-		break;
-	case KEY_RIGHT:
-	case 'N':
-	case 'n':
-		if (focus_control_index < controls_count - 1) {
-			++focus_control_index;
-            display_controls();
-		}
-		break;
-	case KEY_PPAGE:
-		change_control_relative(focus_control_index, 5, CH_LEFT | CH_RIGHT);
-		break;
-	case KEY_NPAGE:
-		change_control_relative(focus_control_index, -5, CH_LEFT | CH_RIGHT);
-		break;
-	case KEY_LL:
-	case KEY_END:
-		change_control_to_percent(focus_control_index, 0, CH_LEFT | CH_RIGHT);
-		break;
-	case KEY_UP:
-	case '+':
-	case 'K':
-	case 'k':
-	case 'W':
-	case 'w':
-		change_control_relative(focus_control_index, 2, CH_LEFT | CH_RIGHT);
-		break;
-	case KEY_DOWN:
-	case '-':
-	case 'J':
-	case 'j':
-	case 'X':
-	case 'x':
-		change_control_relative(focus_control_index, -2, CH_LEFT | CH_RIGHT);
-		break;
-	case '0': case '1': case '2': case '3': case '4':
-	case '5': case '6': case '7': case '8': case '9':
-		change_control_to_percent(focus_control_index, (key - '0') * 10, CH_LEFT | CH_RIGHT);
-		break;
-	case 'Q':
-	case 'q':
-		change_control_relative(focus_control_index, 2, CH_LEFT);
-		break;
-	case 'Y':
-	case 'y':
-	case 'Z':
-	case 'z':
-		change_control_relative(focus_control_index, -2, CH_LEFT);
-		break;
-	case 'E':
-	case 'e':
-		change_control_relative(focus_control_index, 2, CH_RIGHT);
-		break;
-	case 'C':
-	case 'c':
-		change_control_relative(focus_control_index, -2, CH_RIGHT);
-		break;
-	case 'M':
-	case 'm':
-        toggle_mute(focus_control_index);
-		break;
-/*
-	case 'B':
-	case 'b':
-	case '=':
-		//balance_volumes();
-		break;
-*/
-	case '<':
-	case ',':
-        change_control_relative(focus_control_index, -255, CH_LEFT);
-		break;
-	case '>':
-	case '.':
-        change_control_relative(focus_control_index, -255, CH_RIGHT);
-		break;
-	}
-}
-
 static void on_window_size_changed(void)
 {
 	create_mixer_widget();
@@ -171,6 +46,23 @@ static void on_window_size_changed(void)
 static void on_close(void)
 {
 	widget_free(&mixer_widget);
+}
+
+
+void create_mixer_widget(void)
+{
+	static const char title[] = " Ampy Mixer ";
+
+	widget_init(&mixer_widget, screen_lines, screen_cols, 0, 0,
+		    attr_mixer_frame, WIDGET_BORDER);
+	if (screen_cols >= (sizeof(title) - 1) + 2) {
+		wattrset(mixer_widget.window, attr_mixer_active);
+		mvwaddstr(mixer_widget.window, 0, (screen_cols - (sizeof(title) - 1)) / 2, title);
+	}
+
+	init_mixer_layout();
+	display_card_info();
+    display_view_mode();
 }
 
 void show_help(void)
@@ -199,20 +91,10 @@ void show_help(void)
 	show_text(help, ARRAY_SIZE(help), "Help");
 }
 
-void create_mixer_widget(void)
+void refocus_control(void)
 {
-	static const char title[] = " Ampy Mixer ";
 
-	widget_init(&mixer_widget, screen_lines, screen_cols, 0, 0,
-		    attr_mixer_frame, WIDGET_BORDER);
-	if (screen_cols >= (sizeof(title) - 1) + 2) {
-		wattrset(mixer_widget.window, attr_mixer_active);
-		mvwaddstr(mixer_widget.window, 0, (screen_cols - (sizeof(title) - 1)) / 2, title);
-	}
-
-	init_mixer_layout();
-	display_card_info();
-    display_view_mode();
+	display_controls();
 }
 
 void change_control_to_percent(int ctrl, int value, unsigned int channels)
@@ -301,3 +183,129 @@ void toggle_mute(int ctrl)
         display_controls();
     }
 }
+
+static void on_handle_key(int key)
+{
+	switch (key) {
+    case KEY_F(1):
+    case 'H':
+    case 'h':
+    case '?':
+        show_help();
+        break;
+	case KEY_F(3):
+        view_mode = VIEW_MIXER;
+        focus_control_index = 0;
+        create_controls();
+        display_card_info();
+		display_controls();
+        break;
+	case KEY_F(4):
+        view_mode = VIEW_AMP;
+        focus_control_index = 0;
+        create_controls();
+        display_card_info();
+		display_controls();
+        break;
+	case 27:
+	case KEY_CANCEL:
+	case KEY_F(10):
+		mixer_widget.close();
+        //app_shutdown();
+		break;
+	case KEY_REFRESH:
+	case 12:
+	case 'L':
+	case 'l':
+	case 'R':
+	case 'r':
+        get_mixer_values(&fd_device);
+		clearok(mixer_widget.window, TRUE);
+		display_controls();
+		break;
+	case KEY_LEFT:
+	case 'P':
+	case 'p':
+		if (focus_control_index > 0) {
+			--focus_control_index;
+            refocus_control();
+		}
+		break;
+	case KEY_RIGHT:
+	case 'N':
+	case 'n':
+		if (focus_control_index < controls_count - 1) {
+			++focus_control_index;
+            refocus_control();
+		}
+		break;
+	case KEY_PPAGE:
+		change_control_relative(focus_control_index, 5, CH_LEFT | CH_RIGHT);
+		break;
+	case KEY_NPAGE:
+		change_control_relative(focus_control_index, -5, CH_LEFT | CH_RIGHT);
+		break;
+	case KEY_LL:
+	case KEY_END:
+		change_control_to_percent(focus_control_index, 0, CH_LEFT | CH_RIGHT);
+		break;
+	case KEY_UP:
+	case '+':
+	case 'K':
+	case 'k':
+	case 'W':
+	case 'w':
+		change_control_relative(focus_control_index, 2, CH_LEFT | CH_RIGHT);
+		break;
+	case KEY_DOWN:
+	case '-':
+	case 'J':
+	case 'j':
+	case 'X':
+	case 'x':
+		change_control_relative(focus_control_index, -2, CH_LEFT | CH_RIGHT);
+		break;
+	case '0': case '1': case '2': case '3': case '4':
+	case '5': case '6': case '7': case '8': case '9':
+		change_control_to_percent(focus_control_index, (key - '0') * 10, CH_LEFT | CH_RIGHT);
+		break;
+	case 'Q':
+	case 'q':
+		change_control_relative(focus_control_index, 2, CH_LEFT);
+		break;
+	case 'Y':
+	case 'y':
+	case 'Z':
+	case 'z':
+		change_control_relative(focus_control_index, -2, CH_LEFT);
+		break;
+	case 'E':
+	case 'e':
+		change_control_relative(focus_control_index, 2, CH_RIGHT);
+		break;
+	case 'C':
+	case 'c':
+		change_control_relative(focus_control_index, -2, CH_RIGHT);
+		break;
+	case 'M':
+	case 'm':
+        toggle_mute(focus_control_index);
+		break;
+/*
+	case 'B':
+	case 'b':
+	case '=':
+		//balance_volumes();
+		break;
+*/
+	case '<':
+	case ',':
+        change_control_relative(focus_control_index, -255, CH_LEFT);
+		break;
+	case '>':
+	case '.':
+        change_control_relative(focus_control_index, -255, CH_RIGHT);
+		break;
+	}
+}
+

@@ -47,7 +47,6 @@ void create_controls(void)
     compute_controls_layout();
     display_view_mode();
 
-    //search_for_focus_control();
-	//refocus_control();
+	refocus_control();
 }
 
