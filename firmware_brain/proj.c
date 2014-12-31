@@ -36,6 +36,8 @@
 int8_t ir_number;
 uint8_t pga_id_cur = -1;
 
+const uint8_t detect_port[DETECT_CHANNELS] = { BIT7, BIT1 };
+
 #define SLOW_REFRESH_DELAY 56   // 56 ta0 overflows are 56*128s ~= 2hours
 uint16_t tfr = SLOW_REFRESH_DELAY;   // time for display refresh
 
@@ -108,57 +110,55 @@ static void parse_UI(enum sys_message msg)
 // edge detect based interrupt handler
 static void port_trigger(enum sys_message msg)
 {
-    uint8_t in_now[DETECT_CHANNELS] = {0,0};
     uint8_t i;
 
-    if (input_ed & SND_DETECT_FRONT) {
-        in_now[0] = MUTE;
-    }
-    if (input_ed & SND_DETECT_REAR) {
-        in_now[1] = MUTE;
-    }
+    // input_ed bit is HIGH if a HIGH->LOW transition happened
+    // aka sound is detected
 
     for (i=0;i<DETECT_CHANNELS;i++) {
-        if (in_now[i]!=stat.in_orig[i]) {
+        if (ampy_get_detect(i+1) && (input_ed & detect_port[i])) {
             stat.count[i]=0;
+            timer_a0_delay_noblk_ccr2(_50ms);
         }
     }
 
-    timer_a0_delay_noblk_ccr2(_50ms);
 }
 
 // time based interrupt request handler
 static void port_parser(enum sys_message msg)
 {
-    uint8_t in_now[DETECT_CHANNELS] = {LIVE, LIVE};
+    uint8_t input_cur[DETECT_CHANNELS] = {LIVE, LIVE};
     uint8_t i;
     uint8_t smth_changed = 0;
 
-    if (P1IN & SND_DETECT_FRONT) {
-        in_now[0] = MUTE;
+    // port gets LOW if sound is detected
+
+    if (P1IN & detect_port[0]) {
+        input_cur[0] = MUTE;
     }
-    if (P1IN & SND_DETECT_REAR) {
-        in_now[1] = MUTE;
+
+    if (P1IN & detect_port[1]) {
+        input_cur[1] = MUTE;
     }
            
     for (i=0;i<DETECT_CHANNELS;i++) {
-        if (in_now[i]!=stat.in_orig[i]) {
+        if (ampy_get_detect(i+1) && (input_cur[i]!=stat.input_last[i])) {
             smth_changed = 1;
             stat.count[i]++;
-            if ((stat.in_orig[i] == MUTE) && (stat.count[i] > ON_DEBOUNCE)) {
+            if ((stat.input_last[i] == MUTE) && (stat.count[i] > ON_DEBOUNCE)) {
                 stat.count[i] = 0;
-                ampy_set_status(i+1, UNMUTE);
-                stat.in_orig[i] = UNMUTE;
+                ampy_set_status(i+1, LIVE);
+                stat.input_last[i] = LIVE;
                 LED_ON;
                 if (i == 0) {
                     UNMUTE_FRONT;
                 } else if (i == 1) {
                     UNMUTE_REAR;
                 }
-            } else if ((stat.in_orig[i] == UNMUTE) && (stat.count[i] > OFF_DEBOUNCE)) {
+            } else if ((stat.input_last[i] == LIVE) && (stat.count[i] > OFF_DEBOUNCE)) {
                 stat.count[i] = 0;
                 ampy_set_status(i+1, MUTE);
-                stat.in_orig[i] = MUTE;
+                stat.input_last[i] = MUTE;
                 if ((ampy_get_status(1) == MUTE) && (ampy_get_status(2) == MUTE)) {
                     LED_OFF;
                 }
@@ -180,7 +180,7 @@ static void port_parser(enum sys_message msg)
 
 int main(void)
 {
-    uint8_t i;
+    //uint8_t i;
 
     main_init();
     timer_a0_init();
@@ -190,14 +190,16 @@ int main(void)
 #ifdef HARDWARE_I2C
     i2c_init();
 #endif
-    port_init();
 
     settings_init(FLASH_ADDR);
+    settings_apply();
 
+/*
     for (i=0;i<DETECT_CHANNELS;i++) {
         ampy_set_status(i+1, MUTE);
-        stat.in_orig[i] = MUTE;
+        //stat.input_last[i] = MUTE;
     }
+*/
 
     sys_messagebus_register(&timer_a0_ovf_irq, SYS_MSG_TIMER0_IFG);
     sys_messagebus_register(&timer_a0_ccr1_irq, SYS_MSG_TIMER0_CCR1);
@@ -497,5 +499,44 @@ void settings_init(uint8_t * addr)
 
 void settings_apply(void)
 {
+    uint8_t i;
+    uint8_t tmp;
 
+    LED_OFF;
+
+	// IRQ triggers on a hi-low transition
+	P1IES |= detect_port[0] + detect_port[1];
+	P1IFG &= ~(detect_port[0] + detect_port[1]);
+	P1IE &= ~(detect_port[0] + detect_port[1]);
+
+    for (i=0;i<DETECT_CHANNELS;i++) {
+        if (ampy_get_detect(i+1)) {
+        	P1IE |= detect_port[i];
+            ampy_set_status(i+1, MUTE);
+            if (i == 0) {
+                MUTE_FRONT;
+            } else if (i == 1) {
+                MUTE_REAR;
+            }
+        } else {
+            tmp = ampy_get_mute(i+1);
+            ampy_set_status(i+1, tmp);
+            if (tmp == MUTE) {
+                if (i == 0) {
+                    MUTE_FRONT;
+                } else if (i == 1) {
+                    MUTE_REAR;
+                }
+            } else {
+                if (i == 0) {
+                    UNMUTE_FRONT;
+                    //LED_ON;
+                } else if (i == 1) {
+                    UNMUTE_REAR;
+                    //LED_ON;
+                }
+            }
+        }
+        stat.input_last[i] = MUTE;
+    }
 }

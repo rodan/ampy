@@ -28,7 +28,7 @@ uint8_t ampy_get_detect(const uint8_t channel)
 /// ampy_settings_t structure
 /// inputs:
 ///   channel: [1-8]
-///   type: MUTE or UNMUTE
+///   type: MUTE or LIVE
 void ampy_set_mute(const uint8_t channel, const uint8_t type)
 {
     uint8_t mask;
@@ -41,7 +41,7 @@ void ampy_set_mute(const uint8_t channel, const uint8_t type)
         a.mute_flag &= ~mask;
     break;
 
-    case UNMUTE:
+    case LIVE:
         a.mute_flag |= mask;
     break;
     }
@@ -59,7 +59,7 @@ uint8_t ampy_get_mute(const uint8_t channel)
     mask = 1 << (channel - 1);
 
     if (a.mute_flag & mask) {
-        return UNMUTE;
+        return LIVE;
     }
     return MUTE;
 }
@@ -68,7 +68,7 @@ uint8_t ampy_get_mute(const uint8_t channel)
 /// ampy_settings_t structure
 /// inputs:
 ///   channel: [1-8]
-///   type: MUTE or UNMUTE
+///   type: MUTE or LIVE
 void ampy_set_status(const uint8_t channel, const uint8_t type)
 {
     uint8_t mask;
@@ -81,7 +81,7 @@ void ampy_set_status(const uint8_t channel, const uint8_t type)
         a.mute_status &= ~mask;
     break;
 
-    case UNMUTE:
+    case LIVE:
         a.mute_status |= mask;
     break;
     }
@@ -99,7 +99,7 @@ uint8_t ampy_get_status(const uint8_t channel)
     mask = 1 << (channel - 1);
 
     if (a.mute_status & mask) {
-        return UNMUTE;
+        return LIVE;
     }
     return MUTE;
 }

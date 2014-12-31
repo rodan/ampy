@@ -20,16 +20,25 @@ void display_menu(void)
     //        "\r\n --- tracy build #%d\r\n  available commands:\r\n", BUILD);
     //uart0_tx_str(str_temp, strlen(str_temp));
 
-    snprintf(str_temp, TEMP_LEN, " \e[33;1mstat\e[0m   - system status\r\n" );
+    snprintf(str_temp, TEMP_LEN, " \e[33;1mstat\e[0m      - system status\r\n" );
     uart0_tx_str(str_temp, strlen(str_temp));
 
-    snprintf(str_temp, TEMP_LEN, " \e[33;1mst\e[0m     - display &s\r\n" );
+    snprintf(str_temp, TEMP_LEN, " \e[33;1mshowreg\e[0m   - display &s and &a\r\n" );
     uart0_tx_str(str_temp, strlen(str_temp));
 
-    snprintf(str_temp, TEMP_LEN, " \e[33;1mrd\e[0m     - test read\r\n" );
+    snprintf(str_temp, TEMP_LEN, " \e[33;1maXXXXXX\e[0m   - set amp ver, snd_det, mute_flag\r\n" );
     uart0_tx_str(str_temp, strlen(str_temp));
 
-    snprintf(str_temp, TEMP_LEN, " \e[33;1mreset\e[0m  - uC reset\r\n" );
+    snprintf(str_temp, TEMP_LEN, " \e[33;1mvXXXXXXXX\e[0m - set vol pga_id, mute, volr, voll\r\n" );
+    uart0_tx_str(str_temp, strlen(str_temp));
+
+    snprintf(str_temp, TEMP_LEN, " \e[33;1mstoreamp\e[0m  - save amp regs to flash\r\n" );
+    uart0_tx_str(str_temp, strlen(str_temp));
+
+    snprintf(str_temp, TEMP_LEN, " \e[33;1mstoremix\e[0m  - save mixer regs to flash\r\n" );
+    uart0_tx_str(str_temp, strlen(str_temp));
+
+    snprintf(str_temp, TEMP_LEN, " \e[33;1mreset\e[0m     - uC reset\r\n" );
     uart0_tx_str(str_temp, strlen(str_temp));
 
 }
@@ -109,6 +118,7 @@ void parse_user_input(void)
         uart0_tx_str("\r\n", 2);
     } else if (strstr(in, "storeamp")) {
         flash_save(flash_addr, (void *)&a, 3);
+        settings_apply();
     } else if (strstr(in, "storemix")) {
         i2c_tx_cmd(M_CMD_WRITE, 1);
     } else if (f == 'v') {
@@ -122,6 +132,7 @@ void parse_user_input(void)
         for (i=0;i<3;i++) {
             extract_hex((char *)uart0_rx_buf+i*2+1, (uint8_t *) &a+i);
         }
+        settings_apply();
     }
 
 

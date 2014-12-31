@@ -18,10 +18,6 @@ struct ampy_settings_t a;
 #define MUTE 0x0
 #endif
 
-#ifndef UNMUTE
-#define UNMUTE 0x1
-#endif
-
 #ifndef LIVE
 #define LIVE 0x1
 #endif
@@ -44,28 +40,28 @@ uint8_t ampy_get_detect(const uint8_t channel);
 /// ampy_settings_t structure
 /// inputs:
 ///   channel: [1-8]
-///   type: MUTE or UNMUTE
+///   type: MUTE or LIVE
 void ampy_set_mute(const uint8_t channel, const uint8_t type);
 
 /// read out the mute setting of channel from the
 /// ampy_settings_t structure
 /// inputs:
 ///   channel: [1-8]
-/// returns the mute status: MUTE - pga muted, UNMUTE - pga not muted
+/// returns the mute status: MUTE - pga muted, LIVE - pga not muted
 uint8_t ampy_get_mute(const uint8_t channel);
 
 /// write the mute status on channel into the
 /// ampy_settings_t structure
 /// inputs:
 ///   channel: [1-8]
-///   type: MUTE or UNMUTE
+///   type: MUTE or LIVE
 void ampy_set_status(const uint8_t channel, const uint8_t type);
 
 /// read out the mute status of channel from the
 /// ampy_settings_t structure
 /// inputs:
 ///   channel: [1-8]
-/// returns the mute status: MUTE - pga muted, UNMUTE - pga not muted
+/// returns the mute status: MUTE - pga muted, LIVE - pga not muted
 uint8_t ampy_get_status(const uint8_t channel);
 
 #endif

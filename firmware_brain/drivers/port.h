@@ -4,8 +4,8 @@
 
 #include "proj.h"
 
-#define SND_DETECT_FRONT    (BIT7)
-#define SND_DETECT_REAR     (BIT1)
+//#define SND_DETECT_FRONT    (BIT7)
+//#define SND_DETECT_REAR     (BIT1)
 
 volatile uint8_t input_ed;  // edge detected input
 
