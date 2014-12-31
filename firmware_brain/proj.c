@@ -530,10 +530,10 @@ void settings_apply(void)
             } else {
                 if (i == 0) {
                     UNMUTE_FRONT;
-                    //LED_ON;
+                    LED_ON;
                 } else if (i == 1) {
                     UNMUTE_REAR;
-                    //LED_ON;
+                    LED_ON;
                 }
             }
         }

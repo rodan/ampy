@@ -212,6 +212,8 @@ void toggle_mute(int ctrl)
         }
 
         set_amp_registers(&fd_device, A_VER, amp[1]<<1 | amp[0], amp[3]<<1 | amp[2]);
+        usleep(10000);
+        get_mixer_values(&fd_device);
         display_controls();
     }
 }
@@ -336,13 +338,6 @@ static void on_handle_key(int key)
 	case 'm':
         toggle_mute(focus_control_index);
 		break;
-/*
-	case 'B':
-	case 'b':
-	case '=':
-		//balance_volumes();
-		break;
-*/
 	case '<':
 	case ',':
         change_control_relative(focus_control_index, -255, CH_LEFT);

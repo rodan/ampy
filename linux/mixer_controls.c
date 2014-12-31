@@ -37,12 +37,12 @@ struct control controls[2][CONTROLS_MAX_COUNT] = {
         {"c/subw", "center/subwoofer", TYPE_PVOLUME | TYPE_PSWITCH | IS_ACTIVE, &s.v[11], &s.v[10], &mixer_mute[5]},
         {NULL, NULL, 0, NULL, NULL} // keep as last control
     },{
-        {"f det", "front sound detection", TYPE_PSWITCH | IS_ACTIVE, NULL, NULL, &amp[0]},
-        {"r det", "rear sound detection", TYPE_PSWITCH | IS_ACTIVE, NULL, NULL, &amp[1]},
-        {"f def", "front default", TYPE_PSWITCH | IS_ACTIVE, NULL, NULL, &amp[2]},
-        {"r def", "rear default", TYPE_PSWITCH | IS_ACTIVE, NULL, NULL, &amp[3]},
-        {"f cur", "front current", TYPE_PSWITCH, NULL, NULL, &amp[4]},
-        {"r cur", "rear current", TYPE_PSWITCH, NULL, NULL, &amp[5]},
+        {"f detect", "front sound detection", TYPE_PSWITCH | IS_ACTIVE, NULL, NULL, &amp[0]},
+        {"r detect", "rear sound detection", TYPE_PSWITCH | IS_ACTIVE, NULL, NULL, &amp[1]},
+        {"f defaul", "front default", TYPE_PSWITCH | IS_ACTIVE, NULL, NULL, &amp[2]},
+        {"r defaul", "rear default", TYPE_PSWITCH | IS_ACTIVE, NULL, NULL, &amp[3]},
+        {"f cur st", "front current status", TYPE_PSWITCH, NULL, NULL, &amp[4]},
+        {"r cur st", "rear current status", TYPE_PSWITCH, NULL, NULL, &amp[5]},
         {NULL, NULL, 0, NULL, NULL} // keep as last control
     }
 };
