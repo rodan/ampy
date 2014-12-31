@@ -3,6 +3,7 @@
 
 #include <msp430.h>
 #include <stdlib.h>
+#include "lm4780_helper.h"
 #include "config.h"
 
 #define MCLK_FREQ           1048576
@@ -45,6 +46,10 @@ void wake_up(void);
 void check_events(void);
 void check_ir(void);
 
+#define FLASH_ADDR          SEGMENT_B
+void settings_init(uint8_t * addr);
+void settings_apply(void);
+
 uint8_t str_to_uint16(char *str, uint16_t * out, const uint8_t seek,
      const uint8_t len, const uint16_t min, const uint16_t max);
 
@@ -56,12 +61,18 @@ uint8_t str_to_uint16(char *str, uint16_t * out, const uint8_t seek,
 volatile uint8_t input_ed;  // edge detected input
 
 struct ampy_stat_t {
-    uint8_t mute[DETECT_CHANNELS];      // [bool] true if channel is muted
+    //uint8_t mute[DETECT_CHANNELS];      // [bool] true if channel is muted
     uint8_t in_orig[DETECT_CHANNELS];   // [bool] true if channel was muted
     uint16_t count[DETECT_CHANNELS];    // [uint] debounce counter
 };
 
 struct ampy_stat_t stat;
+
+static const struct ampy_settings_t defaults = {
+    A_VER,      // struct version
+    0x3,        // snd_detect
+    0           // mute_flag
+};
 
 
 #endif

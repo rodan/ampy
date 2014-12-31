@@ -19,8 +19,8 @@ struct control {
 };
 
 uint8_t mixer_mute[6];
-uint8_t amp_detect_en;
-uint8_t amp_mute[2];
+
+uint8_t amp[6];
 
 extern struct control controls[2][CONTROLS_MAX_COUNT];
 int controls_count;

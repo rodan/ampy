@@ -30,7 +30,8 @@
 
 #include "widget.h"
 #include "pga2311_helper.h"
-#include "amp_mixer.h"
+#include "lm4780_helper.h"
+#include "ampy_mixer.h"
 #include "proj.h"
 #include "version.h"
 #include "colors.h"
@@ -91,6 +92,8 @@ void show_help(void)
 		"F1 ? H     Help",
 		"F3         Show mixer board controls",
 		"F4         Show power amp controls",
+        "Tab        Switch control view",
+        "S          Save controls to flash",
 		"R          Redraw screen",
 		"",
 		"Left       Move to the previous control",
@@ -108,6 +111,16 @@ void show_help(void)
 		"< >        Toggle left/right mute",
 	};
 	show_text(help, ARRAY_SIZE(help), "Help");
+}
+
+void show_saved (void)
+{
+	const char *msg[] = {
+		"  Settings saved to flash  ",
+        "",
+		"  press ENTER to continue  "
+    };
+    show_text(msg, ARRAY_SIZE(msg), "Info");
 }
 
 void refocus_control(void)
@@ -192,13 +205,13 @@ void toggle_mute(int ctrl)
     } else if (view_mode == VIEW_AMP) {
         if (*controls[VIEW_AMP][ctrl].pswitch == UNMUTE) {
             *controls[VIEW_AMP][ctrl].pswitch = MUTE;
+            amp[ctrl] = MUTE;
         } else {
             *controls[VIEW_AMP][ctrl].pswitch = UNMUTE;
-        }
-        if (focus_control_index == 0) {
-            // send activation
+            amp[ctrl] = UNMUTE;
         }
 
+        set_amp_registers(&fd_device, A_VER, amp[1]<<1 | amp[0], amp[3]<<1 | amp[2]);
         display_controls();
     }
 }
@@ -226,6 +239,18 @@ static void on_handle_key(int key)
         display_card_info();
 		display_controls();
         break;
+    case 's':
+    case 'S':
+        store_registers(&fd_device, view_mode);
+        show_saved();
+        break;
+    case '\t':
+        view_mode = (view_mode + 1) % 2;
+        focus_control_index = 0;
+        create_controls();
+        display_card_info();
+		display_controls();
+        break;
 	case 27:
 	case KEY_CANCEL:
 	case KEY_F(10):
@@ -240,6 +265,7 @@ static void on_handle_key(int key)
 	case 'r':
         get_mixer_values(&fd_device);
 		clearok(mixer_widget.window, TRUE);
+        create_controls();
 		display_controls();
 		break;
 	case KEY_LEFT:

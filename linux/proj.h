@@ -6,6 +6,4 @@
 char *stty_device;
 int fd_device;
 
-uint8_t famp_mute[2];
-
 #endif

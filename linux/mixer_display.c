@@ -33,7 +33,7 @@
 #include "mixer_controls.h"
 #include "mixer_widget.h"
 #include "pga2311_helper.h"
-#include "amp_mixer.h"
+#include "ampy_mixer.h"
 
 enum align {
     ALIGN_LEFT,

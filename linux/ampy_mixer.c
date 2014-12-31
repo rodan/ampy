@@ -9,10 +9,12 @@
 #include <string.h>
 #include <panel.h>
 
-#include "amp_mixer.h"
+#include "ampy_mixer.h"
 #include "pga2311_helper.h"
+#include "lm4780_helper.h"
 #include "proj.h"
 #include "widget.h"
+#include "mixer_controls.h"
 
 #define STR_LEN 256
 
@@ -115,7 +117,7 @@ int get_mixer_values(int *dev)
     }
 
     signal(SIGALRM, catch_alarm);
-    i = write(*dev, "st\r\n", 4);
+    i = write(*dev, "showreg\r\n", 9);
     alarm(1);
 
     i = 0;
@@ -138,11 +140,21 @@ int get_mixer_values(int *dev)
     
     //printf("i %d %d %s\n", i, *dev, input);
 
-    extract_hex(input, &famp_mute[0]);
-    extract_hex(input + 2, &famp_mute[1]);
+    // first 28 bytes are the s struct in hex, next 8 are the a struct
     for (i = 0; i < 14; i++) {
-        extract_hex(input + (i * 2) + 4, (uint8_t *) (&s) + i);
+        extract_hex(input + (i * 2), (uint8_t *) (&s) + i);
     }
+
+    for (i = 0; i < 4; i++) {
+        extract_hex(input + (i * 2) + 28, (uint8_t *) (&a) + i);
+    }
+
+    amp[0] = ampy_get_detect(1);
+    amp[1] = ampy_get_detect(2);
+    amp[2] = ampy_get_mute(1);
+    amp[3] = ampy_get_mute(2);
+    amp[4] = ampy_get_status(1);
+    amp[5] = ampy_get_status(2);
 
     return EXIT_SUCCESS;
 }
@@ -161,6 +173,54 @@ int set_mixer_volume(int *dev, const uint8_t pga_id, const uint8_t mute,
 
     snprintf(str_temp, STR_LEN, "v%02x%02x%02x%02x\r\n", pga_id, mute, right,
              left);
+
+    if (write(*dev, str_temp, strlen(str_temp)) < 1) {
+        return EXIT_FAILURE;
+    }
+    usleep(100);
+
+    return EXIT_SUCCESS;
+}
+
+int set_amp_registers(int *dev, const uint8_t ver, const uint8_t snd_detect, const uint8_t mute_flag)
+{
+    char str_temp[STR_LEN];
+
+    if (*dev < 0) {
+        if (stty_init(stty_device, dev) == EXIT_FAILURE) {
+            printf("err\n");
+            return EXIT_FAILURE;
+        }
+    }
+
+    snprintf(str_temp, STR_LEN, "a%02x%02x%02x\r\n", ver, snd_detect, mute_flag);
+
+    if (write(*dev, str_temp, strlen(str_temp)) < 1) {
+        return EXIT_FAILURE;
+    }
+    usleep(100);
+
+    return EXIT_SUCCESS;
+}
+
+int store_registers(int *dev, uint8_t type)
+{
+    char str_temp[STR_LEN];
+
+    if (*dev < 0) {
+        if (stty_init(stty_device, dev) == EXIT_FAILURE) {
+            printf("err\n");
+            return EXIT_FAILURE;
+        }
+    }
+
+    if (type == VIEW_MIXER) {
+        snprintf(str_temp, STR_LEN, "storemix\r\n");
+    } else if (type == VIEW_AMP) {
+        snprintf(str_temp, STR_LEN, "storeamp\r\n");
+    } else {
+        return EXIT_FAILURE;
+    }
 
     if (write(*dev, str_temp, strlen(str_temp)) < 1) {
         return EXIT_FAILURE;

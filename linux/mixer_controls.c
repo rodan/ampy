@@ -22,7 +22,7 @@
 #include "mixer_controls.h"
 #include "mixer_display.h"
 #include "mixer_widget.h"
-#include "amp_mixer.h"
+#include "ampy_mixer.h"
 #include "pga2311_helper.h"
 
 //int controls_count = 6;
@@ -37,9 +37,12 @@ struct control controls[2][CONTROLS_MAX_COUNT] = {
         {"c/subw", "center/subwoofer", TYPE_PVOLUME | TYPE_PSWITCH | IS_ACTIVE, &s.v[11], &s.v[10], &mixer_mute[5]},
         {NULL, NULL, 0, NULL, NULL} // keep as last control
     },{
-        {"snd det", "sound detection", TYPE_PSWITCH | IS_ACTIVE, NULL, NULL, &amp_detect_en},
-        {"front", "front", TYPE_PSWITCH, NULL, NULL, &amp_mute[0]},
-        {"rear", "rear", TYPE_PSWITCH, NULL, NULL, &amp_mute[1]},
+        {"f det", "front sound detection", TYPE_PSWITCH | IS_ACTIVE, NULL, NULL, &amp[0]},
+        {"r det", "rear sound detection", TYPE_PSWITCH | IS_ACTIVE, NULL, NULL, &amp[1]},
+        {"f def", "front default", TYPE_PSWITCH | IS_ACTIVE, NULL, NULL, &amp[2]},
+        {"r def", "rear default", TYPE_PSWITCH | IS_ACTIVE, NULL, NULL, &amp[3]},
+        {"f cur", "front current", TYPE_PSWITCH, NULL, NULL, &amp[4]},
+        {"r cur", "rear current", TYPE_PSWITCH, NULL, NULL, &amp[5]},
         {NULL, NULL, 0, NULL, NULL} // keep as last control
     }
 };

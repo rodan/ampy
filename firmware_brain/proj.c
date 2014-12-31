@@ -15,6 +15,8 @@
 #include "drivers/uart0.h"
 #include "drivers/ir_remote.h"
 #include "drivers/pga2311_helper.h"
+#include "drivers/lm4780_helper.h"
+#include "drivers/flash.h"
 #include "drivers/port.h"
 #include "ui.h"
 
@@ -38,7 +40,7 @@ uint8_t pga_id_cur = -1;
 uint16_t tfr = SLOW_REFRESH_DELAY;   // time for display refresh
 
 uint8_t d;
-char m[] = "muted";
+char muted[] = "muted";
 
 void display_mixer_status(void)
 {
@@ -62,25 +64,25 @@ static void timer_a0_ccr1_irq(enum sys_message msg)
 {
     switch (d) {
         case 0:
-            snprintf(str_temp, TEMP_LEN, "1front     %3d %3d %s\n", s.v[0], s.v[1], mixer_get_mute_struct(1)?"":m);
+            snprintf(str_temp, TEMP_LEN, "1front     %3d %3d %s\n", s.v[0], s.v[1], mixer_get_mute_struct(1)?"":muted);
             break;
         case 1:
-            snprintf(str_temp, TEMP_LEN, "2rear      %3d %3d %s\n", s.v[2], s.v[3], mixer_get_mute_struct(2)?"":m);
+            snprintf(str_temp, TEMP_LEN, "2rear      %3d %3d %s\n", s.v[2], s.v[3], mixer_get_mute_struct(2)?"":muted);
             break;
         case 2:
-            snprintf(str_temp, TEMP_LEN, "3line in   %3d %3d %s\n", s.v[4], s.v[5], mixer_get_mute_struct(3)?"":m);
+            snprintf(str_temp, TEMP_LEN, "3line in   %3d %3d %s\n", s.v[4], s.v[5], mixer_get_mute_struct(3)?"":muted);
             break;
         case 3:
-            snprintf(str_temp, TEMP_LEN, "4spdif     %3d %3d %s\n", s.v[6], s.v[7], mixer_get_mute_struct(4)?"":m);
+            snprintf(str_temp, TEMP_LEN, "4spdif     %3d %3d %s\n", s.v[6], s.v[7], mixer_get_mute_struct(4)?"":muted);
             break;
         case 4:
-            snprintf(str_temp, TEMP_LEN, "5f-r pan   %3d %3d %s\n", s.v[8], s.v[9], mixer_get_mute_struct(5)?"":m);
+            snprintf(str_temp, TEMP_LEN, "5f-r pan   %3d %3d %s\n", s.v[8], s.v[9], mixer_get_mute_struct(5)?"":muted);
             break;
         case 5:
-            snprintf(str_temp, TEMP_LEN, "6center    %3d     %s\n", s.v[10], mixer_get_mute_struct(6)?"":m);
+            snprintf(str_temp, TEMP_LEN, "6center    %3d     %s\n", s.v[10], mixer_get_mute_struct(6)?"":muted);
             break;
         case 6:
-            snprintf(str_temp, TEMP_LEN, "7subwoofer %3d     %s\n", s.v[11], mixer_get_mute_struct(6)?"":m);
+            snprintf(str_temp, TEMP_LEN, "7subwoofer %3d     %s\n", s.v[11], mixer_get_mute_struct(6)?"":muted);
             break;
         case 7:
             snprintf(str_temp, TEMP_LEN, "A\n");
@@ -110,10 +112,10 @@ static void port_trigger(enum sys_message msg)
     uint8_t i;
 
     if (input_ed & SND_DETECT_FRONT) {
-        in_now[0] = 1;
+        in_now[0] = MUTE;
     }
     if (input_ed & SND_DETECT_REAR) {
-        in_now[1] = 1;
+        in_now[1] = MUTE;
     }
 
     for (i=0;i<DETECT_CHANNELS;i++) {
@@ -128,36 +130,36 @@ static void port_trigger(enum sys_message msg)
 // time based interrupt request handler
 static void port_parser(enum sys_message msg)
 {
-    uint8_t in_now[DETECT_CHANNELS] = {0,0};
+    uint8_t in_now[DETECT_CHANNELS] = {LIVE, LIVE};
     uint8_t i;
     uint8_t smth_changed = 0;
 
     if (P1IN & SND_DETECT_FRONT) {
-        in_now[0] = 1;
+        in_now[0] = MUTE;
     }
     if (P1IN & SND_DETECT_REAR) {
-        in_now[1] = 1;
+        in_now[1] = MUTE;
     }
            
     for (i=0;i<DETECT_CHANNELS;i++) {
         if (in_now[i]!=stat.in_orig[i]) {
             smth_changed = 1;
             stat.count[i]++;
-            if ((stat.in_orig[i] == 1) && (stat.count[i] > ON_DEBOUNCE)) {
+            if ((stat.in_orig[i] == MUTE) && (stat.count[i] > ON_DEBOUNCE)) {
                 stat.count[i] = 0;
-                stat.mute[i] = 0;
-                stat.in_orig[i] = 0;
+                ampy_set_status(i+1, UNMUTE);
+                stat.in_orig[i] = UNMUTE;
                 LED_ON;
                 if (i == 0) {
                     UNMUTE_FRONT;
                 } else if (i == 1) {
                     UNMUTE_REAR;
                 }
-            } else if ((stat.in_orig[i] == 0) && (stat.count[i] > OFF_DEBOUNCE)) {
+            } else if ((stat.in_orig[i] == UNMUTE) && (stat.count[i] > OFF_DEBOUNCE)) {
                 stat.count[i] = 0;
-                stat.mute[i] = 1;
-                stat.in_orig[i] = 1;
-                if ((stat.mute[0] == 1) && (stat.mute[1] == 1)) {
+                ampy_set_status(i+1, MUTE);
+                stat.in_orig[i] = MUTE;
+                if ((ampy_get_status(1) == MUTE) && (ampy_get_status(2) == MUTE)) {
                     LED_OFF;
                 }
                 if (i == 0) {
@@ -190,9 +192,11 @@ int main(void)
 #endif
     port_init();
 
+    settings_init(FLASH_ADDR);
+
     for (i=0;i<DETECT_CHANNELS;i++) {
-        stat.mute[i] = 1;
-        stat.in_orig[i] = 1;
+        ampy_set_status(i+1, MUTE);
+        stat.in_orig[i] = MUTE;
     }
 
     sys_messagebus_register(&timer_a0_ovf_irq, SYS_MSG_TIMER0_IFG);
@@ -473,3 +477,25 @@ uint8_t str_to_uint16(char *str, uint16_t * out, const uint8_t seek,
     return 1;
 }
 */
+
+void settings_init(uint8_t * addr)
+{
+    uint8_t *src_p, *dst_p;
+    //uint8_t *ptr;
+    //uint8_t right, left;
+    uint8_t i;
+
+    src_p = addr;
+    dst_p = (uint8_t *) & a;
+    if ((*src_p) != A_VER) {
+        src_p = (uint8_t *) & defaults;
+    }
+    for (i = 0; i < sizeof(a); i++) {
+        *dst_p++ = *src_p++;
+    }
+}
+
+void settings_apply(void)
+{
+
+}

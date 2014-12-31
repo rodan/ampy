@@ -4,7 +4,9 @@
 
 #include "drivers/uart0.h"
 #include "drivers/timer_a0.h"
+#include "drivers/flash.h"
 #include "drivers/pga2311_helper.h"
+#include "drivers/lm4780_helper.h"
 #include "interface/i2c_fcts.h"
 #include "ui.h"
 #ifdef HARDWARE_I2C
@@ -67,6 +69,8 @@ void parse_user_input(void)
     char *in = (char *) uart0_rx_buf;
     uint8_t i;
     uint8_t t_int[4];
+    uint8_t *flash_addr = FLASH_ADDR;
+
 
     if (f == '?') {
         display_menu();
@@ -78,26 +82,48 @@ void parse_user_input(void)
             snprintf(str_temp, TEMP_LEN, "pga%d %03d %03d %s\n", i+1, mixer_get_vol_struct(i+1, CH_RIGHT), mixer_get_vol_struct(i+1, CH_LEFT), mixer_get_mute_struct(i+1)?"1":"0");
             uart0_tx_str(str_temp, strlen(str_temp));
         }
-
         for (i=0;i<DETECT_CHANNELS;i++) {
-            snprintf(str_temp, TEMP_LEN, "amp%d %s\n", i+1, stat.mute[i]?"0":"1");
+            snprintf(str_temp, TEMP_LEN, "amp%d detect %s\n", i+1, ampy_get_detect(i+1)?"0":"1");
             uart0_tx_str(str_temp, strlen(str_temp));
         }
-    } else if (strstr(in, "st")) {
+        for (i=0;i<DETECT_CHANNELS;i++) {
+            snprintf(str_temp, TEMP_LEN, "amp%d default %s\n", i+1, ampy_get_mute(i+1)?"0":"1");
+            uart0_tx_str(str_temp, strlen(str_temp));
+        }
+        for (i=0;i<DETECT_CHANNELS;i++) {
+            snprintf(str_temp, TEMP_LEN, "amp%d current %s\n", i+1, ampy_get_status(i+1)?"0":"1");
+            uart0_tx_str(str_temp, strlen(str_temp));
+        }
+    } else if (strstr(in, "showreg")) {
+        // mixer related
         get_mixer_status();
-        snprintf(str_temp, TEMP_LEN, "%02x%02x", stat.mute[0], stat.mute[1]);
-        uart0_tx_str(str_temp, strlen(str_temp));
         for (i=0;i<14;i++) {
             snprintf(str_temp, TEMP_LEN, "%02x", *((uint8_t *) &s+i));
             uart0_tx_str(str_temp, strlen(str_temp));
         }
+        // power amp related
+        for (i=0;i<4;i++) {
+            snprintf(str_temp, TEMP_LEN, "%02x", *((uint8_t *) &a+i));
+            uart0_tx_str(str_temp, strlen(str_temp));
+        }
         uart0_tx_str("\r\n", 2);
+    } else if (strstr(in, "storeamp")) {
+        flash_save(flash_addr, (void *)&a, 3);
+    } else if (strstr(in, "storemix")) {
+        i2c_tx_cmd(M_CMD_WRITE, 1);
     } else if (f == 'v') {
+        // receive volume levels - one line per pga
         for (i=0;i<4;i++) {
             extract_hex((char *)uart0_rx_buf+i*2+1, &t_int[i]);
         }
         i2c_tx_vol(t_int[0], t_int[1], t_int[2], t_int[3]);
+    } else if (f == 'a') {
+        // receive amp settings
+        for (i=0;i<3;i++) {
+            extract_hex((char *)uart0_rx_buf+i*2+1, (uint8_t *) &a+i);
+        }
     }
+
 
             /*
             if (stat.mute[i]) {

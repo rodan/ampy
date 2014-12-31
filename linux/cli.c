@@ -4,7 +4,7 @@
 #include <getopt.h>
 #include <unistd.h>
 #include <inttypes.h>
-#include "amp_mixer.h"
+#include "ampy_mixer.h"
 #include "cli.h"
 #include "proj.h"
 #include "pga2311_helper.h"
@@ -16,14 +16,13 @@ uint8_t show_interface;
 
 void show_cli_help(void)
 {
-    fprintf(stdout, "Usage: amp_mixer [OPTION]\n\n");
+    fprintf(stdout, "Usage: ampy_mixer [OPTION]\n\n");
     fprintf(stdout,
             "Mandatory arguments to long options are mandatory for short options too.\n");
     fprintf(stdout,
             "  -h, --help              this help\n"
             "  -d, --device=NAME       stty device name\n"
             "  -v, --volume=pgaid,mute,vol_r,vol_l\n"
-            "  -i, --interface         display ncurses interface\n"
             "  -s, --show              display current mixer settings\n");
 }
 
@@ -43,20 +42,19 @@ void display_mixer_values(void)
 
 static void parse_options(int argc, char *argv[])
 {
-    static const char short_options[] = "hsid:v:";
+    static const char short_options[] = "hsd:v:";
     static const struct option long_options[] = {
         {.name = "help",.val = 'h'},
         {.name = "device",.has_arg = 1,.val = 'd'},
         {.name = "volume",.has_arg = 1,.val = 'v'},
         {.name = "show",.val = 's'},
-        {.name = "interface",.val = 'i'},
         {}
     };
     int option;
     uint8_t t_int[4];
     uint8_t i;
 
-    show_interface = 0;
+    show_interface = 1;
 
     while ((option = getopt_long(argc, argv, short_options,
                                  long_options, NULL)) != -1) {
@@ -70,13 +68,10 @@ static void parse_options(int argc, char *argv[])
             //fprintf(stdout, "fd_device: %d\n", fd_device);
             get_mixer_values(&fd_device);
             display_mixer_values();
+            show_interface = 0;
             break;
         case 'd':
             stty_device = optarg;
-            break;
-        case 'i':
-            get_mixer_values(&fd_device);
-            show_interface = 1;
             break;
         case 'v':
             for (i = 0; i < 4; i++) {
@@ -84,6 +79,7 @@ static void parse_options(int argc, char *argv[])
                 optarg += 2;
             }
             set_mixer_volume(&fd_device, t_int[0], t_int[1], t_int[2], t_int[3]);
+            show_interface = 0;
             break;
         default:
             fprintf(stderr, "unknown option: %c\n", option);
@@ -101,6 +97,7 @@ int main(int argc, char *argv[])
     parse_options(argc, argv);
 
     if (show_interface) {
+        get_mixer_values(&fd_device);
         initialize_curses(1);
 	    create_mixer_widget();
 	    mainloop();
