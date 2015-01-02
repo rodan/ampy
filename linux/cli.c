@@ -4,10 +4,12 @@
 #include <getopt.h>
 #include <unistd.h>
 #include <inttypes.h>
+#include <string.h>
 #include "ampy_mixer.h"
 #include "cli.h"
 #include "proj.h"
 #include "pga2311_helper.h"
+#include "lm4780_helper.h"
 #include "mixer_controls.h"
 #include "mixer_widget.h"
 #include "mainloop.h"
@@ -103,6 +105,11 @@ int main(int argc, char *argv[])
         return 0;
 
     fd_device = -1;
+
+    memset(&s, 0, sizeof(s));
+    memset(&a, 0, sizeof(a));
+    memset(&amp, 0, 6);
+
     parse_options(argc, argv);
 
     if (show_interface) {
@@ -120,6 +127,7 @@ int main(int argc, char *argv[])
     if (debug) {
         fprintf(stdout, "\nDebug info:\n");
         fprintf(stdout, " transmission errors:\t%d\n", tx_err);
+        fprintf(stdout, " invalid data rcvd:  \t%d\n", tx_inval);
     }
 
     return 0;

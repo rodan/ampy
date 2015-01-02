@@ -33,6 +33,7 @@ int portfd_is_socket = 0;
 int portfd_is_connected = 0;
 
 unsigned int tx_err = 0;
+unsigned int tx_inval = 0;
 
 /*
 void catch_alarm(int sig)
@@ -101,7 +102,7 @@ int fd_read_ready(int fd_dev, struct timeval* timeout)
     return EXIT_FAILURE;
 }
 
-int ampy_tx_cmd(int *fd_dev, char *tx_buff, uint8_t tx_buff_len, char *rx_buff, uint8_t *rx_buff_len, uint8_t retries)
+int ampy_tx_cmd(int *fd_dev, char *tx_buff, uint8_t tx_buff_len, char *rx_buff, uint8_t *rx_buff_len, const uint8_t exp_rx_buff_len, const uint8_t retries)
 {
     fd_set write_fd_set;
     struct timeval timeout;
@@ -160,8 +161,16 @@ int ampy_tx_cmd(int *fd_dev, char *tx_buff, uint8_t tx_buff_len, char *rx_buff, 
                         }
                     }
                 }
-                rx_buff[*rx_buff_len] = 0; // terminate string
-                return EXIT_SUCCESS;
+                // what we get back must end with 'ok\r\n'
+                if (((exp_rx_buff_len) && (*rx_buff_len != exp_rx_buff_len)) || 
+                        (rx_buff[*rx_buff_len-3] != 'o') || (rx_buff[*rx_buff_len-2] != 'k')) {
+                    fail++;
+                    tx_inval++;
+                    usleep(10000);
+                } else {
+                    rx_buff[*rx_buff_len] = 0; // terminate string
+                    return EXIT_SUCCESS;
+                }
             } else {
                 fail++;
                 tx_err++;
@@ -211,7 +220,7 @@ int get_mixer_values(int *fd_dev)
     uint8_t i;
 
 
-    if (ampy_tx_cmd(fd_dev, "showreg\r\n", 9, input, &input_len, 20) == EXIT_FAILURE) {
+    if (ampy_tx_cmd(fd_dev, "showreg\r\n", 9, input, &input_len, 40, 20) == EXIT_FAILURE) {
         return EXIT_FAILURE;
     }
 
@@ -244,7 +253,7 @@ int set_mixer_volume(int *fd_dev, const uint8_t pga_id, const uint8_t mute,
     snprintf(str_temp, STR_LEN, "v%02x%02x%02x%02x\r\n", pga_id, mute, right,
              left);
 
-    if (ampy_tx_cmd(fd_dev, str_temp, strlen(str_temp), input, &input_len, 10) == EXIT_FAILURE) {
+    if (ampy_tx_cmd(fd_dev, str_temp, strlen(str_temp), input, &input_len, 4, 10) == EXIT_FAILURE) {
         return EXIT_FAILURE;
     }
 
@@ -259,7 +268,7 @@ int set_amp_registers(int *fd_dev, const uint8_t ver, const uint8_t snd_detect, 
 
     snprintf(str_temp, STR_LEN, "a%02x%02x%02x\r\n", ver, snd_detect, mute_flag);
 
-    if (ampy_tx_cmd(fd_dev, str_temp, strlen(str_temp), input, &input_len, 10) == EXIT_FAILURE) {
+    if (ampy_tx_cmd(fd_dev, str_temp, strlen(str_temp), input, &input_len, 4, 10) == EXIT_FAILURE) {
         return EXIT_FAILURE;
     }
 
@@ -280,7 +289,7 @@ int store_registers(int *fd_dev, uint8_t type)
         return EXIT_FAILURE;
     }
 
-    if (ampy_tx_cmd(fd_dev, str_temp, strlen(str_temp), input, &input_len, 4) == EXIT_FAILURE) {
+    if (ampy_tx_cmd(fd_dev, str_temp, strlen(str_temp), input, &input_len, 4, 4) == EXIT_FAILURE) {
         return EXIT_FAILURE;
     }
 

@@ -11,6 +11,7 @@ extern const char card_name[2][22];
 extern const char chip_name[2][26];
 
 extern unsigned int tx_err;
+extern unsigned int tx_inval;
 
 void main_loop(void);
 int get_mixer_values(int *dev);
@@ -21,7 +22,7 @@ int store_registers(int *dev, uint8_t type);
 
 int fd_read_ready(int fd_dev, struct timeval* timeout);
 
-int ampy_tx_cmd(int *fd_dev, char *tx_buff, uint8_t tx_buff_len, char *rx_buff, uint8_t *rx_buff_len, uint8_t retries);
+int ampy_tx_cmd(int *fd_dev, char *tx_buff, uint8_t tx_buff_len, char *rx_buff, uint8_t *rx_buff_len, const uint8_t exp_rx_buff_len, const uint8_t retries);
 
 uint8_t extract_hex(char *str, uint8_t * rv);
 
