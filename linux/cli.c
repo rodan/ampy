@@ -14,6 +14,8 @@
 
 uint8_t show_interface;
 
+int debug = 0;
+
 void show_cli_help(void)
 {
     fprintf(stdout, "Usage: ampy_mixer [OPTION]\n\n");
@@ -23,7 +25,8 @@ void show_cli_help(void)
             "  -h, --help              this help\n"
             "  -d, --device=NAME       stty device name\n"
             "  -v, --volume=pgaid,mute,vol_r,vol_l\n"
-            "  -s, --show              display current mixer settings\n");
+            "  -s, --show              display current mixer settings\n"
+            "  -e, --debug             show extra info\n");
 }
 
 void display_mixer_values(void)
@@ -42,12 +45,13 @@ void display_mixer_values(void)
 
 static void parse_options(int argc, char *argv[])
 {
-    static const char short_options[] = "hsd:v:";
+    static const char short_options[] = "hsed:v:";
     static const struct option long_options[] = {
         {.name = "help",.val = 'h'},
         {.name = "device",.has_arg = 1,.val = 'd'},
         {.name = "volume",.has_arg = 1,.val = 'v'},
         {.name = "show",.val = 's'},
+        {.name = "debug",.val = 'e'},
         {}
     };
     int option;
@@ -66,12 +70,17 @@ static void parse_options(int argc, char *argv[])
             break;
         case 's':
             //fprintf(stdout, "fd_device: %d\n", fd_device);
-            get_mixer_values(&fd_device);
+            if (get_mixer_values(&fd_device) == EXIT_FAILURE) {
+                exit(1);
+            }
             display_mixer_values();
             show_interface = 0;
             break;
         case 'd':
             stty_device = optarg;
+            break;
+        case 'e':
+            debug = 1;
             break;
         case 'v':
             for (i = 0; i < 4; i++) {
@@ -104,6 +113,14 @@ int main(int argc, char *argv[])
         app_shutdown();
     }
 
+    if (fd_device > 0) {
+        close(fd_device);
+    }
+
+    if (debug) {
+        fprintf(stdout, "\nDebug info:\n");
+        fprintf(stdout, " transmission errors:\t%d\n", tx_err);
+    }
 
     return 0;
 }

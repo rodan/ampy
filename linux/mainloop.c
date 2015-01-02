@@ -21,6 +21,7 @@
 #include <errno.h>
 #include <poll.h>
 #include <panel.h>
+#include <unistd.h>
 #include "mem.h"
 #include "die.h"
 #include "colors.h"
@@ -29,6 +30,7 @@
 #include "mixer_display.h"
 #include "mixer_controls.h"
 #include "mainloop.h"
+#include "proj.h"
 
 WINDOW *curses_initialized;
 
@@ -54,7 +56,6 @@ void app_shutdown(void)
 		curs_set(1);
 		endwin();
 	}
-    exit(0);
 }
 
 void mainloop()
