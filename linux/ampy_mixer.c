@@ -47,7 +47,7 @@ int stty_init(char *stty_device, int *fd_dev)
     int n = 0;
 
     if (stty_device == NULL) {
-        stty_device = "/dev/ttyUSB0";
+        stty_device = DFL_PORT;
     }
 
 #if defined(O_NDELAY) && defined(F_SETFL)
