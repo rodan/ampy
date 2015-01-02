@@ -7,7 +7,6 @@
 #include <signal.h>
 #include <inttypes.h>
 #include <string.h>
-#include <panel.h>
 #include <sys/select.h>
 #include <fcntl.h>
 

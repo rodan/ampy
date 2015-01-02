@@ -2,7 +2,7 @@
 CC      = gcc
 #CFLAGS  = -g -Wall -O2
 CFLAGS  = -g -Wall -ggdb
-LDFLAGS = -lncurses -lpanel -lm 
+LDFLAGS = -lncurses -lm -lpanel 
 PROGS   = ampy_mixer
 
 ampy_mixer_OBJS    = cli.o ampy_mixer.o pga2311_helper.o lm4780_helper.o colors.o widget.o mem.o utils.o mixer_display.o mixer_controls.o mixer_widget.o textbox.o die.o mainloop.o sysdep1.o
@@ -25,7 +25,7 @@ tags : $(ampy_mixer_OBJS) $(ampy_mixer_EXTRA)
 	exuberant-ctags -h ".h.c" *
 
 clean :
-	rm -f *.o *.sibling *.combine $(PROGS)
+	rm -f *.o *.sibling *.combine *.log $(PROGS)
 
 strip : $(ampy_mixer_OBJS) $(ampy_mixer_EXTRA)
 	strip ${PROGS}

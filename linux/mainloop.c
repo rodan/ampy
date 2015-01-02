@@ -20,7 +20,6 @@
 #include <stdlib.h>
 #include <errno.h>
 #include <poll.h>
-#include <panel.h>
 #include <unistd.h>
 #include "mem.h"
 #include "die.h"

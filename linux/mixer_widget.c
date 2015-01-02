@@ -21,7 +21,6 @@
 #include <stdlib.h>
 #include <ctype.h>
 #include <curses.h>
-#include <panel.h>
 #include <inttypes.h>
 #include <signal.h>
 #include <poll.h>

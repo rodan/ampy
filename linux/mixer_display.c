@@ -27,7 +27,6 @@
 #include "mem.h"
 #include "colors.h"
 #include "widget.h"
-//#include "volume_mapping.h"
 #include "widget.h"
 #include "mixer_display.h"
 #include "mixer_controls.h"
