@@ -32,6 +32,7 @@ const char chip_name[2][26] = { "Texas Instruments PGA2311", "Texas Instruments 
 int portfd_is_socket = 0;
 int portfd_is_connected = 0;
 
+unsigned int rx_err = 0;
 unsigned int tx_err = 0;
 unsigned int tx_inval = 0;
 
@@ -50,6 +51,7 @@ int stty_init(char *stty_device, int *fd_dev)
     if (stty_device == NULL) {
         stty_device = DFL_PORT;
     }
+
 #if defined(O_NDELAY) && defined(F_SETFL)
     *fd_dev = open(stty_device, O_RDWR|O_NDELAY|O_NOCTTY);
     if (*fd_dev >= 0) {
@@ -81,9 +83,6 @@ int fd_read_ready(int fd_dev, struct timeval* timeout)
 
     FD_ZERO(&read_fd_set);
     FD_SET(fd_dev, &read_fd_set);
-
-    //timeout.tv_sec = 3;
-    //timeout.tv_usec = 0;
 
     switch (select(fd_dev + 1, &read_fd_set, NULL, NULL, timeout)) {
     case -1:
@@ -124,6 +123,8 @@ int ampy_tx_cmd(int *fd_dev, char *tx_buff, uint8_t tx_buff_len, char *rx_buff, 
     timeout.tv_sec = 10;
     timeout.tv_usec = 0;
 
+    flush_fd(*fd_dev);
+
     switch (select(*fd_dev + 1, NULL, &write_fd_set, NULL, &timeout)) {
     case -1:
         fprintf(stderr, "select() error during write\n");
@@ -147,10 +148,12 @@ int ampy_tx_cmd(int *fd_dev, char *tx_buff, uint8_t tx_buff_len, char *rx_buff, 
         if (write(*fd_dev, tx_buff, tx_buff_len) != tx_buff_len) {
             fail++;
             tx_err++;
-            usleep(90000);
+            usleep(80000);
         } else {
+            // when reading from a wireless serial connection (like bluetooth)
+            // the select function returns success only about 100ms after the reply is expected
             timeout.tv_sec = 0;
-            timeout.tv_usec = 50000;
+            timeout.tv_usec = 200000;
             if (fd_read_ready(*fd_dev, &timeout) == EXIT_SUCCESS) {
                 rx_count = 0;
                 keep_reading = 1;
@@ -169,8 +172,9 @@ int ampy_tx_cmd(int *fd_dev, char *tx_buff, uint8_t tx_buff_len, char *rx_buff, 
                     }
                 }
                 // what we get back must end with 'ok\r\n'
-                if (((exp_rx_buff_len) && (rx_count != exp_rx_buff_len)) || 
+                if (((exp_rx_buff_len != 0) && (rx_count != exp_rx_buff_len)) || 
                         (rx_buff[rx_count-4] != 'o') || (rx_buff[rx_count-3] != 'k')) {
+                    printf("[%c %c %d %d]", rx_buff[rx_count-4], rx_buff[rx_count-3], rx_count, exp_rx_buff_len);
                     fail++;
                     tx_inval++;
                     usleep(100000);
@@ -181,8 +185,8 @@ int ampy_tx_cmd(int *fd_dev, char *tx_buff, uint8_t tx_buff_len, char *rx_buff, 
                 }
             } else {
                 fail++;
-                tx_err++;
-                usleep(110000);
+                rx_err++;
+                usleep(80000);
             }
         }
     }

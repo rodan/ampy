@@ -612,3 +612,9 @@ int m_wait(int *stt)
 #endif
 }
 
+void flush_fd(int fd) {
+#ifdef POSIX_TERMIOS
+    tcflush(fd, TCIOFLUSH);
+#endif
+}
+

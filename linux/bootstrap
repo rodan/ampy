@@ -6,5 +6,5 @@ autoheader
 automake --force-missing --add-missing 2&>/dev/null
 autoconf
 ./configure
-make
+cd src; make
 

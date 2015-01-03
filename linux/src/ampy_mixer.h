@@ -11,6 +11,7 @@ extern const char card_name[2][22];
 extern const char chip_name[2][26];
 
 extern unsigned int tx_err;
+extern unsigned int rx_err;
 extern unsigned int tx_inval;
 
 void main_loop(void);

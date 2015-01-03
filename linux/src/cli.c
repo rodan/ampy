@@ -13,6 +13,7 @@
 #include "mixer_controls.h"
 #include "mixer_widget.h"
 #include "mainloop.h"
+#include "sysdep1.h"
 
 uint8_t show_interface;
 
@@ -121,13 +122,15 @@ int main(int argc, char *argv[])
     }
 
     if (fd_device > 0) {
+        flush_fd(fd_device);
         close(fd_device);
     }
 
     if (debug) {
         fprintf(stdout, "\nDebug info:\n");
-        fprintf(stdout, " transmission errors:\t%d\n", tx_err);
-        fprintf(stdout, " invalid data rcvd:  \t%d\n", tx_inval);
+        fprintf(stdout, " tx errors:\t%d\n", tx_err);
+        fprintf(stdout, " rx errors:\t%d\n", rx_err);
+        fprintf(stdout, " invalid data:\t%d\n", tx_inval);
     }
 
     return 0;
