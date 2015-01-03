@@ -5,7 +5,6 @@ AC_PREREQ([2.69])
 AC_INIT([ampy_mixer], [0.1], [petre.rodan@simplex.ro])
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_SRCDIR([src/ampy_mixer.c])
-#AM_CONFIG_HEADER([config.h])
 
 #AM_INIT_AUTOMAKE([1.7])
 
