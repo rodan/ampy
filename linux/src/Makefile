@@ -1,7 +1,7 @@
 
 CC      = gcc
 #CFLAGS  = -g -Wall -O2
-CFLAGS  = -g -Wall -ggdb
+CFLAGS  = -g -Wall -ggdb -I..
 LDFLAGS = -lncurses -lm -lpanel 
 PROGS   = ampy_mixer
 

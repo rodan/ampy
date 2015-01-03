@@ -595,7 +595,7 @@ PACKAGE_STRING='ampy_mixer 0.1'
 PACKAGE_BUGREPORT='petre.rodan@simplex.ro'
 PACKAGE_URL=''
 
-ac_unique_file="ampy_mixer.c"
+ac_unique_file="src/ampy_mixer.c"
 # Factoring default headers for most tests.
 ac_includes_default="\
 #include <stdio.h>

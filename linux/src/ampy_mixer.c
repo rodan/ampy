@@ -50,7 +50,6 @@ int stty_init(char *stty_device, int *fd_dev)
     if (stty_device == NULL) {
         stty_device = DFL_PORT;
     }
-
 #if defined(O_NDELAY) && defined(F_SETFL)
     *fd_dev = open(stty_device, O_RDWR|O_NDELAY|O_NOCTTY);
     if (*fd_dev >= 0) {
@@ -70,7 +69,8 @@ int stty_init(char *stty_device, int *fd_dev)
     portfd_is_connected = 1;
 
     // port init
-    m_setparms(*fd_dev, "9600", "N", "8", "1", 1, 0);
+    // 9600, 8N1, no hardware flow control, no software flow control
+    m_setparms(*fd_dev, "9600", "N", "8", "1", 0, 0);
 
     return EXIT_SUCCESS;
 }
@@ -109,6 +109,7 @@ int ampy_tx_cmd(int *fd_dev, char *tx_buff, uint8_t tx_buff_len, char *rx_buff, 
     char buff;
     uint8_t fail;
     uint8_t keep_reading;
+    uint8_t rx_count;
     
     if (*fd_dev < 0) {
         if (stty_init(stty_device, fd_dev) == EXIT_FAILURE) {
@@ -137,44 +138,51 @@ int ampy_tx_cmd(int *fd_dev, char *tx_buff, uint8_t tx_buff_len, char *rx_buff, 
     }
 
     fail = 0;
-    keep_reading = 1;
 
+    // a full reply should be received in about 
+    //   60ms for a wired ftdi connection
     while (fail<retries) {
         //signal(SIGALRM, catch_alarm);
         //alarm(1);
         if (write(*fd_dev, tx_buff, tx_buff_len) != tx_buff_len) {
             fail++;
             tx_err++;
+            usleep(90000);
         } else {
-            *rx_buff_len = 0;
             timeout.tv_sec = 0;
-            timeout.tv_usec = 10000;
-
+            timeout.tv_usec = 50000;
             if (fd_read_ready(*fd_dev, &timeout) == EXIT_SUCCESS) {
+                rx_count = 0;
+                keep_reading = 1;
                 while (keep_reading) {
                     if (read(*fd_dev, &buff, 1) == 1) {
-                        if ((buff == '\n') || *rx_buff_len > (STR_LEN - 2)) {
+                        if (rx_count > (STR_LEN - 2)) {
                             keep_reading = 0;
+                        } else if (buff == '\n') {
+                            keep_reading = 0;
+                            rx_buff[rx_count] = buff;
+                            rx_count++;
                         } else {
-                            rx_buff[*rx_buff_len] = buff;
-                            (*rx_buff_len)++;
+                            rx_buff[rx_count] = buff;
+                            rx_count++;
                         }
                     }
                 }
                 // what we get back must end with 'ok\r\n'
-                if (((exp_rx_buff_len) && (*rx_buff_len != exp_rx_buff_len)) || 
-                        (rx_buff[*rx_buff_len-3] != 'o') || (rx_buff[*rx_buff_len-2] != 'k')) {
+                if (((exp_rx_buff_len) && (rx_count != exp_rx_buff_len)) || 
+                        (rx_buff[rx_count-4] != 'o') || (rx_buff[rx_count-3] != 'k')) {
                     fail++;
                     tx_inval++;
-                    usleep(10000);
+                    usleep(100000);
                 } else {
                     rx_buff[*rx_buff_len] = 0; // terminate string
+                    *rx_buff_len = rx_count;
                     return EXIT_SUCCESS;
                 }
             } else {
                 fail++;
                 tx_err++;
-                usleep(10000);
+                usleep(110000);
             }
         }
     }
@@ -220,7 +228,7 @@ int get_mixer_values(int *fd_dev)
     uint8_t i;
 
 
-    if (ampy_tx_cmd(fd_dev, "showreg\r\n", 9, input, &input_len, 40, 20) == EXIT_FAILURE) {
+    if (ampy_tx_cmd(fd_dev, "showreg\r\n", 9, input, &input_len, 41, 20) == EXIT_FAILURE) {
         return EXIT_FAILURE;
     }
 
