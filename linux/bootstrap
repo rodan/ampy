@@ -3,8 +3,8 @@
 libtoolize --force
 aclocal
 autoheader
-automake --force-missing --add-missing 2&>/dev/null
+automake --force-missing --add-missing
 autoconf
 ./configure
-cd src; make
+make
 
