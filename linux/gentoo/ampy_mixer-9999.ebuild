@@ -21,13 +21,12 @@ IUSE=""
 DEPEND="sys-libs/ncurses"
 RDEPEND=""
 
-#src_prepare() {
-#	elibtoolize
-#}
-
-src_install() {
-	dodir "${ROOT}/usr/bin"
-	exeinto "${ROOT}/usr/bin"
-	doexe src/ampy_mixer
+src_prepare() {
+	elibtoolize
 }
 
+src_install() {
+	dodir "usr/bin"
+	exeinto "usr/bin"
+	doexe src/ampy_mixer
+}
