@@ -1,0 +1,15 @@
+
+Author:     Petre Rodan <petre.rodan@simplex.ro>
+
+ - ncurses code based on alsamixer ver 1.0.28
+ * Lewis Carroll
+ * Tim Janik
+ * Jaroslav Kysela <perex@perex.cz>
+ * Clemens Ladisch <clemens@ladisch.de>
+
+ - tty setup code based on minicom ver 2.7
+ * Miquel van Smoorenburg <miquels@cistron.nl>
+ * Jukka Lahtinen <walker@netsonic.fi>
+ * Adam Lackorzynski <adam@os.inf.tu-dresden.de>
+
+

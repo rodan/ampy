@@ -128,7 +128,7 @@ void refocus_control(void)
 	display_controls();
 }
 
-void change_control_to_percent(int ctrl, int value, unsigned int channels)
+void change_control_to_percent(int ctrl, int value)
 {
     if (view_mode == VIEW_MIXER) {
         float v_right = 2.55 * value;
@@ -293,7 +293,7 @@ static void on_handle_key(int key)
 		break;
 	case KEY_LL:
 	case KEY_END:
-		change_control_to_percent(focus_control_index, 0, CH_LEFT | CH_RIGHT);
+		change_control_to_percent(focus_control_index, 0);
 		break;
 	case KEY_UP:
 	case '+':
@@ -313,7 +313,7 @@ static void on_handle_key(int key)
 		break;
 	case '0': case '1': case '2': case '3': case '4':
 	case '5': case '6': case '7': case '8': case '9':
-		change_control_to_percent(focus_control_index, (key - '0') * 10, CH_LEFT | CH_RIGHT);
+		change_control_to_percent(focus_control_index, (key - '0') * 10);
 		break;
 	case 'Q':
 	case 'q':

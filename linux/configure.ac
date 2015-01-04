@@ -6,7 +6,7 @@ AC_INIT([ampy_mixer], [0.1], [petre.rodan@simplex.ro])
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_SRCDIR([src/ampy_mixer.c])
 
-#AM_INIT_AUTOMAKE([1.7])
+AM_INIT_AUTOMAKE
 
 dnl Checks for programs.
 #AC_PROG_CC
@@ -158,4 +158,5 @@ AH_BOTTOM([
 #endif
 ])
 
+AC_CONFIG_FILES([Makefile src/Makefile])
 AC_OUTPUT

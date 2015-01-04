@@ -14,7 +14,7 @@ extern bool controls_changed;
 
 void create_mixer_widget(void);
 void refocus_control(void);
-void change_control_to_percent(int ctrl, int value, unsigned int channels);
+void change_control_to_percent(int ctrl, int value);
 void change_control_relative(int ctrl, int delta, unsigned int channels);
 void toggle_mute(int ctrl);
 void show_help(void);

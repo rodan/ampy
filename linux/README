@@ -1,16 +1,8 @@
 
-linux mixer control software for the ampy ecosystem.
-a serial connection is used to connect to firmare_brain in order to control the mixer and the power amp boards.
+Linux mixer control software for the ampy ecosystem.
 
- - ncurses code based on alsamixer ver 1.0.28
- * Copyright (c) 1874 Lewis Carroll
- * Copyright (c) 1998,1999 Tim Janik
-                           Jaroslav Kysela <perex@perex.cz>
- * Copyright (c) 2009 Clemens Ladisch <clemens@ladisch.de>
+Either an FTDI-based USB-to-uart or a USB bluetooth connection that supports SPP is used to connect to firmare_brain in order to control the mixer and the power amp boards.
 
- - tty setup code based on minicom ver 2.7
-Author:     Miquel van Smoorenburg <miquels@cistron.nl>   (1991-1996)
-Maintainer: Jukka Lahtinen <walker@netsonic.fi>           (1997-2002)
-Maintainer: Adam Lackorzynski <adam@os.inf.tu-dresden.de> (since 2003)
-
+All the PGA2311 chips present on the mixer board can be set in the [mixer view] and on the [amp view] the sound detection and mute signals can be toggled.
+The second only works if the power amp is based on the LM4780 IC.
 
