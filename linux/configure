@@ -7971,10 +7971,6 @@ _lt_linker_boilerplate=`cat conftest.err`
 $RM -r conftest*
 
 
-## CAVEAT EMPTOR:
-## There is no encapsulation within the following macros, do not change
-## the running order or otherwise move them around unless you know exactly
-## what you are doing...
 if test -n "$compiler"; then
 
 lt_prog_compiler_no_builtin_flag=
@@ -11527,7 +11523,7 @@ CC="$lt_save_CC"
 # Only expand once:
 
 
-
+#AC_CONFIG_MACRO_DIR([m4])
 
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for library containing strerror" >&5
 $as_echo_n "checking for library containing strerror... " >&6; }
