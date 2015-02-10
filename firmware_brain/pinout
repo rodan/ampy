@@ -1,7 +1,7 @@
 UEXT
 
-1   vcc         3v3     orange
-2   gnd         gnd     white/orange
+1   vcc         3v3     orange, brown
+2   gnd         gnd     white/orange, white/brown
 3   txd         1.6     white/green
 4   rxd         1.5     white/brown
 5   mute_ctrl_f 2.0     blue

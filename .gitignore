@@ -10,7 +10,16 @@ proj.cflags
 *.swp
 *.?#?
 *.pyc
+*.plt
+*.log
+*.raw
+.deps
+autom4te.cache
 docs
+stamp-h1
+config.h
 config.log
+config.status
 output.map
+ampy_mixer
 tags

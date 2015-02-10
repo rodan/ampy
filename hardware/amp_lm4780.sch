@@ -22269,8 +22269,8 @@ Standard SMD solder jumper. Used to automate production. Two varients : Normally
 <part name="GNDI23" library="supply1" deviceset="GNDI" device=""/>
 <part name="GNDI24" library="supply1" deviceset="GNDI" device=""/>
 <part name="GNDI25" library="supply1" deviceset="GNDI" device=""/>
-<part name="C32" library="rcl" deviceset="C-EU" device="C0805" value="100nF"/>
-<part name="C33" library="rcl" deviceset="C-EU" device="C0805" value="100nF"/>
+<part name="C32" library="rcl" deviceset="C-EU" device="C0805" value="1nF"/>
+<part name="C33" library="rcl" deviceset="C-EU" device="C0805" value="1nF"/>
 <part name="GNDI26" library="supply1" deviceset="GNDI" device=""/>
 <part name="GNDI27" library="supply1" deviceset="GNDI" device=""/>
 </parts>
