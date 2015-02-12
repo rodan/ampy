@@ -15,6 +15,7 @@ extern unsigned int rx_err;
 extern unsigned int tx_inval;
 
 void main_loop(void);
+int get_sensors(int *fd_dev);
 int get_mixer_values(int *dev);
 int set_mixer_volume(int *dev, const uint8_t pga_id, const uint8_t mute,
                      const uint8_t right, const uint8_t left);

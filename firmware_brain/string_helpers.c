@@ -79,26 +79,3 @@ uint8_t check_xor_hash(const char *msg, const uint16_t len)
     }
 }
 
-
-/*
-void main()
-{
-    uint8_t hash;
-    char hash_str[4];
-
-    snprintf(strtemp, STR_MAX-3, "V120200");
-    compute_hash(strtemp, strlen(strtemp), &hash);
-    snprintf(hash_str, 4, "*%02x", hash);
-    strncat(strtemp, hash_str, STR_MAX);
-
-    fprintf(stdout, "%s\n", strtemp);
-
-    if (check_hash(strtemp, strlen(strtemp)) == EXIT_SUCCESS) {
-        fprintf(stdout, "hash ok\n");
-    } else {
-        fprintf(stdout, "hash failed\n");
-    }
-    
-}
-*/
-

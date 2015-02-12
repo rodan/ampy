@@ -7,6 +7,7 @@
 #include "drivers/flash.h"
 #include "drivers/pga2311_helper.h"
 #include "drivers/lm4780_helper.h"
+#include "drivers/adc.h"
 #include "interface/i2c_fcts.h"
 #include "string_helpers.h"
 #include "ui.h"
@@ -53,7 +54,7 @@ int parse_user_input(void)
     uint8_t i;
     uint8_t t_int[4];
     uint8_t *flash_addr = FLASH_ADDR;
-
+    uint16_t q_t_brain; //, t_mixer;
 
     if (f == '?') {
         display_menu();
@@ -97,6 +98,11 @@ int parse_user_input(void)
     } else if (strstr(in, "storemix")) {
         i2c_tx_cmd(M_CMD_WRITE, 1);
         uart0_tx_str("ok\r\n", 4);
+    } else if (strstr(in, "sensor")) {
+        adc12_read(10, &q_t_brain, REFVSEL_0);
+        adc12_halt();
+        snprintf(str_temp, TEMP_LEN, "T_BRAIN %d\r\n", q_t_brain);
+        uart0_tx_str(str_temp, strlen(str_temp));
     } else if (f == 'v') {
         // receive volume levels - one line per pga
         if (check_xor_hash(in, uart0_rx_buf_len) == EXIT_SUCCESS) {

@@ -207,6 +207,20 @@ int ampy_tx_cmd(int *fd_dev, char *tx_buff, uint8_t tx_buff_len, char *rx_buff, 
     return EXIT_FAILURE;
 }
 
+int get_sensors(int *fd_dev)
+{
+    char input[STR_LEN];
+    uint8_t input_len;
+
+    if (ampy_tx_cmd(fd_dev, "sensors\r\n", 9, input, &input_len, 0, 20) == EXIT_FAILURE) {
+        return EXIT_FAILURE;
+    }
+
+    fprintf(stdout, "%s\n", input);
+
+    return EXIT_SUCCESS;
+}
+
 int get_mixer_values(int *fd_dev)
 {
     char input[STR_LEN];

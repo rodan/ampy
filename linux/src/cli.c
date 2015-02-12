@@ -14,6 +14,7 @@
 #include "mixer_widget.h"
 #include "mainloop.h"
 #include "sysdep1.h"
+#include "string_helpers.h"
 
 uint8_t show_interface;
 
@@ -33,6 +34,7 @@ void show_cli_help(void)
             "              VR - volume for right channel (00-FF)\n"
             "              VL - volume for left channel (00-FF)\n"
             "  -s, --show              display current mixer settings\n"
+            "  -i, --sensors           display internal sensors\n"
             "  -e, --debug             show extra info\n");
 }
 
@@ -52,12 +54,13 @@ void display_mixer_values(void)
 
 static void parse_options(int argc, char *argv[])
 {
-    static const char short_options[] = "hsed:v:";
+    static const char short_options[] = "hsied:v:";
     static const struct option long_options[] = {
         {.name = "help",.val = 'h'},
         {.name = "device",.has_arg = 1,.val = 'd'},
         {.name = "volume",.has_arg = 1,.val = 'v'},
         {.name = "show",.val = 's'},
+        {.name = "sensors",.val = 'i'},
         {.name = "debug",.val = 'e'}
     };
     int option;
@@ -75,11 +78,17 @@ static void parse_options(int argc, char *argv[])
             exit(EXIT_SUCCESS);
             break;
         case 's':
-            //fprintf(stdout, "fd_device: %d\n", fd_device);
             if (get_mixer_values(&fd_device) == EXIT_FAILURE) {
                 exit(1);
             }
             display_mixer_values();
+            show_interface = 0;
+            break;
+        case 'i':
+            if (get_sensors(&fd_device) == EXIT_FAILURE) {
+                exit(1);
+            }
+            //display_sensors();
             show_interface = 0;
             break;
         case 'd':
