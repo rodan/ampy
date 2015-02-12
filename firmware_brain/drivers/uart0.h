@@ -12,6 +12,7 @@ enum uart0_tevent {
 
 volatile char uart0_rx_buf[UART0_RXBUF_SZ];
 volatile uint8_t uart0_p;
+volatile uint8_t uart0_rx_buf_len;
 volatile uint8_t uart0_rx_enable;
 //uint8_t uart0_rx_err;
 

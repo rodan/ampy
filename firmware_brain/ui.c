@@ -8,12 +8,15 @@
 #include "drivers/pga2311_helper.h"
 #include "drivers/lm4780_helper.h"
 #include "interface/i2c_fcts.h"
+#include "string_helpers.h"
 #include "ui.h"
 #ifdef HARDWARE_I2C
   #include "drivers/i2c.h"
 #else
   #include "drivers/serial_bitbang.h"
 #endif
+
+
 void display_menu(void)
 {
     //snprintf(str_temp, TEMP_LEN,
@@ -43,36 +46,7 @@ void display_menu(void)
 
 }
 
-uint8_t extract_hex(char *str, uint8_t *rv)
-{
-    uint8_t i=0;
-    char *p = str;
-    char c = *p;
-    
-    *rv = 0;
-
-    while ((i<2) && (((c > 47) && (c < 58)) || ((c > 96) && (c < 103)) || ((c > 64) && (c < 71)))) {
-
-        // go lowercase (A-F -> a-f)
-        if ((c > 64) && (c < 71)) {
-            c += 32;
-        }
-
-        *rv = *rv << 4;
-        if ((c > 47) && (c < 58)) {
-            *rv += c - 48;
-        } else if ((c > 96) && (c < 103)) {
-            *rv += c - 87;
-        }
-        i++;
-        //p++;
-        c = *++p;
-    }
-
-    return i;
-}
-
-void parse_user_input(void)
+int parse_user_input(void)
 {
     char f = uart0_rx_buf[0];
     char *in = (char *) uart0_rx_buf;
@@ -105,7 +79,7 @@ void parse_user_input(void)
         }
     } else if (strstr(in, "showreg")) {
         // mixer related
-        get_mixer_status();
+        get_mixer_status(); // XXX
         for (i=0;i<14;i++) {
             snprintf(str_temp, TEMP_LEN, "%02x", *((uint8_t *) &s+i));
             uart0_tx_str(str_temp, strlen(str_temp));
@@ -125,18 +99,38 @@ void parse_user_input(void)
         uart0_tx_str("ok\r\n", 4);
     } else if (f == 'v') {
         // receive volume levels - one line per pga
-        for (i=0;i<4;i++) {
-            extract_hex((char *)uart0_rx_buf+i*2+1, &t_int[i]);
+        if (check_xor_hash(in, uart0_rx_buf_len) == EXIT_SUCCESS) {
+            for (i=0;i<4;i++) {
+                if (extract_hex((char *)uart0_rx_buf+i*2+1, &t_int[i]) != 2) {
+                    uart0_tx_str(in, uart0_rx_buf_len);
+                    uart0_tx_str(" rx_fail\r\n", 10);
+                    return EXIT_FAILURE;
+                }
+            }
+            i2c_tx_vol(t_int[0], t_int[1], t_int[2], t_int[3]);
+            uart0_tx_str(in, uart0_rx_buf_len);
+            uart0_tx_str(" ok\r\n", 5);
+        } else {
+            uart0_tx_str(in, uart0_rx_buf_len);
+            uart0_tx_str(" crc_fail\r\n", 11);
         }
-        i2c_tx_vol(t_int[0], t_int[1], t_int[2], t_int[3]);
-        uart0_tx_str("ok\r\n", 4);
     } else if (f == 'a') {
         // receive amp settings
-        for (i=0;i<3;i++) {
-            extract_hex((char *)uart0_rx_buf+i*2+1, (uint8_t *) &a+i);
+        if (check_xor_hash(in, uart0_rx_buf_len) == EXIT_SUCCESS) {
+            for (i=0;i<3;i++) {
+                if (extract_hex((char *)uart0_rx_buf+i*2+1, (uint8_t *) &a+i) != 2) {
+                    uart0_tx_str(in, uart0_rx_buf_len);
+                    uart0_tx_str(" rx_fail\r\n", 10);
+                    return EXIT_FAILURE;
+                }
+            }
+            uart0_tx_str(in, uart0_rx_buf_len);
+            settings_apply();
+            uart0_tx_str(" ok\r\n", 5);
+        } else {
+            uart0_tx_str(in, uart0_rx_buf_len);
+            uart0_tx_str(" crc_fail\r\n", 11);
         }
-        settings_apply();
-        uart0_tx_str("ok\r\n", 4);
     }
 
 
@@ -149,5 +143,6 @@ void parse_user_input(void)
         }
         uart0_tx_str("\r\n", 2);
         */
+    return EXIT_SUCCESS;
 }
 

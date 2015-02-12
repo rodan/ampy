@@ -98,7 +98,8 @@ am_ampy_mixer_OBJECTS = ampy_mixer.$(OBJEXT) colors.$(OBJEXT) \
 	pga2311_helper.$(OBJEXT) textbox.$(OBJEXT) widget.$(OBJEXT) \
 	cli.$(OBJEXT) die.$(OBJEXT) mainloop.$(OBJEXT) \
 	mixer_controls.$(OBJEXT) mixer_widget.$(OBJEXT) \
-	sysdep1.$(OBJEXT) utils.$(OBJEXT)
+	sysdep1.$(OBJEXT) utils.$(OBJEXT) log.$(OBJEXT) \
+	string_helpers.$(OBJEXT)
 ampy_mixer_OBJECTS = $(am_ampy_mixer_OBJECTS)
 ampy_mixer_LDADD = $(LDADD)
 AM_V_lt = $(am__v_lt_@AM_V@)
@@ -282,8 +283,8 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-ampy_mixer_SOURCES = ampy_mixer.c colors.c lm4780_helper.c mem.c mixer_display.c pga2311_helper.c textbox.c widget.c cli.c die.c mainloop.c mixer_controls.c mixer_widget.c sysdep1.c utils.c
-noinst_HEADERS = ampy_mixer.h colors.h lm4780_helper.h mem.h mixer_display.h pga2311_helper.h sysdep.h textbox.h version.h cli.h die.h mainloop.h mixer_controls.h mixer_widget.h proj.h sysdep1.h utils.h widget.h
+ampy_mixer_SOURCES = ampy_mixer.c colors.c lm4780_helper.c mem.c mixer_display.c pga2311_helper.c textbox.c widget.c cli.c die.c mainloop.c mixer_controls.c mixer_widget.c sysdep1.c utils.c log.c string_helpers.c
+noinst_HEADERS = ampy_mixer.h colors.h lm4780_helper.h mem.h mixer_display.h pga2311_helper.h sysdep.h textbox.h version.h cli.h die.h mainloop.h mixer_controls.h mixer_widget.h proj.h sysdep1.h utils.h widget.h log.h string_helpers.h
 AM_CPPFLAGS = @CPPFLAGS@ -I$(top_srcdir)/lib -DCONFDIR=\"$(confdir)\"
 all: all-am
 
@@ -384,12 +385,14 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/colors.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/die.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/lm4780_helper.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/log.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mainloop.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mem.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mixer_controls.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mixer_display.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mixer_widget.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pga2311_helper.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/string_helpers.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sysdep1.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/textbox.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/utils.Po@am__quote@

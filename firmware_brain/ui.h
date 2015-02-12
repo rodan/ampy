@@ -4,6 +4,6 @@
 #include "proj.h"
 
 void display_menu(void);
-void parse_user_input(void);
+int parse_user_input(void);
 
 #endif

@@ -27,7 +27,11 @@ void show_cli_help(void)
     fprintf(stdout,
             "  -h, --help              this help\n"
             "  -d, --device=NAME       stty device name\n"
-            "  -v, --volume=pgaid,mute,vol_r,vol_l\n"
+            "  -v, --volume=PGMMVRVL   set volume (all values in hex)\n"
+            "        where PG - pga id (01-06)\n"
+            "              MM - 00 for mute, 01 for active\n"
+            "              VR - volume for right channel (00-FF)\n"
+            "              VL - volume for left channel (00-FF)\n"
             "  -s, --show              display current mixer settings\n"
             "  -e, --debug             show extra info\n");
 }

@@ -18,6 +18,8 @@
 #include "widget.h"
 #include "mixer_controls.h"
 #include "sysdep1.h"
+#include "log.h"
+#include "string_helpers.h"
 
 #define STR_LEN 256
 
@@ -109,10 +111,12 @@ int ampy_tx_cmd(int *fd_dev, char *tx_buff, uint8_t tx_buff_len, char *rx_buff, 
     uint8_t fail;
     uint8_t keep_reading;
     uint8_t rx_count;
-    
+
+
     if (*fd_dev < 0) {
         if (stty_init(stty_device, fd_dev) == EXIT_FAILURE) {
             printf("error: ampy hardware not connected\n");
+            log_write("ee hardware not connected\n");
             exit(EXIT_FAILURE);
         }
     }
@@ -128,10 +132,12 @@ int ampy_tx_cmd(int *fd_dev, char *tx_buff, uint8_t tx_buff_len, char *rx_buff, 
     switch (select(*fd_dev + 1, NULL, &write_fd_set, NULL, &timeout)) {
     case -1:
         fprintf(stderr, "select() error during write\n");
+        log_write("ee select() error during write\n");
         return EXIT_FAILURE;
         break;
     case 0:
         fprintf(stderr, "select() timeout during write\n");
+        log_write("ee select() error during write\n");
         return EXIT_FAILURE;
         break;
     case 1:
@@ -145,9 +151,11 @@ int ampy_tx_cmd(int *fd_dev, char *tx_buff, uint8_t tx_buff_len, char *rx_buff, 
     while (fail<retries) {
         //signal(SIGALRM, catch_alarm);
         //alarm(1);
+        log_write("tx %s", tx_buff);
         if (write(*fd_dev, tx_buff, tx_buff_len) != tx_buff_len) {
             fail++;
             tx_err++;
+            log_write("ee tx error #%d, fail %d/%d\n", tx_err, fail, retries);
             usleep(80000);
         } else {
             // when reading from a wireless serial connection (like bluetooth)
@@ -171,58 +179,32 @@ int ampy_tx_cmd(int *fd_dev, char *tx_buff, uint8_t tx_buff_len, char *rx_buff, 
                         }
                     }
                 }
+
+                rx_buff[rx_count] = 0; // terminate string
+
                 // what we get back must end with 'ok\r\n'
                 if (((exp_rx_buff_len != 0) && (rx_count != exp_rx_buff_len)) || 
                         (rx_buff[rx_count-4] != 'o') || (rx_buff[rx_count-3] != 'k')) {
-                    printf("[%c %c %d %d]", rx_buff[rx_count-4], rx_buff[rx_count-3], rx_count, exp_rx_buff_len);
+                    //printf("[%c %c %d %d]", rx_buff[rx_count-4], rx_buff[rx_count-3], rx_count, exp_rx_buff_len);
                     fail++;
                     tx_inval++;
+                    log_write("rx tx_invalid fail %d/%d count=%d, str=%s", fail, retries, rx_count, rx_buff);
                     usleep(100000);
                 } else {
-                    rx_buff[*rx_buff_len] = 0; // terminate string
                     *rx_buff_len = rx_count;
+                    log_write("rx count=%d, str=%s", rx_count, rx_buff);
                     return EXIT_SUCCESS;
                 }
             } else {
                 fail++;
                 rx_err++;
+                log_write("ee rx error #%d, fail %d/%d\n", rx_err, fail, retries);
                 usleep(80000);
             }
         }
     }
 
     return EXIT_FAILURE;
-}
-
-uint8_t extract_hex(char *str, uint8_t * rv)
-{
-    uint8_t i = 0;
-    char *p = str;
-    char c = *p;
-
-    *rv = 0;
-
-    while ((i < 2)
-           && (((c > 47) && (c < 58)) || ((c > 96) && (c < 103))
-               || ((c > 64) && (c < 71)))) {
-
-        // go lowercase (A-F -> a-f)
-        if ((c > 64) && (c < 71)) {
-            c += 32;
-        }
-
-        *rv = *rv << 4;
-        if ((c > 47) && (c < 58)) {
-            *rv += c - 48;
-        } else if ((c > 96) && (c < 103)) {
-            *rv += c - 87;
-        }
-        i++;
-        //p++;
-        c = *++p;
-    }
-
-    return i;
 }
 
 int get_mixer_values(int *fd_dev)
@@ -232,7 +214,7 @@ int get_mixer_values(int *fd_dev)
     uint8_t i;
 
 
-    if (ampy_tx_cmd(fd_dev, "showreg\r\n", 9, input, &input_len, 41, 20) == EXIT_FAILURE) {
+    if (ampy_tx_cmd(fd_dev, "showreg*26\r\n", 12, input, &input_len, 41, 20) == EXIT_FAILURE) {
         return EXIT_FAILURE;
     }
 
@@ -261,11 +243,15 @@ int set_mixer_volume(int *fd_dev, const uint8_t pga_id, const uint8_t mute,
     char str_temp[STR_LEN];
     char input[STR_LEN];
     uint8_t input_len;
+    uint8_t hash;
+    char hash_str[6];
 
-    snprintf(str_temp, STR_LEN, "v%02x%02x%02x%02x\r\n", pga_id, mute, right,
-             left);
+    snprintf(str_temp, STR_LEN-6, "v%02x%02x%02x%02x", pga_id, mute, right, left);
+    compute_xor_hash(str_temp, 9, &hash);
+    snprintf(hash_str, 6, "*%02x\r\n", hash);
+    strncat(str_temp, hash_str, 6);
 
-    if (ampy_tx_cmd(fd_dev, str_temp, strlen(str_temp), input, &input_len, 4, 10) == EXIT_FAILURE) {
+    if (ampy_tx_cmd(fd_dev, str_temp, strlen(str_temp), input, &input_len, 17, 10) == EXIT_FAILURE) {
         return EXIT_FAILURE;
     }
 
@@ -277,10 +263,15 @@ int set_amp_registers(int *fd_dev, const uint8_t ver, const uint8_t snd_detect, 
     char str_temp[STR_LEN];
     char input[STR_LEN];
     uint8_t input_len;
+    uint8_t hash;
+    char hash_str[6];
 
-    snprintf(str_temp, STR_LEN, "a%02x%02x%02x\r\n", ver, snd_detect, mute_flag);
+    snprintf(str_temp, STR_LEN, "a%02x%02x%02x", ver, snd_detect, mute_flag);
+    compute_xor_hash(str_temp, 7, &hash);
+    snprintf(hash_str, 6, "*%02x\r\n", hash);
+    strncat(str_temp, hash_str, 6);
 
-    if (ampy_tx_cmd(fd_dev, str_temp, strlen(str_temp), input, &input_len, 4, 10) == EXIT_FAILURE) {
+    if (ampy_tx_cmd(fd_dev, str_temp, strlen(str_temp), input, &input_len, 15, 10) == EXIT_FAILURE) {
         return EXIT_FAILURE;
     }
 
@@ -294,9 +285,9 @@ int store_registers(int *fd_dev, uint8_t type)
     uint8_t input_len;
 
     if (type == VIEW_MIXER) {
-        snprintf(str_temp, STR_LEN, "storemix\r\n");
+        snprintf(str_temp, STR_LEN, "storemix*56\r\n");
     } else if (type == VIEW_AMP) {
-        snprintf(str_temp, STR_LEN, "storeamp\r\n");
+        snprintf(str_temp, STR_LEN, "storeamp*38\r\n");
     } else {
         return EXIT_FAILURE;
     }

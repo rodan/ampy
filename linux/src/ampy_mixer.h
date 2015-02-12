@@ -25,6 +25,4 @@ int fd_read_ready(int fd_dev, struct timeval* timeout);
 
 int ampy_tx_cmd(int *fd_dev, char *tx_buff, uint8_t tx_buff_len, char *rx_buff, uint8_t *rx_buff_len, const uint8_t exp_rx_buff_len, const uint8_t retries);
 
-uint8_t extract_hex(char *str, uint8_t * rv);
-
 #endif

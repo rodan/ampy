@@ -27,15 +27,23 @@ uint8_t i2c_tx_buff[I2C_TX_BUFF_LEN];
 #define true            1
 #define false           0
 
+// msp430's stdlib.h is missing these
+#ifndef EXIT_SUCCESS
+#define EXIT_SUCCESS    0
+#endif
+#ifndef EXIT_FAILURE
+#define EXIT_FAILURE    1
+#endif
+
 #define LED_SWITCH      P1OUT ^= BIT0
 #define LED_ON          P1OUT |= BIT0
 #define LED_OFF         P1OUT &= ~BIT0
 
-#define MUTE_FRONT      P2OUT |= BIT0
-#define UNMUTE_FRONT    P2OUT &= ~BIT0
+#define MUTE_FRONT      P2OUT &= ~BIT0
+#define UNMUTE_FRONT    P2OUT |= BIT0
 
-#define MUTE_REAR       P2OUT |= BIT1
-#define UNMUTE_REAR     P2OUT &= ~BIT1
+#define MUTE_REAR       P2OUT &= ~BIT1
+#define UNMUTE_REAR     P2OUT |= BIT1
 
 #define TEMP_LEN 64
 char str_temp[TEMP_LEN];

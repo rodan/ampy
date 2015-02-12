@@ -49,6 +49,7 @@ void USCI_A0_ISR(void)
                 uart0_rx_buf[uart0_p] = rx;
                 uart0_p++;
             }
+            uart0_rx_buf_len = uart0_p;
         } else {
             if ((rx == 0x0d) || (rx == 0x0a)) {
                 uart0_p = 0;
