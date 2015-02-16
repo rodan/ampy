@@ -19,9 +19,9 @@
 
 
 // XXX
-//#include <stdio.h>
-//#include <string.h>
-//#include "drivers/uart.h"
+#include <stdio.h>
+#include <string.h>
+#include "drivers/uart0.h"
 
 void i2c_tx_cmd(uint8_t cmd, uint8_t arg)
 {
@@ -82,7 +82,7 @@ void load_presets(uint8_t location)
 
 void get_mixer_status(void)
 {
-    uint8_t buff[14];
+    uint8_t buff[15];
     uint8_t rv;
     uint8_t i;
     uint8_t *src_p, *dst_p;
@@ -93,21 +93,21 @@ void get_mixer_status(void)
     pkg.addr_len = 0;
 
     pkg.data = (uint8_t *) &s;
-    pkg.data_len = 14;
+    pkg.data_len = 15;
     pkg.read = 1;
 
     i2c_transfer_start(&pkg, NULL);
     rv = I2C_ACK;
 #else
 
-    rv = i2cm_rx_buff(I2C_MIXER_SLAVE_ADDR, (uint8_t *) &buff, 14);
+    rv = i2cm_rx_buff(I2C_MIXER_SLAVE_ADDR, (uint8_t *) &buff, 15);
 
 #endif
 
     if (rv == I2C_ACK) {
         src_p = buff;
         dst_p = (uint8_t *) & s;
-        for (i=0;i<14;i++) {
+        for (i=0;i<15;i++) {
             *dst_p++ = *src_p++;
         }
     }
@@ -127,18 +127,21 @@ void mixer_send_funct(const uint8_t pga, const uint8_t function, const uint8_t r
     unmuted = mixer_get_mute_struct(pga);
     vol_r = mixer_get_vol_struct(pga, CH_RIGHT);
     vol_l = mixer_get_vol_struct(pga, CH_LEFT);
-    //sprintf(str_temp, "D1 %d %d %d %d\n", pga, function, vol_r, vol_l);
-    //uart_tx_str(str_temp, strlen(str_temp));
+    
+    sprintf(str_temp, "D1 %d %d %d %d\n", pga, function, vol_r, vol_l);
+    uart0_tx_str(str_temp, strlen(str_temp));
 
     switch (function) {
 
     case FCT_T_MUTE:
         if (!unmuted) {
             mixer_set_mute_struct(pga, UNMUTE);
-            i2c_tx_vol(pga, UNMUTE, vol_r, vol_l);
+            i2c_tx_cmd(M_CMD_UNMUTE, pga);
+            //i2c_tx_vol(pga, UNMUTE, vol_r, vol_l);
         } else {
             mixer_set_mute_struct(pga, MUTE);
-            i2c_tx_vol(pga, MUTE, vol_r, vol_l);
+            i2c_tx_cmd(M_CMD_MUTE, pga);
+            //i2c_tx_vol(pga, MUTE, vol_r, vol_l);
         }
     break;
 

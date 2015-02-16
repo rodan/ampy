@@ -28,18 +28,8 @@ void check_events(void);
 static const struct mixer_settings_t defaults = {
     VERSION,                    // ver
     10,                          // mute_flag
-    20,                          // v1_r
-    30,                          // v1_l
-    40,                          // v2_r
-    50,                          // v2_l
-    60,                          // v3_r
-    70,                          // v3_l
-    80,                          // v4_r
-    90,                          // v4_l
-    100,                          // v5_r
-    110,                          // v5_l
-    120,                          // v6_r
-    130,                          // v6_l
+    {20,30,40,50,60,70,80,90,100,110,120,130}, // volumes
+    0
 };
 
 #endif

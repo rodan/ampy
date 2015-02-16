@@ -188,11 +188,11 @@ int ampy_tx_cmd(int *fd_dev, char *tx_buff, uint8_t tx_buff_len, char *rx_buff, 
                     //printf("[%c %c %d %d]", rx_buff[rx_count-4], rx_buff[rx_count-3], rx_count, exp_rx_buff_len);
                     fail++;
                     tx_inval++;
-                    log_write("rx tx_invalid fail %d/%d count=%d, str=%s", fail, retries, rx_count, rx_buff);
+                    log_write("rx tx_invalid fail %d/%d msg=%s", fail, retries, rx_buff);
                     usleep(100000);
                 } else {
                     *rx_buff_len = rx_count;
-                    log_write("rx count=%d, str=%s", rx_count, rx_buff);
+                    log_write("rx %s", rx_buff);
                     return EXIT_SUCCESS;
                 }
             } else {
@@ -228,7 +228,7 @@ int get_mixer_values(int *fd_dev)
     uint8_t i;
 
 
-    if (ampy_tx_cmd(fd_dev, "showreg*26\r\n", 12, input, &input_len, 41, 20) == EXIT_FAILURE) {
+    if (ampy_tx_cmd(fd_dev, "showreg\r\n", 12, input, &input_len, 41, 20) == EXIT_FAILURE) {
         return EXIT_FAILURE;
     }
 
@@ -299,9 +299,9 @@ int store_registers(int *fd_dev, uint8_t type)
     uint8_t input_len;
 
     if (type == VIEW_MIXER) {
-        snprintf(str_temp, STR_LEN, "storemix*56\r\n");
+        snprintf(str_temp, STR_LEN, "storemix\r\n");
     } else if (type == VIEW_AMP) {
-        snprintf(str_temp, STR_LEN, "storeamp*38\r\n");
+        snprintf(str_temp, STR_LEN, "storeamp\r\n");
     } else {
         return EXIT_FAILURE;
     }

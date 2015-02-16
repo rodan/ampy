@@ -4,18 +4,8 @@
 struct mixer_settings_t {
     uint8_t ver;                // firmware version
     uint8_t mute_flag;
-    uint8_t v1_r;               // pga #1, right channel volume
-    uint8_t v1_l;               // pga #1, left channel volume
-    uint8_t v2_r;               // ...
-    uint8_t v2_l;
-    uint8_t v3_r;
-    uint8_t v3_l;
-    uint8_t v4_r;
-    uint8_t v4_l;
-    uint8_t v5_r;
-    uint8_t v5_l;
-    uint8_t v6_r;
-    uint8_t v6_l;               // pga #6, left channel volume
+    uint8_t v[12];
+    int8_t  int_temp;
 };
 
 struct mixer_settings_t s;

@@ -2,7 +2,7 @@
 #define _CONFIG_H_
 
 //#define USE_UART
-//#define USE_WATCHDOG
+#define USE_WATCHDOG
 //#define CONFIG_DEBUG
 
 //#define HARDWARE_I2C

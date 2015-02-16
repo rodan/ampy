@@ -65,6 +65,18 @@ static void i2c_rx_irq(enum sys_message msg)
                 }
             }
             break;
+
+        case M_CMD_MUTE:
+            if ((0 < arg) && (arg < 7)) {
+                pga_set_mute_st(arg, MUTE, 1);
+            }
+            break;
+
+        case M_CMD_UNMUTE:
+            if ((0 < arg) && (arg < 7)) {
+                pga_set_mute_st(arg, UNMUTE, 1);
+            }
+            break;
     }
 
     i2c_rx_rdy = 1;

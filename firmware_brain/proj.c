@@ -18,6 +18,7 @@
 #include "drivers/lm4780_helper.h"
 #include "drivers/flash.h"
 #include "drivers/port.h"
+#include "drivers/rtc.h"
 #include "ui.h"
 
 #ifdef USE_UART
@@ -180,9 +181,8 @@ static void port_parser(enum sys_message msg)
 
 int main(void)
 {
-    //uint8_t i;
-
     main_init();
+    rtca_init();
     timer_a0_init();
     ir_init();
     uart0_init();
@@ -194,15 +194,10 @@ int main(void)
     settings_init(FLASH_ADDR);
     settings_apply();
 
-/*
-    for (i=0;i<DETECT_CHANNELS;i++) {
-        ampy_set_status(i+1, MUTE);
-        //stat.input_last[i] = MUTE;
-    }
-*/
+    // refresh the volume levels on the display once in a while
+    //sys_messagebus_register(&timer_a0_ovf_irq, SYS_MSG_TIMER0_IFG);
+    //sys_messagebus_register(&timer_a0_ccr1_irq, SYS_MSG_TIMER0_CCR1);
 
-    sys_messagebus_register(&timer_a0_ovf_irq, SYS_MSG_TIMER0_IFG);
-    sys_messagebus_register(&timer_a0_ccr1_irq, SYS_MSG_TIMER0_CCR1);
     sys_messagebus_register(&port_parser, SYS_MSG_TIMER0_CCR2);
     sys_messagebus_register(&port_trigger, SYS_MSG_PORT_TRIG);
     sys_messagebus_register(&parse_UI, SYS_MSG_UART0_RX);
@@ -222,9 +217,9 @@ int main(void)
 void main_init(void)
 {
 
-    // watchdog triggers after 4 minutes when not cleared
+    // watchdog triggers after 25sec when not cleared
 #ifdef USE_WATCHDOG
-    WDTCTL = WDTPW + WDTIS__8192K + WDTSSEL__ACLK + WDTCNTCL;
+    WDTCTL = WDTPW + WDTIS__512K + WDTSSEL__ACLK + WDTCNTCL;
 #else
     WDTCTL = WDTPW + WDTHOLD;
 #endif

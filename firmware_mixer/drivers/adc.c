@@ -10,19 +10,19 @@
 
 #include "adc.h"
 
-volatile uint16_t *adc12_rv;
+volatile uint16_t *adc10_rv;
 volatile uint8_t adcready;
 
 // port: 0 = P6.A0, 1 = P6.A1, .., 0xa = P6.A10 = internal temp sensor
 // vref is one of:  REFVSEL_0  - 1.5v vref
 //                  REFVSEL_1  - 2.0v vref
 //                  REFVSEL_2  - 2.5v vref
-void adc12_read(const uint8_t port, uint16_t * rv, const uint8_t vref)
+void adc10_read(const uint8_t port, uint16_t * rv, const uint8_t vref)
 {
     //*((uint16_t *)portreg) |= 1 << port;
-    // if ref or adc12 are busy then wait
+    // if ref or adc10 are busy then wait
     //while (REFCTL0 & REFGENBUSY) ;
-    while (ADC12CTL1 & ADC12BUSY) ;
+    while (ADC10CTL1 & ADC10BUSY) ;
     // enable reference
     if ((REFCTL0 & 0x30) != vref) {
         // need to change vref
@@ -31,18 +31,25 @@ void adc12_read(const uint8_t port, uint16_t * rv, const uint8_t vref)
     } else {
         REFCTL0 |= REFMSTR + REFON;
     }
-    ADC12CTL0 &= ~ADC12ENC;
-
-    ADC12CTL0 = ADC12SHT0_8 + ADC12ON; // set sample time
-    ADC12CTL1 = ADC12SHP; // + ADC12DIV1 + ADC12DIV0; // enable sample timer
-    ADC12MCTL0 = ADC12SREF_1 + port; // select ADC input
-    //ADC12CTL2 |= ADC12PDIV_2 + ADC12SR;
+    ADC10CTL0 &= ~ADC10ENC;
+    // enable ADC10_A, single channel single conversion
+    ADC10CTL0 = ADC10SHT_2 + ADC10ON;
+    ADC10CTL1 = ADC10SHP + ADC10DIV1 + ADC10DIV0;
+    // use internal Vref(+) AVss (-)
+    ADC10MCTL0 = ADC10SREF_1 + port;
+    ADC10CTL2 |= ADC10PDIV_2 + ADC10SR;
     adcready = 0;
-    adc12_rv = rv;
+    adc10_rv = rv;
     // trigger conversion
-    ADC12IE = ADC12IE0;
-    ADC12CTL0 |= ADC12ENC + ADC12SC; // sampling and conversion start
+    ADC10IE = ADC10IE0;
+    ADC10CTL0 |= ADC10ENC + ADC10SC;
     while (!adcready) ;
+}
+
+void adc10_halt(void)
+{
+    ADC10CTL0 &= ~ADC10ON;
+    REFCTL0 &= ~REFON;
 }
 
 // calculate internal temperature based on the linear regression 
@@ -58,7 +65,7 @@ int16_t calc_temp(const uint16_t qtemp)
     int32_t sumxsq;
     int32_t sumx, sumy, sumxy;
     int32_t coef1, coef2, t10;
-    int32_t rv = 0;
+    int32_t rv;
 
     sumx = x1 + x2;
     sumy = y1 + y2;
@@ -82,18 +89,12 @@ int16_t calc_temp(const uint16_t qtemp)
     return rv;
 }
 
-void adc12_halt(void)
+__attribute__ ((interrupt(ADC10_VECTOR)))
+void adc10_ISR(void)
 {
-    ADC12CTL0 &= ~ADC12ON;
-    REFCTL0 &= ~REFON;
-}
-
-__attribute__ ((interrupt(ADC12_VECTOR)))
-void adc12_ISR(void)
-{
-    uint16_t iv = ADC12IV;
-    if (iv == ADC12IV_ADC12IFG0) {
-        *adc12_rv = ADC12MEM0;
+    uint16_t iv = ADC10IV;
+    if (iv == ADC10IV_ADC10IFG) {
+        *adc10_rv = ADC10MEM0;
         adcready = 1;
     }
 }

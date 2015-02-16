@@ -12,6 +12,7 @@
 #include "drivers/spi.h"
 #include "drivers/pga2311.h"
 #include "drivers/pga2311_helper.h"
+#include "drivers/adc.h"
 
 #ifdef USE_UART
 #include "drivers/uart1.h"
@@ -23,6 +24,29 @@
 #include "interface/i2c_fcts.h"
 #endif
 
+// once a while get the internal temperature
+#define SLOW_REFRESH_DELAY 1   // 1 ta0 overflows are 1*128s ~= 2min
+uint16_t tfr = 0;   // get temperature
+
+void get_temperature(void)
+{
+    uint16_t q_temp;
+
+    adc10_read(10, &q_temp, REFVSEL_0);
+    adc10_halt();
+    s.int_temp = (int8_t) calc_temp(q_temp);
+}
+
+static void timer_a0_ovf_irq(enum sys_message msg)
+{
+    if (timer_a0_ovf >= tfr) {
+        if (timer_a0_ovf > 65535 - SLOW_REFRESH_DELAY) {
+            return;
+        }
+        tfr = timer_a0_ovf + SLOW_REFRESH_DELAY;
+        get_temperature();
+    }
+}
 
 int main(void)
 {
@@ -31,7 +55,7 @@ int main(void)
 
     // PGA2311 needs to get the digital power after a delay
     // otherwise it will lock up
-    timer_a0_delay(1000000);
+    timer_a0_delay_ccr4(_1s);
     pga_enable;
     spi_init();
     spi_fast_mode();
@@ -43,6 +67,8 @@ int main(void)
 
     settings_init(FLASH_ADDR);
 
+    get_temperature();
+
 #ifdef USE_UART
     uart1_init();
     uart1_iface_init();
@@ -52,6 +78,8 @@ int main(void)
     i2c_slave_init();
     i2c_iface_init();
 #endif
+
+    sys_messagebus_register(&timer_a0_ovf_irq, SYS_MSG_TIMER0_IFG);
 
     led_off;
 
@@ -137,7 +165,7 @@ void settings_init(uint8_t * addr)
 
     // apply settings to hardware
 
-    ptr = (uint8_t *) & s.v1_r;
+    ptr = (uint8_t *) & s.v;
     for (i = 1; i < 7; i++) {
         right = *(ptr + (i * 2 - 2));
         left = *(ptr + (i * 2 - 2) + 1);
@@ -162,13 +190,11 @@ void check_events(void)
     struct sys_messagebus *p = messagebus;
     enum sys_message msg = 0;
 
-    /*
     // drivers/timer_a0
     if (timer_a0_last_event == TIMER_A0_EVENT_IFG) {
         msg |= BIT0;
         timer_a0_last_event = 0;
     }
-    */
 
 #ifdef USE_UART
     // drivers/uart
