@@ -140,11 +140,11 @@ void init_mixer_layout(void)
         "Card:",
         "Chip:",
         "View:",
-        "Item:",
+        "Item:"
     };
     const char *labels_right[2] = {
         "F1:  Help",
-        "Esc: Exit",
+        "Esc: Exit"
     };
     unsigned int label_width_left, label_width_right;
     unsigned int right_x, i;

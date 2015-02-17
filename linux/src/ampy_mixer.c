@@ -155,7 +155,7 @@ int ampy_tx_cmd(int *fd_dev, char *tx_buff, uint8_t tx_buff_len, char *rx_buff, 
         if (write(*fd_dev, tx_buff, tx_buff_len) != tx_buff_len) {
             fail++;
             tx_err++;
-            log_write("ee tx error #%d, fail %d/%d\n", tx_err, fail, retries);
+            log_write("tx err %d/%d\n", fail, retries);
             usleep(80000);
         } else {
             // when reading from a wireless serial connection (like bluetooth)
@@ -188,7 +188,7 @@ int ampy_tx_cmd(int *fd_dev, char *tx_buff, uint8_t tx_buff_len, char *rx_buff, 
                     //printf("[%c %c %d %d]", rx_buff[rx_count-4], rx_buff[rx_count-3], rx_count, exp_rx_buff_len);
                     fail++;
                     tx_inval++;
-                    log_write("rx tx_invalid fail %d/%d msg=%s", fail, retries, rx_buff);
+                    log_write("tx err %d/%d %s", fail, retries, rx_buff);
                     usleep(100000);
                 } else {
                     *rx_buff_len = rx_count;
@@ -198,7 +198,7 @@ int ampy_tx_cmd(int *fd_dev, char *tx_buff, uint8_t tx_buff_len, char *rx_buff, 
             } else {
                 fail++;
                 rx_err++;
-                log_write("ee rx error #%d, fail %d/%d\n", rx_err, fail, retries);
+                log_write("rx err %d/%d\n", fail, retries);
                 usleep(80000);
             }
         }

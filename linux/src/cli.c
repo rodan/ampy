@@ -15,6 +15,7 @@
 #include "mainloop.h"
 #include "sysdep1.h"
 #include "string_helpers.h"
+#include "log.h"
 
 uint8_t show_interface;
 
@@ -123,6 +124,8 @@ int main(int argc, char *argv[])
     memset(&a, 0, sizeof(a));
     memset(&amp, 0, 6);
 
+    log_init();
+
     parse_options(argc, argv);
 
     if (show_interface) {
@@ -137,6 +140,11 @@ int main(int argc, char *argv[])
         flush_fd(fd_device);
         close(fd_device);
     }
+
+    if (fd_debug > 0) {
+        unlink(fname_debug);
+    }
+
 
     if (debug) {
         fprintf(stdout, "\nDebug info:\n");

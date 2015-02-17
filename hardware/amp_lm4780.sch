@@ -17600,6 +17600,38 @@ Source: 3M</description>
 <pad name="4" x="3.75" y="0" drill="0.6" diameter="0.9" shape="long" rot="R90"/>
 <pad name="3" x="2.5" y="0" drill="0.6" diameter="0.9" shape="long" rot="R90"/>
 </package>
+<package name="0530480210">
+<description>MOLEX &lt;b&gt;0530480210&lt;/b&gt;</description>
+<pad name="2" x="1.25" y="0" drill="0.6" diameter="0.9" shape="long" rot="R270"/>
+<pad name="1" x="0" y="0" drill="0.6" diameter="0.9" shape="long" rot="R270" first="yes"/>
+<wire x1="-1.5" y1="-4.5" x2="-1.5" y2="1" width="0.127" layer="21"/>
+<wire x1="2.75" y1="-4.5" x2="2.75" y2="1" width="0.127" layer="21"/>
+<wire x1="2.75" y1="-4.5" x2="-1.5" y2="-4.5" width="0.127" layer="21"/>
+<wire x1="2.75" y1="1" x2="1.875" y2="1" width="0.127" layer="21"/>
+<wire x1="-0.625" y1="1" x2="-1.5" y2="1" width="0.127" layer="21"/>
+<wire x1="1.875" y1="1" x2="1.875" y2="0.1" width="0.127" layer="21"/>
+<wire x1="-0.625" y1="1" x2="-0.625" y2="0.1" width="0.127" layer="21"/>
+<wire x1="1.875" y1="0.1" x2="-0.625" y2="0.1" width="0.127" layer="21"/>
+<wire x1="-0.25" y1="1.8" x2="0" y2="1.15" width="0.127" layer="21"/>
+<wire x1="0" y1="1.15" x2="0.25" y2="1.8" width="0.127" layer="21"/>
+<wire x1="-0.25" y1="1.8" x2="0.25" y2="1.8" width="0.127" layer="21"/>
+<text x="-0.02" y="2.46" size="1.27" layer="25">&gt;names</text>
+<text x="-1.27" y="-6.15" size="1.27" layer="27">&gt;value</text>
+</package>
+<package name="0530470210">
+<description>Molex &lt;b&gt;0530470210&lt;/b&gt;</description>
+<wire x1="2.75" y1="2" x2="2.75" y2="-1.2" width="0.127" layer="21"/>
+<wire x1="-1.5" y1="2" x2="-1.5" y2="-1.2" width="0.127" layer="21"/>
+<wire x1="-1.5" y1="2" x2="2.75" y2="2" width="0.127" layer="21"/>
+<wire x1="-1.5" y1="-1.2" x2="2.75" y2="-1.2" width="0.127" layer="21"/>
+<wire x1="-0.25" y1="3.4" x2="0" y2="2.75" width="0.127" layer="21"/>
+<wire x1="0" y1="2.75" x2="0.25" y2="3.4" width="0.127" layer="21"/>
+<wire x1="-0.25" y1="3.4" x2="0.25" y2="3.4" width="0.127" layer="21"/>
+<text x="0.75" y="2.81" size="1.27" layer="27">&gt;value</text>
+<text x="-1.05" y="-1.52" size="1.27" layer="26">&gt;name</text>
+<pad name="2" x="1.25" y="0" drill="0.6" diameter="0.9" shape="long" rot="R90"/>
+<pad name="1" x="0" y="0" drill="0.6" diameter="0.9" shape="long" rot="R90" first="yes"/>
+</package>
 </packages>
 <symbols>
 <symbol name="PINV">
@@ -17625,6 +17657,15 @@ Source: 3M</description>
 <wire x1="0" y1="-2.54" x2="1.27" y2="-2.54" width="0.6096" layer="94"/>
 <pin name="4" x="-2.54" y="-5.08" visible="pad" length="short" direction="pas"/>
 <wire x1="0" y1="-5.08" x2="1.27" y2="-5.08" width="0.6096" layer="94"/>
+</symbol>
+<symbol name="CON2">
+<description>2 pin connector</description>
+<pin name="1" x="-2.54" y="0" visible="pad" length="short" direction="pas"/>
+<pin name="2" x="-2.54" y="-2.54" visible="pad" length="short" direction="pas"/>
+<wire x1="0" y1="0" x2="1.27" y2="0" width="0.6096" layer="94"/>
+<wire x1="0" y1="-2.54" x2="1.27" y2="-2.54" width="0.6096" layer="94"/>
+<text x="-2.54" y="-7.62" size="1.778" layer="96">&gt;VALUE</text>
+<text x="-2.54" y="5.08" size="1.778" layer="95">&gt;NAME</text>
 </symbol>
 </symbols>
 <devicesets>
@@ -17708,6 +17749,33 @@ Source: 3M</description>
 <connect gate="G$1" pin="2" pad="2"/>
 <connect gate="G$1" pin="3" pad="3"/>
 <connect gate="G$1" pin="4" pad="4"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="MOLEX_2" prefix="X">
+<description>Molex 2 pin connectors
+1.25mm PicoBlade</description>
+<gates>
+<gate name="G$1" symbol="CON2" x="0" y="-7.62"/>
+</gates>
+<devices>
+<device name="HORIZONTAL" package="0530480210">
+<connects>
+<connect gate="G$1" pin="1" pad="2"/>
+<connect gate="G$1" pin="2" pad="1"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+<device name="VERTICAL" package="0530470210">
+<connects>
+<connect gate="G$1" pin="1" pad="1"/>
+<connect gate="G$1" pin="2" pad="2"/>
 </connects>
 <technologies>
 <technology name=""/>
@@ -22224,7 +22292,6 @@ Standard SMD solder jumper. Used to automate production. Two varients : Normally
 <part name="SJ6" library="SparkFun-Passives" deviceset="SOLDERJUMPER" device="TRACE" value="opt"/>
 <part name="R5" library="rcl" deviceset="R-EU_" device="R0805W" value="1K"/>
 <part name="R7" library="rcl" deviceset="R-EU_" device="R0805W" value="1K"/>
-<part name="R13" library="Simplex-Jumpers" deviceset="0R" device="_0805"/>
 <part name="IC1" library="linear" deviceset="OPA2333" device="D" value="OPA2333"/>
 <part name="R14" library="rcl" deviceset="R-EU_" device="R0805W" value="10K"/>
 <part name="R17" library="rcl" deviceset="R-EU_" device="R0805W" value="47K"/>
@@ -22273,6 +22340,8 @@ Standard SMD solder jumper. Used to automate production. Two varients : Normally
 <part name="C33" library="rcl" deviceset="C-EU" device="C0805" value="1nF"/>
 <part name="GNDI26" library="supply1" deviceset="GNDI" device=""/>
 <part name="GNDI27" library="supply1" deviceset="GNDI" device=""/>
+<part name="X3" library="Simplex-Connectors" deviceset="MOLEX_2" device="HORIZONTAL"/>
+<part name="GNDI28" library="supply1" deviceset="GNDI" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -22397,7 +22466,6 @@ Standard SMD solder jumper. Used to automate production. Two varients : Normally
 <instance part="SJ6" gate="1" x="30.48" y="38.1" rot="R180"/>
 <instance part="R5" gate="G$1" x="137.16" y="121.92" rot="R180"/>
 <instance part="R7" gate="G$1" x="137.16" y="40.64" rot="R180"/>
-<instance part="R13" gate="G$1" x="429.26" y="88.9"/>
 <instance part="IC1" gate="A" x="116.84" y="121.92" rot="MR180"/>
 <instance part="IC1" gate="B" x="116.84" y="40.64" rot="MR180"/>
 <instance part="IC1" gate="P" x="381" y="71.12" rot="MR0"/>
@@ -22448,6 +22516,8 @@ Standard SMD solder jumper. Used to automate production. Two varients : Normally
 <instance part="C33" gate="G$1" x="154.94" y="30.48" rot="R180"/>
 <instance part="GNDI26" gate="G$1" x="154.94" y="104.14"/>
 <instance part="GNDI27" gate="G$1" x="154.94" y="22.86"/>
+<instance part="X3" gate="G$1" x="439.42" y="152.4"/>
+<instance part="GNDI28" gate="G$1" x="431.8" y="144.78"/>
 </instances>
 <busses>
 </busses>
@@ -22951,7 +23021,6 @@ Standard SMD solder jumper. Used to automate production. Two varients : Normally
 <label x="332.74" y="218.44" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="R13" gate="G$1" pin="P$2"/>
 <wire x1="434.34" y1="88.9" x2="441.96" y2="88.9" width="0.1524" layer="91"/>
 <label x="436.88" y="88.9" size="1.778" layer="95"/>
 </segment>
@@ -22998,7 +23067,7 @@ Standard SMD solder jumper. Used to automate production. Two varients : Normally
 <label x="408.94" y="134.62" size="1.778" layer="95"/>
 </segment>
 </net>
-<net name="+3V3D" class="0">
+<net name="+3V3A" class="0">
 <segment>
 <label x="185.42" y="152.4" size="1.778" layer="95"/>
 <wire x1="254" y1="149.86" x2="254" y2="152.4" width="0.1524" layer="91"/>
@@ -23016,11 +23085,6 @@ Standard SMD solder jumper. Used to automate production. Two varients : Normally
 <wire x1="254" y1="68.58" x2="256.54" y2="68.58" width="0.1524" layer="91"/>
 <wire x1="180.34" y1="71.12" x2="254" y2="71.12" width="0.1524" layer="91"/>
 <pinref part="OK2" gate="B" pin="A"/>
-</segment>
-<segment>
-<label x="419.1" y="132.08" size="1.778" layer="95"/>
-<wire x1="436.88" y1="132.08" x2="419.1" y2="132.08" width="0.1524" layer="91"/>
-<pinref part="X2" gate="G$1" pin="3"/>
 </segment>
 <segment>
 <pinref part="SJ1" gate="G$1" pin="1"/>
@@ -23052,6 +23116,16 @@ Standard SMD solder jumper. Used to automate production. Two varients : Normally
 <wire x1="350.52" y1="81.28" x2="342.9" y2="81.28" width="0.1524" layer="91"/>
 <wire x1="342.9" y1="81.28" x2="342.9" y2="73.66" width="0.1524" layer="91"/>
 <junction x="350.52" y="81.28"/>
+</segment>
+<segment>
+<pinref part="X3" gate="G$1" pin="1"/>
+<wire x1="436.88" y1="152.4" x2="429.26" y2="152.4" width="0.1524" layer="91"/>
+<label x="429.26" y="152.4" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="X2" gate="G$1" pin="3"/>
+<wire x1="436.88" y1="132.08" x2="429.26" y2="132.08" width="0.1524" layer="91"/>
+<label x="429.26" y="132.08" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="N$21" class="0">
@@ -23479,7 +23553,6 @@ Standard SMD solder jumper. Used to automate production. Two varients : Normally
 <pinref part="GNDI23" gate="G$1" pin="GNDI"/>
 </segment>
 <segment>
-<pinref part="R13" gate="G$1" pin="P$1"/>
 <pinref part="GNDI24" gate="G$1" pin="GNDI"/>
 <wire x1="424.18" y1="88.9" x2="416.56" y2="88.9" width="0.1524" layer="91"/>
 <wire x1="416.56" y1="88.9" x2="416.56" y2="86.36" width="0.1524" layer="91"/>
@@ -23541,6 +23614,12 @@ Standard SMD solder jumper. Used to automate production. Two varients : Normally
 <pinref part="C32" gate="G$1" pin="1"/>
 <pinref part="GNDI26" gate="G$1" pin="GNDI"/>
 <wire x1="154.94" y1="109.22" x2="154.94" y2="106.68" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<pinref part="X3" gate="G$1" pin="2"/>
+<pinref part="GNDI28" gate="G$1" pin="GNDI"/>
+<wire x1="436.88" y1="149.86" x2="431.8" y2="149.86" width="0.1524" layer="91"/>
+<wire x1="431.8" y1="149.86" x2="431.8" y2="147.32" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$32" class="0">

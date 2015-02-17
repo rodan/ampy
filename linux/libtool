@@ -2,7 +2,7 @@
 
 # libtool - Provide generalized library-building support services.
 # Generated automatically by config.status (ampy_mixer) 0.1
-# Libtool was configured on host peter:
+# Libtool was configured on host pandora:
 # NOTE: Changes made to this file will be lost: look at ltmain.sh.
 #
 #   Copyright (C) 1996, 1997, 1998, 1999, 2000, 2001, 2003, 2004, 2005,
@@ -66,12 +66,12 @@ PATH_SEPARATOR=":"
 
 # The host system.
 host_alias=
-host=i686-pc-linux-gnu
+host=x86_64-unknown-linux-gnu
 host_os=linux-gnu
 
 # The build system.
 build_alias=
-build=i686-pc-linux-gnu
+build=x86_64-unknown-linux-gnu
 build_os=linux-gnu
 
 # A sed program that does not truncate output.
@@ -272,10 +272,10 @@ finish_eval=""
 hardcode_into_libs=yes
 
 # Compile-time system search path for libraries.
-sys_lib_search_path_spec="/usr/lib/gcc/i686-pc-linux-gnu/4.7.3 /usr/i686-pc-linux-gnu/lib /usr/lib /lib "
+sys_lib_search_path_spec="/usr/lib/gcc/x86_64-pc-linux-gnu/4.8.3 /usr/lib64 /lib64 /usr/x86_64-pc-linux-gnu/lib "
 
 # Run-time system search path for libraries.
-sys_lib_dlsearch_path_spec="/lib /usr/lib /lib /usr/lib /usr/local/lib /usr/i686-pc-linux-gnu/lib /usr/lib/gcc/i686-pc-linux-gnu/4.7.3 /usr/lib/gcc/i686-pc-linux-gnu/4.7.3 /usr/lib/gcc/i686-pc-linux-gnu/4.7.3 /usr/lib/gcc/i686-pc-linux-gnu/4.7.3 /usr/lib/gcc/i686-pc-linux-gnu/4.7.3 /usr/lib/opengl/xorg-x11/lib /usr/lib/qt4 "
+sys_lib_dlsearch_path_spec="/lib /usr/lib /lib64 /usr/lib64 /usr/local/lib64 /lib32 /usr/lib32 /usr/local/lib32 /lib /usr/lib /usr/local/lib /usr/x86_64-pc-linux-gnu/lib /usr/lib/gcc/x86_64-pc-linux-gnu/4.8.3/32 /usr/lib/gcc/x86_64-pc-linux-gnu/4.8.3 /usr/lib/gcc/x86_64-pc-linux-gnu/4.7.3/32 /usr/lib/gcc/x86_64-pc-linux-gnu/4.7.3 /usr/lib/gcc/x86_64-pc-linux-gnu/4.6.4/32 /usr/lib/gcc/x86_64-pc-linux-gnu/4.6.4 /usr/lib/gcc/x86_64-pc-linux-gnu/4.5.4/32 /usr/lib/gcc/x86_64-pc-linux-gnu/4.5.4 /usr/lib32/OpenCL/vendors/nvidia /usr/lib64/OpenCL/vendors/nvidia /usr/lib32/opengl/xorg-x11/lib /usr/lib64/opengl/xorg-x11/lib /usr/lib64/qt4 /usr/lib32/qt4 /usr/lib/qt4 /usr/games/lib64 /usr/games/lib32 /usr/games/lib "
 
 # Whether dlopen is supported.
 dlopen_support=unknown
@@ -292,7 +292,7 @@ striplib="strip --strip-unneeded"
 
 
 # The linker used to build libraries.
-LD="/usr/i686-pc-linux-gnu/bin/ld"
+LD="/usr/x86_64-pc-linux-gnu/bin/ld -m elf_x86_64"
 
 # How to create reloadable object files.
 reload_flag=" -r"

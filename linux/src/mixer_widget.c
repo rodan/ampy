@@ -41,6 +41,7 @@
 #include "mixer_widget.h"
 #include "mixer_display.h"
 #include "mixer_controls.h"
+#include "log.h"
 
 int focus_control_index;
 
@@ -89,6 +90,7 @@ void show_help(void)
 	const char *help[] = {
 		"Esc        Exit",
 		"F1 ? H     Help",
+        "F2         Show serial debug console",
 		"F3         Show mixer board controls",
 		"F4         Show power amp controls",
         "Tab        Switch control view",
@@ -110,6 +112,11 @@ void show_help(void)
 		"< >        Toggle left/right mute",
 	};
 	show_text(help, ARRAY_SIZE(help), "Help");
+}
+
+void show_debug(void)
+{
+    show_textfile(fname_debug);
 }
 
 void show_saved (void)
@@ -225,6 +232,9 @@ static void on_handle_key(int key)
     case 'h':
     case '?':
         show_help();
+        break;
+    case KEY_F(2):
+        show_debug();
         break;
 	case KEY_F(3):
         view_mode = VIEW_MIXER;
