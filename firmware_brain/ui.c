@@ -115,8 +115,7 @@ int parse_user_input(void)
         if (check_xor_hash(in, uart0_rx_buf_len) == EXIT_SUCCESS) {
             for (i=0;i<4;i++) {
                 if (extract_hex((char *)uart0_rx_buf+i*2+1, &t_int[i]) != 2) {
-                    uart0_tx_str(in, uart0_rx_buf_len);
-                    uart0_tx_str(" rx_fail\r\n", 10);
+                    uart0_tx_str("extract_hex fail\r\n", 10);
                     return EXIT_FAILURE;
                 }
             }
@@ -124,16 +123,14 @@ int parse_user_input(void)
             uart0_tx_str(in, uart0_rx_buf_len);
             uart0_tx_str(" ok\r\n", 5);
         } else {
-            uart0_tx_str(in, uart0_rx_buf_len);
-            uart0_tx_str(" crc_fail\r\n", 11);
+            uart0_tx_str("hash fail\r\n", 11);
         }
     } else if (f == 'a') {
         // receive amp settings
         if (check_xor_hash(in, uart0_rx_buf_len) == EXIT_SUCCESS) {
             for (i=0;i<3;i++) {
                 if (extract_hex((char *)uart0_rx_buf+i*2+1, (uint8_t *) &a+i) != 2) {
-                    uart0_tx_str(in, uart0_rx_buf_len);
-                    uart0_tx_str(" rx_fail\r\n", 10);
+                    uart0_tx_str("extract_hex fail\r\n", 10);
                     return EXIT_FAILURE;
                 }
             }
@@ -141,8 +138,7 @@ int parse_user_input(void)
             settings_apply();
             uart0_tx_str(" ok\r\n", 5);
         } else {
-            uart0_tx_str(in, uart0_rx_buf_len);
-            uart0_tx_str(" crc_fail\r\n", 11);
+            uart0_tx_str("hash fail\r\n", 11);
         }
     }
 
