@@ -227,18 +227,28 @@ int get_mixer_values(int *fd_dev)
     uint8_t input_len;
     uint8_t i;
 
+    if (ampy_tx_cmd(fd_dev, "showreg\r\n", 12, input, &input_len, 44, 20) == EXIT_FAILURE) {
+        return EXIT_FAILURE;
+    }
 
-    if (ampy_tx_cmd(fd_dev, "showreg\r\n", 12, input, &input_len, 41, 20) == EXIT_FAILURE) {
+    if (check_xor_hash(input, input_len-5) == EXIT_FAILURE) {
+        log_write("ee hash fail\n");
         return EXIT_FAILURE;
     }
 
     // first 28 bytes are the s struct in hex, next 8 are the a struct
     for (i = 0; i < 14; i++) {
-        extract_hex(input + (i * 2), (uint8_t *) (&s) + i);
+        if (extract_hex(input + (i * 2), (uint8_t *) (&s) + i) !=2 ) {
+            log_write("ee extract_hex fail\n");
+            return EXIT_FAILURE;
+        }
     }
 
     for (i = 0; i < 4; i++) {
-        extract_hex(input + (i * 2) + 28, (uint8_t *) (&a) + i);
+        if (extract_hex(input + (i * 2) + 28, (uint8_t *) (&a) + i) !=2 ) {
+            log_write("ee extract_hex fail\n");
+            return EXIT_FAILURE;
+        }
     }
 
     amp[0] = ampy_get_detect(1);

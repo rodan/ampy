@@ -51,7 +51,7 @@ uint8_t compute_xor_hash(const char *msg, const uint16_t len, uint8_t *rv)
 {
     uint16_t i;
 
-    *rv = 85;
+    *rv = 0;
 
     for (i=0;i<len;i++) {
         *rv ^= msg[i];    

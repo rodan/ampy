@@ -21,7 +21,7 @@ int log_init()
     fd_debug = mkstemp(debug_file);
 
     if (fd_debug > -1 ) {
-        snprintf(fname_debug, DEBUG_FILE_MAX, debug_file);
+        snprintf(fname_debug, DEBUG_FILE_MAX, "%s", debug_file);
         //fcntl(fd_debug, F_GETPATH, fname_debug);
         //snprintf(fd_proc, DEBUG_FILE_MAX, "/proc/self/fd/%d", fd_debug);
         //readlink(fd_proc, fname_debug, DEBUG_FILE_MAX);

@@ -51,7 +51,7 @@ uint8_t compute_xor_hash(const char *msg, const uint16_t len, uint8_t *rv)
 {
     uint16_t i;
 
-    *rv = 85;
+    *rv = 0;
 
     for (i=0;i<len;i++) {
         *rv ^= msg[i];    
@@ -64,7 +64,7 @@ uint8_t check_xor_hash(const char *msg, const uint16_t len)
 {
     uint8_t sender_hash;
     uint8_t computed_hash;
-
+        
     if (msg[len-3] == '*') {
         extract_hex(&msg[len-2], &sender_hash);
         compute_xor_hash(msg, len-3, &computed_hash);

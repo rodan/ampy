@@ -1,4 +1,7 @@
 
+#include <string.h>
+#include <stdio.h>
+
 #include "uart0.h"
 
 // you'll have to initialize/map uart ports in main()
@@ -13,6 +16,21 @@ void uart0_init(void)
     UCA0IE |= UCRXIE;           // enable USCI_A0 RX interrupt
     uart0_p = 0;
     uart0_rx_enable = 1;
+    xor_hash0_active = false;
+}
+
+void start_hash0(void)
+{
+    xor_hash0_active = true;
+    xor_hash0 = 0;
+}
+
+void output_hash0(void)
+{
+    char hash_str[4];
+    xor_hash0_active = false;
+    snprintf(hash_str, 4, "*%02x", xor_hash0);
+    uart0_tx_str(hash_str, strlen(hash_str));
 }
 
 uint16_t uart0_tx_str(char *str, const uint16_t size)
@@ -21,6 +39,9 @@ uint16_t uart0_tx_str(char *str, const uint16_t size)
     while (p < size) {
         while (!(UCA0IFG & UCTXIFG)) ;  // USCI_A0 TX buffer ready?
         UCA0TXBUF = str[p];
+        if (xor_hash0_active) {
+            xor_hash0 ^= str[p];
+        }
         p++;
     }
     return p;

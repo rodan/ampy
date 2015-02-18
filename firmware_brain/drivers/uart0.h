@@ -16,8 +16,14 @@ volatile uint8_t uart0_rx_buf_len;
 volatile uint8_t uart0_rx_enable;
 //uint8_t uart0_rx_err;
 
+uint8_t xor_hash0;
+uint8_t xor_hash0_active;
+
 void uart0_init();
 uint16_t uart0_tx_str(char *str, const uint16_t size);
+
+void start_hash0(void);
+void output_hash0(void);
 
 volatile enum uart0_tevent uart0_last_event;
 

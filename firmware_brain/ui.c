@@ -88,6 +88,7 @@ int parse_user_input(void)
     } else if (strstr(in, "showreg")) {
         // mixer related
         get_mixer_status(); // XXX
+        start_hash0();
         for (i=0;i<14;i++) {
             snprintf(str_temp, TEMP_LEN, "%02x", *((uint8_t *) &s+i));
             uart0_tx_str(str_temp, strlen(str_temp));
@@ -97,6 +98,7 @@ int parse_user_input(void)
             snprintf(str_temp, TEMP_LEN, "%02x", *((uint8_t *) &a+i));
             uart0_tx_str(str_temp, strlen(str_temp));
         }
+        output_hash0();
         uart0_tx_str(" ok\r\n", 5);
     } else if (strstr(in, "storeamp")) {
         flash_save(flash_addr, (void *)&a, 3);
