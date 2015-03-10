@@ -202,6 +202,8 @@ int main(void)
     sys_messagebus_register(&port_trigger, SYS_MSG_PORT_TRIG);
     sys_messagebus_register(&parse_UI, SYS_MSG_UART0_RX);
 
+    // the mixer gets initialized after ~1s
+    timer_a0_delay_ccr4(_1500ms);
     get_mixer_status();
 
     while (1) {

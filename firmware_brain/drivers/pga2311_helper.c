@@ -74,7 +74,7 @@ uint8_t mixer_get_mute_struct(const uint8_t pga)
     mask = 1 << (pga - 1);
 
     if (s.mute_flag & mask) {
-        return UNMUTE;
+        return LIVE;
     }
     return MUTE;
 }
@@ -83,7 +83,7 @@ uint8_t mixer_get_mute_struct(const uint8_t pga)
 /// mixer_settings_t structure
 /// inputs:
 ///   pga: [1-6]
-///   type: MUTE or UNMUTE
+///   type: MUTE or UNMUTE/LIVE
 /// returns the mute status: 1 - pga muted, 0 - pga not muted
 void mixer_set_mute_struct(const uint8_t pga, const uint8_t type)
 {
@@ -97,7 +97,7 @@ void mixer_set_mute_struct(const uint8_t pga, const uint8_t type)
         s.mute_flag &= ~mask;
     break;
 
-    case UNMUTE:
+    case LIVE:
         s.mute_flag |= mask;
     break;
     }
