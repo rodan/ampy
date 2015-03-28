@@ -122,6 +122,7 @@ int parse_user_input(void)
                 }
             }
             i2c_tx_vol(t_int[0], t_int[1], t_int[2], t_int[3]);
+            get_mixer_status();
             amp_output_set();
             uart0_tx_str(in, uart0_rx_buf_len);
             uart0_tx_str(" ok\r\n", 5);
