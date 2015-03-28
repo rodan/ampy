@@ -150,7 +150,7 @@ static void port_parser(enum sys_message msg)
                 stat.count[i] = 0;
                 ampy_set_status(i+1, LIVE);
                 stat.input_last[i] = LIVE;
-                LED_ON;
+                //LED_ON;
                 if (i == 0) {
                     UNMUTE_FRONT;
                 } else if (i == 1) {
@@ -160,9 +160,11 @@ static void port_parser(enum sys_message msg)
                 stat.count[i] = 0;
                 ampy_set_status(i+1, MUTE);
                 stat.input_last[i] = MUTE;
+                /*
                 if ((ampy_get_status(1) == MUTE) && (ampy_get_status(2) == MUTE)) {
                     LED_OFF;
                 }
+                */
                 if (i == 0) {
                     MUTE_FRONT;
                 } else if (i == 1) {
@@ -499,7 +501,7 @@ void settings_apply(void)
     uint8_t i;
     uint8_t tmp;
 
-    LED_OFF;
+    //LED_OFF;
 
 	// IRQ triggers on a hi-low transition
 	P1IES |= detect_port[0] + detect_port[1];
@@ -527,13 +529,55 @@ void settings_apply(void)
             } else {
                 if (i == 0) {
                     UNMUTE_FRONT;
-                    LED_ON;
+                    //LED_ON;
                 } else if (i == 1) {
                     UNMUTE_REAR;
-                    LED_ON;
+                    //LED_ON;
                 }
             }
         }
         stat.input_last[i] = MUTE;
     }
+
+    //amp_output_set();
 }
+
+// check if there is any amp with all inputs muted
+void amp_output_set(void)
+{
+    uint32_t tvol_front, tvol_rear, tvol_in, tvol_pan;
+
+    tvol_front = mixer_get_mute_struct(1)*(mixer_get_vol_struct(1, CH_RIGHT) + mixer_get_vol_struct(1, CH_LEFT));
+
+    tvol_in = mixer_get_mute_struct(3)*(mixer_get_vol_struct(3, CH_RIGHT) + mixer_get_vol_struct(3, CH_LEFT));
+    tvol_in += mixer_get_mute_struct(4)*(mixer_get_vol_struct(4, CH_RIGHT) + mixer_get_vol_struct(4, CH_LEFT));
+
+    if (tvol_front + tvol_in) {
+        UNMUTE_FRONT;
+        ampy_set_status(1, LIVE);
+    } else {
+        MUTE_FRONT;
+        ampy_set_status(1, MUTE);
+    }
+
+    tvol_rear = mixer_get_mute_struct(2)*(mixer_get_vol_struct(2, CH_RIGHT) + mixer_get_vol_struct(2, CH_LEFT));
+
+    tvol_pan = mixer_get_mute_struct(4)*(mixer_get_vol_struct(4, CH_RIGHT) + mixer_get_vol_struct(4, CH_LEFT));
+
+    if (tvol_rear + (tvol_in * tvol_pan)) {
+        UNMUTE_REAR;
+        ampy_set_status(2, LIVE);
+    } else {
+        MUTE_REAR;
+        ampy_set_status(2, MUTE);
+    }
+
+    if ((ampy_get_status(1) == MUTE) && (ampy_get_status(2) == MUTE)) {
+        LED_OFF;
+    } else {
+        LED_ON;
+    }
+
+}
+
+

@@ -198,6 +198,8 @@ void mixer_send_funct(const uint8_t pga, const uint8_t function, const uint8_t r
         }
     break;
     }
+
+    amp_output_set();
 }
 
 #endif
