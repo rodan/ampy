@@ -19,9 +19,9 @@
 
 
 // XXX
-#include <stdio.h>
-#include <string.h>
-#include "drivers/uart0.h"
+//#include <stdio.h>
+//#include <string.h>
+//#include "drivers/uart0.h"
 
 void i2c_tx_cmd(uint8_t cmd, uint8_t arg)
 {
@@ -117,25 +117,25 @@ void mixer_send_funct(const uint8_t pga, const uint8_t function, const uint8_t r
 {
     uint8_t vol_r, vol_l;
     uint8_t vol_new_r, vol_new_l;
-    uint8_t unmuted;
+    uint8_t pga_stat;
     uint8_t change = 0;
 
     if (pga < 1 || pga > 6) {
         return;
     }
 
-    unmuted = mixer_get_mute_struct(pga);
+    pga_stat = mixer_get_mute_struct(pga);
     vol_r = mixer_get_vol_struct(pga, CH_RIGHT);
     vol_l = mixer_get_vol_struct(pga, CH_LEFT);
     
-    sprintf(str_temp, "D1 %d %d %d %d\n", pga, function, vol_r, vol_l);
-    uart0_tx_str(str_temp, strlen(str_temp));
+    //sprintf(str_temp, "D1 %d %d %d %d %d\n", pga, function, pga_stat, vol_r, vol_l);
+    //uart0_tx_str(str_temp, strlen(str_temp));
 
     switch (function) {
 
     case FCT_T_MUTE:
-        if (!unmuted) {
-            mixer_set_mute_struct(pga, UNMUTE);
+        if (pga_stat == MUTE) {
+            mixer_set_mute_struct(pga, LIVE);
             i2c_tx_cmd(M_CMD_UNMUTE, pga);
             //i2c_tx_vol(pga, UNMUTE, vol_r, vol_l);
         } else {
@@ -166,9 +166,9 @@ void mixer_send_funct(const uint8_t pga, const uint8_t function, const uint8_t r
             change = 1;
         }
         if (change) {
-            //sprintf(str_temp, "D2 %d %d %d %d\n", pga, unmuted, vol_new_r, vol_new_l);
+            //sprintf(str_temp, "D2 %d %d %d %d\n", pga, pga_stat, vol_new_r, vol_new_l);
             //uart_tx_str(str_temp, strlen(str_temp));
-            i2c_tx_vol(pga, unmuted, vol_new_r, vol_new_l);
+            i2c_tx_vol(pga, pga_stat, vol_new_r, vol_new_l);
         }
     break;
 
@@ -192,12 +192,14 @@ void mixer_send_funct(const uint8_t pga, const uint8_t function, const uint8_t r
             change = 1;
         }
         if (change) {
-            //sprintf(str_temp, "D3 %d %d %d %d\n", pga, unmuted, vol_new_r, vol_new_l);
+            //sprintf(str_temp, "D3 %d %d %d %d\n", pga, pga_stat, vol_new_r, vol_new_l);
             //uart_tx_str(str_temp, strlen(str_temp));
-            i2c_tx_vol(pga, unmuted, vol_new_r, vol_new_l);
+            i2c_tx_vol(pga, pga_stat, vol_new_r, vol_new_l);
         }
     break;
     }
+
+    amp_output_set();
 }
 
 #endif

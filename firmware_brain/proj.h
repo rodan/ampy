@@ -54,6 +54,8 @@ void wake_up(void);
 void check_events(void);
 void check_ir(void);
 
+void amp_output_set();
+
 #define FLASH_ADDR          SEGMENT_B
 void settings_init(uint8_t * addr);
 void settings_apply(void);

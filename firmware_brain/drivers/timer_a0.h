@@ -8,6 +8,7 @@
 #define _100ms          _10ms * 10
 #define _500ms          _10ms * 50
 #define _1s             512UL
+#define _1500ms         768UL
 
 enum timer_a0_event {
     TIMER_A0_EVENT_CCR0 = BIT0,

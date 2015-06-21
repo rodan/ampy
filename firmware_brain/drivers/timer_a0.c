@@ -53,6 +53,28 @@ void timer_a0_delay_noblk_ccr3(uint16_t ticks)
     TA0CCTL3 = CCIE;
 }
 
+void timer_a0_delay_ccr4(uint16_t ticks)
+{
+    __disable_interrupt();
+    TA0CCR4 = TA0R + ticks;
+    TA0CCTL4 = CCIE;
+    __enable_interrupt();
+    timer_a0_last_event &= ~TIMER_A0_EVENT_CCR4;
+    while (1) {
+        _BIS_SR(LPM3_bits + GIE);
+        __no_operation();
+#ifdef USE_WATCHDOG
+        // reset watchdog
+        WDTCTL = (WDTCTL & 0xff) | WDTPW | WDTCNTCL;
+#endif
+        if (timer_a0_last_event & TIMER_A0_EVENT_CCR4)
+            break;
+    }
+    TA0CCTL4 &= ~CCIE;
+    timer_a0_last_event &= ~TIMER_A0_EVENT_CCR4;
+}
+
+
 __attribute__ ((interrupt(TIMER0_A1_VECTOR)))
 void timer0_A1_ISR(void)
 {

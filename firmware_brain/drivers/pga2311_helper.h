@@ -24,6 +24,8 @@ struct mixer_settings_t s;
 
 #define MUTE            0x0
 #define UNMUTE          0x1
+#define LIVE            0x1
+#define ACTIVE          0x1
 
 #define M_CMD_WRITE     0x57
 #define M_CMD_READ      0x52
