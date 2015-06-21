@@ -62,7 +62,8 @@ static void parse_options(int argc, char *argv[])
         {.name = "volume",.has_arg = 1,.val = 'v'},
         {.name = "show",.val = 's'},
         {.name = "sensors",.val = 'i'},
-        {.name = "debug",.val = 'e'}
+        {.name = "debug",.val = 'e'},
+        {0, 0, 0, 0}
     };
     int option;
     uint8_t t_int[4];
