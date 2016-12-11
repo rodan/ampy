@@ -59,7 +59,7 @@ void spi_fast_mode(void)
 
 void spi_read_frame(uint8_t * pBuffer, uint16_t size)
 {
-    uint16_t gie = __get_SR_register() & GIE;   //Store current GIE state
+    uint16_t gie = __read_status_register() & GIE;   //Store current GIE state
 
     __disable_interrupt();      //Make this operation atomic
 
@@ -73,12 +73,12 @@ void spi_read_frame(uint8_t * pBuffer, uint16_t size)
         *pBuffer++ = UCB1RXBUF;
     }
 
-    __bis_SR_register(gie);     //Restore original GIE state
+    __bis_status_register(gie);     //Restore original GIE state
 }
 
 void spi_send_frame(uint8_t * pBuffer, uint16_t size)
 {
-    uint16_t gie = __get_SR_register() & GIE;   //Store current GIE state
+    uint16_t gie = __read_status_register() & GIE;   //Store current GIE state
 
     __disable_interrupt();      //Make this operation atomic
 
@@ -95,6 +95,6 @@ void spi_send_frame(uint8_t * pBuffer, uint16_t size)
     UCB1RXBUF;                  //Dummy read to empty RX buffer
     //and clear any overrun conditions
 
-    __bis_SR_register(gie);     //Restore original GIE state
+    __bis_status_register(gie);     //Restore original GIE state
 }
 
