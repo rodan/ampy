@@ -1,7 +1,7 @@
 
 //  audio mixer based on an MSP430F5510
 //
-//  author:          Petre Rodan <petre.rodan@simplex.ro>
+//  author:          Petre Rodan <2b4eda@subdimension.ro>
 //  available from:  https://github.com/rodan/ampy
 //  license:         GNU GPLv3
 

@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.69])
-AC_INIT([ampy_mixer], [0.1], [petre.rodan@simplex.ro])
+AC_INIT([ampy_mixer], [0.1], [2b4eda@subdimension.ro])
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_SRCDIR([src/ampy_mixer.c])
 

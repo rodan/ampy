@@ -3,7 +3,7 @@
 //  deprecated functions that used UART to talk to the mixer board.
 //  i2c_fcts should be used instead
 //
-//  author:          Petre Rodan <petre.rodan@simplex.ro>
+//  author:          Petre Rodan <2b4eda@subdimension.ro>
 //  available from:  https://github.com/rodan/ampy
 //  license:         GNU GPLv3
 

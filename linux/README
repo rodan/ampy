@@ -6,3 +6,9 @@ Either an FTDI-based USB-to-uart or a USB bluetooth connection that supports SPP
 All the PGA2311 chips present on the mixer board can be set in the [mixer view] and on the [amp view] the sound detection and mute signals can be toggled.
 The second only works if the power amp is based on the LM4780 IC.
 
+in order to compile, rnu the following:
+
+./bootstrap
+./configure
+make
+

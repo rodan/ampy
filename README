@@ -47,7 +47,7 @@ s      show settings
 
 
  homepage:        https://github.com/rodan/ampy
- author:          Petre Rodan <petre.rodan@simplex.ro>
+ author:          Petre Rodan <2b4eda@subdimension.ro>
  license:         GNU GPLv3
 
  parts of the code were originally forked from the openchronos-ng project [1]. 
