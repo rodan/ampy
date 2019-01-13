@@ -14,6 +14,7 @@ void uart1_init();
 uint16_t uart1_tx_str(char *str, uint16_t size);
 
 enum uart1_tevent {
+    UART1_EV_NONE = 0,
     UART1_EV_RX = BIT0,
     UART1_EV_TX = BIT1
 };

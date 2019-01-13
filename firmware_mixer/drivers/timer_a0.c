@@ -21,8 +21,13 @@ void timer_a0_init(void)
     __disable_interrupt();
     timer_a0_ovf = 0;
 
-    TA0EX0 |= TAIDEX_7;
+    TA0EX0 |= TAIDEX_7; // divide input clock by 8, and then by 8 again
     TA0CTL |= TASSEL__ACLK + MC__CONTINOUS + TACLR + ID__8 + TAIE;
+
+    // for ID__8 and TAIDEX 0x7
+    //   Fclock = 32768/8/8 = 512Hz
+    //   1 tick = 1953 microseconds
+    //   Tovf   = 65536 * .0019531250 = 128s 
     __enable_interrupt();
 }
 
